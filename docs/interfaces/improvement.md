@@ -1,6 +1,6 @@
 # Interface: Improvement (Evolution Layer)
 
-> Package: `wc-evolve` **[Validated in prototype]**
+> Package: `hylo-evolve` **[Validated in prototype]**
 > Based on: `../../research/comparisons/rsi-comparison.md`
 
 ## 1. Closed loop and split discipline

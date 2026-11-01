@@ -1,0 +1,33 @@
+[project]
+name = "hylo-eval"
+version = "0.1.0.dev0"
+description = "Hylo evaluation engine: benchmark contract and splits, scorers, paired statistics and gate tests, evaluation runner, experiments"
+requires-python = ">=3.10"
+dependencies = ["hylo-core"]
+license = "Apache-2.0"
+
+[build-system]
+requires = ["hatchling>=1.24"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/hylo"]
+
+[project.entry-points."hylo.benchmarks"]
+"testing/reach-v0" = "hylo.eval.builtin:testing_benchmark"
+
+[project.entry-points."hylo.scorers"]
+"success" = "hylo.eval.scoring:SuccessScorer"
+"safety_interventions" = "hylo.eval.scoring:SafetyInterventionScorer"
+"steps" = "hylo.eval.scoring:StepsScorer"
+
+[project.entry-points."hylo.gate_tests"]
+"mcnemar" = "hylo.eval.stats:McNemar"
+"sign" = "hylo.eval.stats:SignTest"
+"paired_permutation" = "hylo.eval.stats:PairedPermutation"
+
+[tool.uv.sources]
+hylo-core = { workspace = true }
+
+[project.entry-points."hylo.meta"]
+"hylo-eval" = "hylo.eval:META"

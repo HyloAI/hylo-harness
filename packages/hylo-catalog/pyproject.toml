@@ -1,0 +1,18 @@
+[project]
+name = "hylo-catalog"
+version = "0.1.0.dev0"
+description = "Hylo catalog: a read-only query API over the runs directory (runs, episode timelines and frames, paired comparisons, campaigns, artifacts, skills, lessons, memories)"
+requires-python = ">=3.10"
+dependencies = ["hylo-core", "hylo-eval", "numpy>=1.24"]
+license = "Apache-2.0"
+
+[build-system]
+requires = ["hatchling>=1.24"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/hylo"]
+
+[tool.uv.sources]
+hylo-core = { workspace = true }
+hylo-eval = { workspace = true }

@@ -1,6 +1,6 @@
 # Plugin System
 
-> Implementation: wc-core `worldcurrent/core/registry.py` **[Validated in prototype]**
+> Implementation: hylo-core `hylo/core/registry.py` **[Validated in prototype]**
 
 ## 1. Design sources
 
@@ -14,37 +14,37 @@
 
 | Group (entry point group) | Protocol | Examples |
 |---|---|---|
-Every contract is defined in wc-core (module in brackets), so a plugin of any group depends on wc-core alone.
+Every contract is defined in hylo-core (module in brackets), so a plugin of any group depends on hylo-core alone.
 
-| Group (entry point group) | Contract (wc-core module) | Examples |
+| Group (entry point group) | Contract (hylo-core module) | Examples |
 |---|---|---|
-| `worldcurrent.envs` | `Environment` (`core.env`) | `testing.point_reach`, `mujoco.planar_reach`, `libero` |
-| `worldcurrent.agents` | `Agent` or a factory returning one (`core.agent`) | `testing.p_controller`, `policy`, `steered`, `lerobot.steered` |
-| `worldcurrent.policies` | `ChunkPolicy` (`core.policy`) | `policy.flow`, `policy.bc`, `lerobot` |
-| `worldcurrent.reasoners` | `Reasoner` (`core.reasoning`) | `testing.rule_landmark` |
-| `worldcurrent.choosers` | `Chooser` (`core.reasoning`) | `chooser.rule_color`, `chooser.llm`, `chooser.vlm` |
-| `worldcurrent.planners` | `Planner` (`core.reasoning`) | `planner.identity`, `planner.llm` |
-| `worldcurrent.reflectors` | `Reflector` (`core.reasoning`) | `llm.reflector` |
-| `worldcurrent.memory` | `MemoryStore` / `ActionMemory` (`core.memory`, `core.experience`) | `sqlite`, `action_bank`, `lesson_book` |
-| `worldcurrent.scorers` | `Scorer` (`core.scoring`) | `success`, `steps`, `safety_interventions` |
-| `worldcurrent.gate_tests` | `GateTest` (`core.scoring`) | `mcnemar`, `sign`, `paired_permutation` |
-| `worldcurrent.benchmarks` | a factory returning a `Benchmark` (`core.benchmark`) | `testing/reach-v0`, `mujoco/reach-v0`, `libero` |
-| `worldcurrent.generators` | `Proposer` (`core.improvement`) | `rule.gain`, `rule.steering`, `llm.steering`, `learn` |
-| `worldcurrent.learners` | `Learner` / `OnlineLearner` (`core.learning`) | `critic.chunk_value`, `policy.flow` |
-| `worldcurrent.instruments` | `SuccessJudge` / `ValueModel` / `WorldModel` (`core.instrument`) | `judge.trace`, `judge.vlm` |
-| `worldcurrent.datasources` | `DataSource` (`core.learning`) | `video.frames`, `lerobot.dataset` |
-| `worldcurrent.guards` | `Guard` (`core.safety`) | `delta_limit`, `keep_out` |
+| `hylo.envs` | `Environment` (`core.env`) | `testing.point_reach`, `mujoco.planar_reach`, `libero` |
+| `hylo.agents` | `Agent` or a factory returning one (`core.agent`) | `testing.p_controller`, `policy`, `steered`, `lerobot.steered` |
+| `hylo.policies` | `ChunkPolicy` (`core.policy`) | `policy.flow`, `policy.bc`, `lerobot` |
+| `hylo.reasoners` | `Reasoner` (`core.reasoning`) | `testing.rule_landmark` |
+| `hylo.choosers` | `Chooser` (`core.reasoning`) | `chooser.rule_color`, `chooser.llm`, `chooser.vlm` |
+| `hylo.planners` | `Planner` (`core.reasoning`) | `planner.identity`, `planner.llm` |
+| `hylo.reflectors` | `Reflector` (`core.reasoning`) | `llm.reflector` |
+| `hylo.memory` | `MemoryStore` / `ActionMemory` (`core.memory`, `core.experience`) | `sqlite`, `action_bank`, `lesson_book` |
+| `hylo.scorers` | `Scorer` (`core.scoring`) | `success`, `steps`, `safety_interventions` |
+| `hylo.gate_tests` | `GateTest` (`core.scoring`) | `mcnemar`, `sign`, `paired_permutation` |
+| `hylo.benchmarks` | a factory returning a `Benchmark` (`core.benchmark`) | `testing/reach-v0`, `mujoco/reach-v0`, `libero` |
+| `hylo.generators` | `Proposer` (`core.improvement`) | `rule.gain`, `rule.steering`, `llm.steering`, `learn` |
+| `hylo.learners` | `Learner` / `OnlineLearner` (`core.learning`) | `critic.chunk_value`, `policy.flow` |
+| `hylo.instruments` | `SuccessJudge` / `ValueModel` / `WorldModel` (`core.instrument`) | `judge.trace`, `judge.vlm` |
+| `hylo.datasources` | `DataSource` (`core.learning`) | `video.frames`, `lerobot.dataset` |
+| `hylo.guards` | `Guard` (`core.safety`) | `delta_limit`, `keep_out` |
 
 ## 3. Resolution rules
 
 ```python
 registry.resolve(group, "testing.point_reach")              # 1. explicitly or lazily registered name
 registry.resolve(group, "my_lab.envs.kitchen:KitchenEnv") # 2. if it contains ":", import as module:attr
-# 3. on a name miss, load worldcurrent.<group> entry points (only once; WORLDCURRENT_NO_PLUGIN_AUTOLOAD=1 disables)
+# 3. on a name miss, load Hylo.<group> entry points (only once; HYLO_NO_PLUGIN_AUTOLOAD=1 disables)
 registry.build(group, {"type": "...", "params": {...}})   # factory call
 ```
 
-- **Lazy**: `builtin.py` registers string references with `register_lazy`, so `import worldcurrent` does not import MuJoCo **[Validated in prototype]**.
+- **Lazy**: `builtin.py` registers string references with `register_lazy`, so `import Hylo` does not import MuJoCo **[Validated in prototype]**.
 - **Diagnosable errors**: an error for an unknown name lists the known plugins **[Validated in prototype]**.
 
 ## 4. Plugin metadata (introduced in v0.2)

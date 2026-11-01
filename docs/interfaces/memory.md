@@ -1,6 +1,6 @@
 # Interface: Memory
 
-> Package: `wc-memory` (data types pushed down into `wc-core`) **[Validated in prototype]**
+> Package: `hylo-memory` (data types pushed down into `hylo-core`) **[Validated in prototype]**
 > Based on: `../../research/comparisons/memory-comparison.md`, `../../research/projects/memory-landscape.md` §10
 
 ## 1. Data model
@@ -60,7 +60,7 @@ class MemoryStore(Protocol):
 | Spatial | SQLite (bbox + radius) | when an object/landmark is observed | near(pose, r) + key + as_of | Spark-DSG (hierarchical scene graph, observation intervals, change-feed) + ConceptGraphs association rules |
 | Skill | v0.2: directory + JSON + content hash | **only after promotion through the validation gate** | trigger/precondition matching; embedding used only for recall | same + sandboxed execution |
 
-Skill item payload (v0.2): `{"code" | "params", "api_surface": "wc.tools@v1", "trigger", "preconditions", "postconditions", "status": proposed|verified|refuted|deprecated, "verdicts": {useful, misleading, wrong, not_applicable}, "evidence": [trace refs]}`.
+Skill item payload (v0.2): `{"code" | "params", "api_surface": "hylo.tools@v1", "trigger", "preconditions", "postconditions", "status": proposed|verified|refuted|deprecated, "verdicts": {useful, misleading, wrong, not_applicable}, "evidence": [trace refs]}`.
 Skill writes go through the same gate as the Evolution layer (`improvement.md`); this is where Memory and RSI meet.
 
 ## 4. Memory and observability

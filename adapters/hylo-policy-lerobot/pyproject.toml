@@ -1,0 +1,40 @@
+[project]
+name = "hylo-policy-lerobot"
+version = "0.1.0.dev0"
+description = "Hylo adapter that runs LeRobot policies (SmolVLA, pi0, ...) as Agents, usually behind an AgentServer"
+requires-python = ">=3.10"
+dependencies = ["hylo-core", "hylo-agents", "hylo-memory"]
+license = "Apache-2.0"
+
+[build-system]
+requires = ["hatchling>=1.24"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/hylo"]
+
+[project.entry-points."hylo.policies"]
+"lerobot" = "hylo.policies.lerobot.agent:LeRobotAgent"          # any LeRobot policy as a chunk sampler
+
+[project.entry-points."hylo.agents"]
+"lerobot" = "hylo.policies.lerobot.agent:LeRobotAgent"
+"lerobot.steered" = "hylo.policies.lerobot.agent:make_steered"
+"lerobot.critic_steered" = "hylo.policies.lerobot.critic_agent:make_critic_steered"
+"lerobot.memory_steered" = "hylo.policies.lerobot.experience_agent:make_experience_agent"
+"lerobot.noise_steered" = "hylo.policies.lerobot.experience_agent:make_noise_agent"
+
+[project.entry-points."hylo.datasources"]
+"lerobot.dataset" = "hylo.policies.lerobot.ingest:LeRobotDatasetSource"
+
+[project.entry-points."hylo.learners"]
+"lerobot.expert_iteration" = "hylo.policies.lerobot.selftrain:ExpertIterationLearner"
+"lerobot.action_memory" = "hylo.policies.lerobot.memory_build:ActionMemoryLearner"
+"lerobot.noise_prior" = "hylo.policies.lerobot.memory_build:NoisePriorLearner"
+
+[tool.uv.sources]
+hylo-core = { workspace = true }
+hylo-agents = { workspace = true }
+hylo-memory = { workspace = true }
+
+[project.entry-points."hylo.meta"]
+"hylo-policy-lerobot" = "hylo.policies.lerobot:META"

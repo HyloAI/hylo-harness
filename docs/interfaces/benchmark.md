@@ -1,6 +1,6 @@
 # Interface: Benchmark / Task / Scorer
 
-> Packages: `wc-core` (TaskSpec) + `wc-eval` **[Validated in prototype]**
+> Packages: `hylo-core` (TaskSpec) + `hylo-eval` **[Validated in prototype]**
 
 ## 1. Task
 
@@ -72,11 +72,11 @@ Built-in Scorers: `success`, `safety_interventions`, `steps` **[Validated in pro
 def evaluate(benchmark, split, *, env_factory, agent, run_root, safety, scorers, manifest) -> EvalResult
 ```
 
-EvalLog (`wc.evallog/v0.1`):
+EvalLog (`hylo.evallog/v0.1`):
 
 ```json
 {
-  "version": "wc.evallog/v0.1", "run_id": "...",
+  "version": "hylo.evallog/v0.1", "run_id": "...",
   "benchmark": {"id", "version", "digest", "split", "requires_privileged"},
   "agent": {"name", "version", "components"},
   "results": {"success_mean": 1.0, "safety_interventions_mean": 0.03, "steps_mean": 38.3, "n_episodes": 100, "n_scored": 100},

@@ -1,0 +1,27 @@
+[project]
+name = "hylo-data-video"
+version = "0.1.0.dev0"
+description = "Hylo external data sources: folders of image sequences and video files (no action labels)"
+requires-python = ">=3.10"
+dependencies = ["hylo-core", "pillow>=10", "imageio>=2.30"]
+license = "Apache-2.0"
+
+[project.optional-dependencies]
+ffmpeg = ["imageio-ffmpeg>=0.5"]
+
+[project.entry-points."hylo.datasources"]
+"video.frames" = "hylo.datasources.video.sources:FrameFolderSource"
+"video.files" = "hylo.datasources.video.sources:VideoFileSource"
+
+[build-system]
+requires = ["hatchling>=1.24"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/hylo"]
+
+[tool.uv.sources]
+hylo-core = { workspace = true }
+
+[project.entry-points."hylo.meta"]
+"hylo-data-video" = "hylo.datasources.video:META"

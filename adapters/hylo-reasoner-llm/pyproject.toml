@@ -1,0 +1,30 @@
+[project]
+name = "hylo-reasoner-llm"
+version = "0.1.0.dev0"
+description = "Hylo LLM/VLM runtime components: client, planner, object choosers, VLM success judge (Ollama native or OpenAI-compatible endpoints)"
+requires-python = ">=3.10"
+dependencies = ["hylo-core", "pillow>=10"]
+license = "Apache-2.0"
+
+[build-system]
+requires = ["hatchling>=1.24"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/hylo"]
+
+[project.entry-points."hylo.choosers"]
+"chooser.llm" = "hylo.reasoners.llm.chooser:LLMChooser"
+"chooser.vlm" = "hylo.reasoners.llm.vlm_chooser:VLMChooser"
+
+[project.entry-points."hylo.planners"]
+"planner.llm" = "hylo.reasoners.llm.planner:LLMSubgoalPlanner"
+
+[project.entry-points."hylo.instruments"]
+"judge.vlm" = "hylo.reasoners.llm.judge:VLMSuccessJudge"
+
+[tool.uv.sources]
+hylo-core = { workspace = true }
+
+[project.entry-points."hylo.meta"]
+"hylo-reasoner-llm" = "hylo.reasoners.llm:META"

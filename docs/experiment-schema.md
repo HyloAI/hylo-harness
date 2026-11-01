@@ -1,11 +1,11 @@
-# Experiment Schema (`wc.experiment/v0.1`)
+# Experiment Schema (`hylo.experiment/v0.1`)
 
-> Implementation: wc-core `worldcurrent/core/config.py`; example configs in worldcurrent-bench `examples/configs/` **[Validated in prototype]**
+> Implementation: hylo-core `hylo/core/config.py`; example configs in hylo-bench `examples/configs/` **[Validated in prototype]**
 
 ## 1. Configuration file
 
 ```yaml
-schema_version: wc.experiment/v0.1      # required; readers match strictly and reject if incompatible
+schema_version: hylo.experiment/v0.1      # required; readers match strictly and reject if incompatible
 name: mujoco-reach
 seed: 0                                  # experiment-level seed (Agent randomness, etc.); episode seeds are determined by the benchmark split
 tags: [baseline, reach]
@@ -48,7 +48,7 @@ output_dir: runs                         # not included in the digest
 
 ```json
 {
-  "run_id": "...", "schema_version": "wc.experiment/v0.1", "config_digest": "5ed561fa3971c221",
+  "run_id": "...", "schema_version": "hylo.experiment/v0.1", "config_digest": "5ed561fa3971c221",
   "config": {"...": "full normalized configuration"},
   "code": {"git_sha": "..."},
   "runtime": {"python": "3.12.3", "platform": "...", "packages": {"numpy": "2.5.4", "mujoco": "3.17.0"}},
@@ -57,7 +57,7 @@ output_dir: runs                         # not included in the digest
 }
 ```
 
-Added in v0.2: all worldcurrent package versions and protocol versions, external benchmark commit and asset hashes, policy weight identifiers and `weights_license`, memory `snapshot()` hash, Candidate Registry `active` version, EnvServer-side Python/dependency versions.
+Added in v0.2: all Hylo package versions and protocol versions, external benchmark commit and asset hashes, policy weight identifiers and `weights_license`, memory `snapshot()` hash, Candidate Registry `active` version, EnvServer-side Python/dependency versions.
 
 ### Reproducibility levels
 
@@ -86,9 +86,9 @@ GPU simulation, GPU inference and remote LLMs can generally only reach R1; the E
 ```text
 runs/<run_id>/
 ├── manifest.json
-├── evallog.json           # wc.evallog/v0.1: benchmark, agent, results, samples[{key, task_id, seed, episode_id, status, scores, trace}]
-├── episodes/<episode_id>.jsonl   # wc.trace/v0.1 event stream
+├── evallog.json           # hylo.evallog/v0.1: benchmark, agent, results, samples[{key, task_id, seed, episode_id, status, scores, trace}]
+├── episodes/<episode_id>.jsonl   # hylo.trace/v0.1 event stream
 └── blobs/<sha256>.npy     # arrays > 64 KB (images, etc.), content-addressed
 ```
 
-Exporters (v0.2): `wc trace export --format lerobot-v3` (training data), `--format rerun` (visualization), `--format inspect-robots` (reuse its view tools).
+Exporters (v0.2): `hylo trace export --format lerobot-v3` (training data), `--format rerun` (visualization), `--format inspect-robots` (reuse its view tools).

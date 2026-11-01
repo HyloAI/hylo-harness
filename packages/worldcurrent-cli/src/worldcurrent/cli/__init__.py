@@ -1,1 +1,0 @@
-"""worldcurrent command line."""

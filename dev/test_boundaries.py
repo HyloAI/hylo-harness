@@ -1,17 +1,17 @@
-"""Boundary lint for the worldcurrent repositories (dev/repos.toml) and the packages inside them.
+"""Boundary lint for the Hylo repositories (dev/repos.toml) and the packages inside them.
 
 Runs from a development workspace: the repositories side by side in one directory (dev/bootstrap.sh). It checks
 the repositories that are present, so it also runs with the harness alone.
 
-1. Package layering: every `worldcurrent.*` import (and "pkg.mod:attr" / "-m pkg.mod" string reference) in a
+1. Package layering: every `hylo.*` import (and "pkg.mod:attr" / "-m pkg.mod" string reference) in a
    package's src/ must target a package allowed for it in ALLOWED (docs/dependency-graph.md).
 2. Repository rule: a package may import or declare only packages of its own repository and of the
    repositories it depends on (repos.toml). Leaves never import each other; the harness imports no leaf.
-3. Robot side: packages of a `robot_side` repository (serve) declare no worldcurrent dependency but wc-core,
+3. Robot side: packages of a `robot_side` repository (serve) declare no Hylo dependency but hylo-core,
    so a robot computer installs nothing else by default.
 4. No code or config file reaches into another repository by path (a "../<repo>/" path). Exempt: deployment
    configs (they only compose installed repositories) and install scripts, which find a sibling checkout
-   through an environment variable with a side-by-side default (bench's envs/libero/setup.sh: WC_HARNESS).
+   through an environment variable with a side-by-side default (bench's envs/libero/setup.sh: HYLO_HARNESS).
 """
 
 from __future__ import annotations
@@ -30,65 +30,65 @@ CODE_REPOS = [r for r, spec in REPOS.items() if spec.get("code", True)]
 
 # module prefix -> owning distribution
 OWNER = {
-    "worldcurrent.core": "wc-core",
-    "worldcurrent.testing": "wc-core",
-    "worldcurrent.eval": "wc-eval",
-    "worldcurrent.bench": "wc-bench",
-    "worldcurrent.agents": "wc-agents",
-    "worldcurrent.memory": "wc-memory",
-    "worldcurrent.evolve": "wc-evolve",
-    "worldcurrent.envs.mujoco": "wc-env-mujoco",
-    "worldcurrent.reasoners.llm": "wc-reasoner-llm",
-    "worldcurrent.proposers.llm": "wc-proposer-llm",
-    "worldcurrent.envs.libero": "wc-env-libero",
-    "worldcurrent.policies.lerobot": "wc-policy-lerobot",
-    "worldcurrent.policies.openpi": "wc-policy-openpi",
-    "worldcurrent.cli": "worldcurrent-cli",
-    "worldcurrent.learn": "wc-learn",
-    "worldcurrent.playground": "wc-playground",
-    "worldcurrent.catalog": "wc-catalog",
-    "worldcurrent.serve": "wc-serve",
-    "worldcurrent.envs.lerobot_robot": "wc-env-lerobot-robot",
-    "worldcurrent.datasources.video": "wc-data-video",
-    "worldcurrent.policies.reference": "wc-policies",
-    "wc_examples": "wc-plugin-examples",
+    "hylo.core": "hylo-core",
+    "hylo.testing": "hylo-core",
+    "hylo.eval": "hylo-eval",
+    "hylo.bench": "hylo-bench",
+    "hylo.agents": "hylo-agents",
+    "hylo.memory": "hylo-memory",
+    "hylo.evolve": "hylo-evolve",
+    "hylo.envs.mujoco": "hylo-env-mujoco",
+    "hylo.reasoners.llm": "hylo-reasoner-llm",
+    "hylo.proposers.llm": "hylo-proposer-llm",
+    "hylo.envs.libero": "hylo-env-libero",
+    "hylo.policies.lerobot": "hylo-policy-lerobot",
+    "hylo.policies.openpi": "hylo-policy-openpi",
+    "hylo.cli": "hylo-cli",
+    "hylo.learn": "hylo-learn",
+    "hylo.playground": "hylo-playground",
+    "hylo.catalog": "hylo-catalog",
+    "hylo.serve": "hylo-serve",
+    "hylo.envs.lerobot_robot": "hylo-env-lerobot-robot",
+    "hylo.datasources.video": "hylo-data-video",
+    "hylo.policies.reference": "hylo-policies",
+    "hylo_examples": "hylo-plugin-examples",
 }
 
 # Package layering (within and across repositories). Every package is allowed itself.
 ALLOWED = {
     # harness
-    "wc-core": set(),
-    "wc-eval": {"wc-core"},
-    "wc-agents": {"wc-core"},
-    "wc-memory": {"wc-core"},
-    "wc-policies": {"wc-core", "wc-agents"},
-    "wc-learn": {"wc-core", "wc-eval", "wc-agents"},
-    "wc-evolve": {"wc-core", "wc-eval", "wc-learn"},
-    "wc-catalog": {"wc-core", "wc-eval"},
-    "worldcurrent-cli": {"wc-core", "wc-eval", "wc-agents", "wc-memory", "wc-evolve", "wc-learn"},
-    "wc-reasoner-llm": {"wc-core"},
-    "wc-proposer-llm": {"wc-core", "wc-agents", "wc-evolve", "wc-reasoner-llm"},
-    "wc-policy-lerobot": {"wc-core", "wc-agents", "wc-memory"},
-    "wc-policy-openpi": {"wc-core"},
-    "wc-data-video": {"wc-core"},
+    "hylo-core": set(),
+    "hylo-eval": {"hylo-core"},
+    "hylo-agents": {"hylo-core"},
+    "hylo-memory": {"hylo-core"},
+    "hylo-policies": {"hylo-core", "hylo-agents"},
+    "hylo-learn": {"hylo-core", "hylo-eval", "hylo-agents"},
+    "hylo-evolve": {"hylo-core", "hylo-eval", "hylo-learn"},
+    "hylo-catalog": {"hylo-core", "hylo-eval"},
+    "hylo-cli": {"hylo-core", "hylo-eval", "hylo-agents", "hylo-memory", "hylo-evolve", "hylo-learn"},
+    "hylo-reasoner-llm": {"hylo-core"},
+    "hylo-proposer-llm": {"hylo-core", "hylo-agents", "hylo-evolve", "hylo-reasoner-llm"},
+    "hylo-policy-lerobot": {"hylo-core", "hylo-agents", "hylo-memory"},
+    "hylo-policy-openpi": {"hylo-core"},
+    "hylo-data-video": {"hylo-core"},
     # bench
-    "wc-bench": {"wc-core", "wc-eval"},
-    "wc-env-libero": {"wc-core"},
-    "wc-env-mujoco": {"wc-core"},
+    "hylo-bench": {"hylo-core", "hylo-eval"},
+    "hylo-env-libero": {"hylo-core"},
+    "hylo-env-mujoco": {"hylo-core"},
     # serve
-    "wc-serve": {"wc-core"},
-    "wc-env-lerobot-robot": {"wc-core"},
+    "hylo-serve": {"hylo-core"},
+    "hylo-env-lerobot-robot": {"hylo-core"},
     # studio
-    "wc-playground": {"wc-core", "wc-eval", "wc-catalog"},
+    "hylo-playground": {"hylo-core", "hylo-eval", "hylo-catalog"},
     # plugins
-    "wc-plugin-examples": {"wc-core", "wc-eval", "wc-learn"},
+    "hylo-plugin-examples": {"hylo-core", "hylo-eval", "hylo-learn"},
 }
 
 HEAVY = {"torch", "jax", "mujoco", "langchain_core", "langgraph", "dspy", "robosuite"}
-HEAVY_ALLOWED = {"wc-env-mujoco": {"mujoco"}, "wc-policy-lerobot": {"torch"}}
+HEAVY_ALLOWED = {"hylo-env-mujoco": {"mujoco"}, "hylo-policy-lerobot": {"torch"}}
 
-NOT_MODULES = {"worldcurrent.commands", "worldcurrent.meta"}      # entry-point group names, not module references
-REF = re.compile(r"^worldcurrent(\.[a-z_0-9]+)+(:[A-Za-z_][A-Za-z_0-9.]*)?$")
+NOT_MODULES = {"hylo.commands", "hylo.meta"}      # entry-point group names, not module references
+REF = re.compile(r"^hylo(\.[a-z_0-9]+)+(:[A-Za-z_][A-Za-z_0-9.]*)?$")
 
 
 def _package_dirs() -> dict[str, tuple[str, Path]]:
@@ -144,7 +144,7 @@ PRESENT = sorted(PACKAGES)
 
 def test_every_package_is_classified():
     assert not set(PACKAGES) - set(ALLOWED), "add the new package to ALLOWED"
-    assert {"wc-core", "wc-eval"} <= set(PACKAGES)
+    assert {"hylo-core", "hylo-eval"} <= set(PACKAGES)
 
 
 def test_layering_never_points_from_the_base_to_a_leaf():
@@ -161,7 +161,7 @@ def test_package_imports_respect_layering(dist: str):
     for py in (root / "src").rglob("*.py"):
         for mod in _imports(py):
             top = mod.split(".")[0]
-            if mod.startswith("worldcurrent.") or top == "wc_examples":
+            if mod.startswith("hylo.") or top == "hylo_examples":
                 owner = _owner(mod)
                 if owner is None or (owner != dist and owner not in ALLOWED[dist]):
                     violations.append(f"{py.relative_to(WORKSPACE)} imports {mod} (owner {owner})")
@@ -176,7 +176,7 @@ def test_declared_dependencies_stay_within_reachable_repositories(dist: str):
     bad = {d for d in _declared(dist) if _repo_of(d) not in _reachable(repo)}
     assert not bad, f"{dist} ({repo}) declares {sorted(bad)} from {sorted({_repo_of(d) for d in bad})}"
     if REPOS[repo].get("robot_side"):
-        extra = _declared(dist) - {"wc-core"}
+        extra = _declared(dist) - {"hylo-core"}
         assert not extra, f"{dist} is robot-side: declare {sorted(extra)} as an optional extra, not a dependency"
 
 

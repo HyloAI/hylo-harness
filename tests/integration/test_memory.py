@@ -1,9 +1,9 @@
-from worldcurrent.agents.composable import make_landmark_agent
-from worldcurrent.core.kernel import EpisodeRunner
-from worldcurrent.core.task import TaskInstance
-from worldcurrent.core.trace import TraceStore
-from worldcurrent.core.memory import MemoryItem, MemoryKind, MemoryQuery, Pose, TimeSpan, WorkingMemory
-from worldcurrent.memory.sqlite import SQLiteMemoryStore
+from hylo.agents.composable import make_landmark_agent
+from hylo.core.kernel import EpisodeRunner
+from hylo.core.task import TaskInstance
+from hylo.core.trace import TraceStore
+from hylo.core.memory import MemoryItem, MemoryKind, MemoryQuery, Pose, TimeSpan, WorkingMemory
+from hylo.memory.sqlite import SQLiteMemoryStore
 
 
 def item(x, y, key="cup", t=0.0, **kw):

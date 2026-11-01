@@ -1,6 +1,6 @@
 # Interface: Reasoner / Planner / Tools
 
-> Package: `wc-agents` **[Validated in prototype: synchronous, rule-based]**
+> Package: `hylo-agents` **[Validated in prototype: synchronous, rule-based]**
 
 ## 1. Role split
 

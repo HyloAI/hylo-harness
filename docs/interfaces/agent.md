@@ -1,6 +1,6 @@
 # Interface: Agent / Policy / World Model
 
-> Packages: `wc-core` (Agent protocol) + `wc-agents` **[Validated in prototype]**
+> Packages: `hylo-core` (Agent protocol) + `hylo-agents` **[Validated in prototype]**
 
 ## 1. Agent (the only intelligence abstraction the Kernel knows about)
 
@@ -94,4 +94,4 @@ class WorldModelEnvironment(Environment):           # wraps a World Model as an 
     cheap pre-screening of RSI candidates (cannot replace the validation gate), and sim-vs-model consistency studies."""
 ```
 
-This is one of the differentiators between worldcurrent and existing projects: the world model is treated as a first-class evaluable object, not as a private implementation detail of the planner.
+This is one of the differentiators between Hylo and existing projects: the world model is treated as a first-class evaluable object, not as a private implementation detail of the planner.

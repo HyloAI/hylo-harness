@@ -1,0 +1,37 @@
+[project]
+name = "hylo-cli"
+version = "0.1.0.dev0"
+description = "the harness subcommands of hylo (run, evolve, learn, ...); hylo itself is in hylo-core"
+requires-python = ">=3.10"
+dependencies = ["hylo-core", "hylo-eval", "hylo-agents", "hylo-memory", "hylo-evolve", "hylo-learn"]
+license = "Apache-2.0"
+
+[build-system]
+requires = ["hatchling>=1.24"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/hylo"]
+
+[project.entry-points."hylo.commands"]
+run = "hylo.cli.commands:run"
+plugins = "hylo.cli.commands:plugins"
+schema = "hylo.cli.commands:schema"
+trace = "hylo.cli.commands:trace"
+evolve = "hylo.cli.commands:evolve"
+skills = "hylo.cli.commands:skills"
+learn = "hylo.cli.commands:learn"
+calibrate = "hylo.cli.commands:calibrate"
+ingest = "hylo.cli.commands:ingest"
+label = "hylo.cli.commands:label"
+contamination = "hylo.cli.commands:contamination"
+artifact = "hylo.cli.commands:artifact"
+plugin = "hylo.cli.commands:plugin"
+conformance = "hylo.cli.commands:conformance"
+
+[tool.uv.sources]
+hylo-core = { workspace = true }
+hylo-eval = { workspace = true }
+hylo-agents = { workspace = true }
+hylo-memory = { workspace = true }
+hylo-evolve = { workspace = true }

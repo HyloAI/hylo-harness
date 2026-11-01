@@ -1,12 +1,12 @@
 import numpy as np
 import pytest
 
-from worldcurrent.agents.baseline import PControllerAgent
-from worldcurrent.core import codec
-from worldcurrent.core.kernel import EpisodeRunner
-from worldcurrent.core.task import TaskInstance
-from worldcurrent.core.types import Action
-from worldcurrent.core.remote.client import RemoteEnvironment
+from hylo.agents.baseline import PControllerAgent
+from hylo.core import codec
+from hylo.core.kernel import EpisodeRunner
+from hylo.core.task import TaskInstance
+from hylo.core.types import Action
+from hylo.core.remote.client import RemoteEnvironment
 
 
 def test_codec_rejects_object_arrays():
@@ -15,7 +15,7 @@ def test_codec_rejects_object_arrays():
 
 
 def test_remote_env_matches_in_process(env, tasks):
-    remote = RemoteEnvironment("worldcurrent.testing.point_reach:PointReachEnv")
+    remote = RemoteEnvironment("hylo.testing.point_reach:PointReachEnv")
     try:
         assert remote.spec() == env.spec()
         for name in ("reach_random", "reach_push"):

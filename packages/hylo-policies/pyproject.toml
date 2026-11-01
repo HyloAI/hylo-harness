@@ -1,0 +1,34 @@
+[project]
+name = "hylo-policies"
+version = "0.1.0.dev0"
+description = "Hylo reference policies: one small, weights-free implementation per policy family (retrieval, regression, generative, tokenized, model-based), trained from your own runs"
+requires-python = ">=3.10"
+dependencies = ["hylo-core", "hylo-agents", "numpy>=1.24"]
+license = "Apache-2.0"
+
+[build-system]
+requires = ["hatchling>=1.24"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/hylo"]
+
+[project.entry-points."hylo.policies"]
+"policy.knn" = "hylo.policies.reference.knn:KNNPolicy"
+"policy.bc" = "hylo.policies.reference.bc:BCPolicy"
+"policy.flow" = "hylo.policies.reference.flow:FlowPolicy"
+"policy.tokens" = "hylo.policies.reference.tokens:TokenPolicy"
+"policy.mpc" = "hylo.policies.reference.mpc:MPCPolicy"
+
+[project.entry-points."hylo.learners"]
+"policy.knn" = "hylo.policies.reference.learners:KNNLearner"
+"policy.bc" = "hylo.policies.reference.learners:BCLearner"
+"policy.flow" = "hylo.policies.reference.learners:FlowLearner"
+"policy.tokens" = "hylo.policies.reference.learners:TokenLearner"
+
+[tool.uv.sources]
+hylo-core = { workspace = true }
+hylo-agents = { workspace = true }
+
+[project.entry-points."hylo.meta"]
+"hylo-policies" = "hylo.policies.reference:META"

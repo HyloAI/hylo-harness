@@ -1,6 +1,6 @@
 # Interface: Environment
 
-> Packages: `wc-core` (protocol) + `wc-env-*` (implementations) **[Validated in prototype]**
+> Packages: `hylo-core` (protocol) + `hylo-env-*` (implementations) **[Validated in prototype]**
 
 ## 1. Protocol
 
@@ -78,10 +78,10 @@ class StepResult(Contract):
 5. When `snapshot=True` is declared, the subsequent trajectory after `restore(snapshot())` is bit-identical **[Validated in prototype: MuJoCo]**.
 6. Action arrays are interpreted according to `BoxSpace.semantics.dim_labels`; composite actions (RoboCasa 12-D) must be mapped by named components; relying on flat ordering is forbidden.
 
-## 4. Remote environments (EnvServer protocol `wc.envserver/v0.1`)
+## 4. Remote environments (EnvServer protocol `hylo.envserver/v0.1`)
 
 - Transport: JSON lines over subprocess stdin/stdout (v0.1); v0.2 adds a WebSocket transport to support containers.
-- Handshake: the server first sends `{"hello": "wc.envserver/v0.1"}`; a version mismatch raises `EnvironmentFault`.
+- Handshake: the server first sends `{"hello": "hylo.envserver/v0.1"}`; a version mismatch raises `EnvironmentFault`.
 - Request: `{"id", "method": spec|reset|step|privileged_state|close, "args"}`; response: `{"id", "ok", "result"|"error", "traceback"}`.
 - Encoding: contracts are pydantic models, so the wire format is `model_dump(mode="json")` / `model_validate`; ndarray → `{"__nd__", dtype, shape, b64}`, only b/i/u/f dtypes allowed; **no pickle**.
 - Remote and in-process execution of the same episode produce step-by-step identical results **[Validated in prototype]**.

@@ -1,7 +1,7 @@
 import pytest
 
-from worldcurrent.testing.point_reach import PointReachEnv, reach_tasks
-from worldcurrent.core.task import TaskInstance
+from hylo.testing.point_reach import PointReachEnv, reach_tasks
+from hylo.core.task import TaskInstance
 
 
 @pytest.fixture

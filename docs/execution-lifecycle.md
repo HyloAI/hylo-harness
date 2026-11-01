@@ -1,6 +1,6 @@
 # Execution Lifecycle
 
-> Implementation: wc-core `worldcurrent/core/kernel.py` **[Validated in prototype]**
+> Implementation: hylo-core `hylo/core/kernel.py` **[Validated in prototype]**
 
 ## 1. Hierarchy
 
@@ -79,7 +79,7 @@ loop that evaluation and deployment share:
   it); a chunk computed at step s and merged at step t has its first t - s actions dropped; an empty queue
   executes a hold action; a watchdog aborts after `max_hold_steps` holds. Clock `virtual` (deterministic: latency
   measured or fixed by `latency_s`, the steps it covers run before the merge) or `wall` (the policy in a worker
-  thread, the loop paced at the control rate). The workcell (wc-serve) runs this mode; a benchmark protocol can
+  thread, the loop paced at the control rate). The workcell (hylo-serve) runs this mode; a benchmark protocol can
   score it (`libero-10-heldout-realtime`).
 Temporal ensembling is an agent (`temporal_ensemble`), not a loop variant.
 
@@ -94,7 +94,7 @@ Temporal ensembling is an agent (`temporal_ensemble`), not a loop variant.
 ```mermaid
 sequenceDiagram
   participant B as vla-eval Benchmark container
-  participant V as wc-bridge-vlaeval (ModelServer)
+  participant V as hylo-bridge-vlaeval (ModelServer)
   participant A as Agent
   participant S as SafetyShield
   participant T as Trace
