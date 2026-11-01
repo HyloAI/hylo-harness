@@ -1,4 +1,23 @@
-# hylo-harness
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset=".github/assets/banner-dark.svg">
+    <img src=".github/assets/banner-light.svg" width="100%" alt="hylo-harness: the kernel and the shared layers on it: cognition, evaluation and evolution">
+  </picture>
+</p>
+
+<p align="center">
+  <a href="LICENSE"><img alt="License: Apache-2.0" src="https://img.shields.io/badge/license-Apache--2.0-c8442d?style=flat-square"></a>
+  <img alt="Python 3.10+" src="https://img.shields.io/badge/python-3.10%2B-171c22?style=flat-square&logo=python&logoColor=white">
+  <a href="https://docs.astral.sh/uv/"><img alt="uv workspace" src="https://img.shields.io/badge/uv-workspace-171c22?style=flat-square"></a>
+  <img alt="Status: v0.1 dev" src="https://img.shields.io/badge/status-v0.1%20dev-5b6168?style=flat-square">
+</p>
+
+<p align="center">
+  <a href="https://hyloai.github.io/"><b>Website</b></a> ·
+  <a href="https://hyloai.github.io/hylo-docs/"><b>Docs</b></a> ·
+  <a href="https://hyloai.github.io/hylo-docs/getting-started/quickstart/"><b>Quickstart</b></a> ·
+  <a href="https://github.com/HyloAI"><b>All repositories</b></a>
+</p>
 
 Part of [Hylo](https://hyloai.github.io/), the stack for physical AI. This repository holds the **kernel** and the
 shared layers built on it: **cognition**, the **evaluation** engine and **evolution**.
@@ -7,6 +26,22 @@ The base of Hylo: contracts and execution kernel, evaluation engine, agents, mem
 improvement campaigns, the run catalog and the adapters to policy stacks and LLMs. Every other Hylo
 repository (bench, serve, studio, plugins) builds on this one and talks to the others only through formats defined
 in `hylo-core`.
+
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset=".github/assets/loop-dark.svg">
+    <img src=".github/assets/loop-light.svg" width="100%" alt="The Hylo loop: run (hylo run), measure (hylo bench), improve through a gate (hylo evolve), deploy (hylo serve); episodes on the robot come back as runs">
+  </picture>
+</p>
+
+## Packages
+
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset=".github/assets/architecture-dark.svg">
+    <img src=".github/assets/architecture-light.svg" width="100%" alt="Packages by layer: cli; evolve and learn; eval and catalog; agents, memory, policies, instruments and reasoners; all on hylo-core; adapters plug into the registry through entry points">
+  </picture>
+</p>
 
 | Package | Namespace | Purpose |
 |---|---|---|
@@ -42,17 +77,35 @@ Documentation: [extending Hylo](docs/extending.md), [package layering](docs/depe
 [interfaces](docs/interfaces/), [plugin system](docs/plugin-system.md), [experiment schema](docs/experiment-schema.md).
 Architecture, RFCs and research live in hylo-docs.
 
+## Gated improvement
+
+A campaign changes the agent only through a gate: a candidate has to beat its parent in a paired test on episodes
+the proposer never saw, and is reported on held-out episodes before anyone approves it. Below, a recorded campaign on
+MuJoCo reach: the candidate controller gain went from 40% to 100% success on selection, gate and held-out splits; in
+cycle 2 the parent was already at 100% and nothing was promoted.
+
+<p align="center">
+  <img src=".github/assets/campaign-mujoco-reach-gain.png" width="78%" alt="Campaign mujoco-reach-gain: parent 40%, 35%, 40% vs candidate 100% on selection, gate and held-out in cycle 1; both 100% in cycle 2">
+</p>
+
 ## The Hylo repositories
+
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset=".github/assets/stack-dark.svg">
+    <img src=".github/assets/stack-light.svg" width="100%" alt="The six layers of the Hylo stack and the repositories that implement them">
+  </picture>
+</p>
 
 | Repository | What it holds | Depends on |
 |---|---|---|
 | hylo-harness (this one) | the base: contracts and kernel, evaluation engine, agents, memory, learning, improvement campaigns, run catalog and store, adapters, `hylo` | - |
-| hylo-bench | benchmarking: protocols, scorecards, leaderboards; LIBERO and MuJoCo suites and their setup | harness |
-| hylo-serve | deployment: policy server, workcell, real-time runner, operator channel, robot adapters | harness (hylo-core only) |
-| hylo-studio | the playground: control plane, run explorer, live sandbox, campaigns, React front end | harness |
-| hylo-plugins | example and community plugins | harness |
-| hylo-docs | architecture, RFCs, research notes, experiment records | - |
-| deployments-template | template for a lab's private `<lab>-deployments`: workcell configs, calibration, safety limits | - |
+| [hylo-bench](https://github.com/HyloAI/hylo-bench) | benchmarking: protocols, scorecards, leaderboards; LIBERO and MuJoCo suites and their setup | harness |
+| [hylo-serve](https://github.com/HyloAI/hylo-serve) | deployment: policy server, workcell, real-time runner, operator channel, robot adapters | harness (hylo-core only) |
+| [hylo-studio](https://github.com/HyloAI/hylo-studio) | the playground: control plane, run explorer, live sandbox, campaigns, React front end | harness |
+| [hylo-plugins](https://github.com/HyloAI/hylo-plugins) | example and community plugins | harness |
+| [hylo-docs](https://github.com/HyloAI/hylo-docs) | architecture, RFCs, research notes, experiment records | - |
+| [deployments-template](https://github.com/HyloAI/hylo-deployments-template) | template for a lab's private `<lab>-deployments`: workcell configs, calibration, safety limits | - |
 
 Leaves never import each other; they cooperate through formats defined in `hylo-core`.
 
