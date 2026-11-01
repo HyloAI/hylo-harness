@@ -3,7 +3,7 @@ name = "hylo-cli"
 version = "0.1.0.dev0"
 description = "the harness subcommands of hylo (run, evolve, learn, ...); hylo itself is in hylo-core"
 requires-python = ">=3.10"
-dependencies = ["hylo-core", "hylo-eval", "hylo-agents", "hylo-memory", "hylo-evolve", "hylo-learn"]
+dependencies = ["hylo-core", "hylo-eval", "hylo-agents[critic,rules]", "hylo-memory", "hylo-evolve", "hylo-learn"]
 license = "Apache-2.0"
 
 [build-system]
@@ -33,5 +33,7 @@ conformance = "hylo.cli.commands:conformance"
 hylo-core = { workspace = true }
 hylo-eval = { workspace = true }
 hylo-agents = { workspace = true }
+hylo-instruments = { workspace = true }
+hylo-reasoners = { workspace = true }
 hylo-memory = { workspace = true }
 hylo-evolve = { workspace = true }

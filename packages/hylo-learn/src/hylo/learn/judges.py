@@ -4,7 +4,7 @@ Training data, from development-split runs only:
 - the last recorded frame of every finished episode, labelled with the simulator outcome;
 - early frames (progress < `negative_before`) of successful episodes as extra negatives: same scene, task not yet
   done, which teaches the scene change rather than the scene identity.
-The sealed artifact is loaded at run time by hylo.agents.judges.TraceSuccessJudge.
+The sealed artifact is loaded at run time by hylo.instruments.judges.TraceSuccessJudge.
 
     learner: {learner: judge.trace, params: {cameras: [agentview, wrist]}}  -> sealed success_judge artifact
 """
@@ -17,8 +17,8 @@ from typing import Any
 
 import numpy as np
 
-from hylo.agents.critic import ChunkCritic, FeatureConfig
-from hylo.agents.judges import JudgeConfig, imaged_frames, judge_features
+from hylo.instruments.critic import ChunkCritic, FeatureConfig
+from hylo.instruments.judges import JudgeConfig, imaged_frames, judge_features
 from hylo.core.artifact import ArtifactManifest, Provenance, check_splits, development_runs, write_manifest
 from hylo.core.trace import TraceStore
 

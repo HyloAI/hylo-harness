@@ -22,7 +22,7 @@ from typing import Any
 
 import numpy as np
 
-from hylo.agents.world_model import StateWorldModel
+from hylo.instruments.world_model import StateWorldModel
 from hylo.core.agent import AgentSpec, EpisodeContext
 from hylo.core.types import Observation
 

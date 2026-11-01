@@ -11,7 +11,7 @@ from typing import Any
 
 import numpy as np
 
-from hylo.agents.world_model import StateWorldModel, _Reg, _vec
+from hylo.instruments.world_model import StateWorldModel, _Reg, _vec
 from hylo.core.artifact import ArtifactManifest, Provenance, check_splits, development_runs, write_manifest
 from hylo.core.trace import TraceStore
 

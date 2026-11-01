@@ -1,0 +1,26 @@
+[project]
+name = "hylo-reasoners"
+version = "0.1.0.dev0"
+description = "Hylo rule-based reasoners and choosers (the LLM/VLM ones are in hylo-reasoner-llm)"
+requires-python = ">=3.10"
+dependencies = ["hylo-core"]
+license = "Apache-2.0"
+
+[build-system]
+requires = ["hatchling>=1.24"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/hylo"]
+
+[project.entry-points."hylo.reasoners"]
+"testing.rule_landmark" = "hylo.reasoners.rules.landmark:LandmarkReasoner"
+
+[project.entry-points."hylo.choosers"]
+"chooser.rule_color" = "hylo.reasoners.rules.objects:RuleColorChooser"
+
+[tool.uv.sources]
+hylo-core = { workspace = true }
+
+[project.entry-points."hylo.meta"]
+"hylo-reasoners" = "hylo.reasoners.rules:META"

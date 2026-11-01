@@ -1,8 +1,8 @@
 import numpy as np
 import pytest
 
-from hylo.agents.critic import (ChunkCritic, CriticSteeredAgent, FeatureConfig, chunk_features,
-                                        state_features)
+from hylo.agents.critic import CriticSteeredAgent
+from hylo.instruments.critic import ChunkCritic, FeatureConfig, chunk_features, state_features
 from hylo.core.agent import AgentSpec, EpisodeContext
 from hylo.core.task import TaskInstance, TaskSpec
 from hylo.core.types import Observation

@@ -13,10 +13,9 @@ import numpy as np
 
 from hylo.core.agent import AgentSpec, EpisodeContext, EpisodeOutcome
 from hylo.core.memory import MemoryStore, WorkingMemory
+from hylo.core.reasoning import Reasoner, ReasonerContext
 from hylo.core.registry import registry
 from hylo.core.types import ActionChunk, ActionSemantics, Observation, StepResult
-
-from .reasoner import LandmarkReasoner, Reasoner, ReasonerContext
 
 
 class GoalPolicy(Protocol):
@@ -138,6 +137,9 @@ DEFAULT_MEMORY = {"type": "sqlite", "params": {"path": ":memory:"}}
 def make_landmark_agent(kp: float = 3.0, memory: dict | None = DEFAULT_MEMORY, replan_every: int = 10) -> ComposableAgent:
     """Factory for configs. The memory backend is resolved through the plugin registry, so this
     package never imports a memory implementation (memory=None disables long-term memory)."""
+    # the rule-based reasoner is in hylo-reasoners (extra `hylo-agents[rules]`), imported only when built
+    from hylo.reasoners.rules.landmark import LandmarkReasoner
+
     store = registry.build("memory", memory) if memory else None
     return ComposableAgent(PGoalPolicy(kp=kp), LandmarkReasoner(), store, replan_every=replan_every)
 
@@ -147,7 +149,8 @@ def make_object_reach_agent(kp: float = 0.3, chooser: dict | None = None, memory
     """Language-conditioned object reaching: an ObjectReasoner picks the instructed object with a
     pluggable chooser (rule-based or LLM, resolved from the `reasoners` plugin group), remembers
     objects in spatial memory while they are visible, and an IK policy drives the arm to it."""
-    from .object_reasoner import ObjectReasoner
+    # the rule-based reasoner is in hylo-reasoners (extra `hylo-agents[rules]`), imported only when built
+    from hylo.reasoners.rules.objects import ObjectReasoner
 
     chooser_obj = registry.build("choosers", chooser or {"type": "chooser.rule_color"})
     store = registry.build("memory", memory) if memory else None

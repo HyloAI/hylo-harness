@@ -1,4 +1,4 @@
-"""LeRobot policy + SteeredAgent + learned chunk critic (hylo.agents.critic)."""
+"""LeRobot policy + SteeredAgent + learned chunk critic (hylo.agents.critic, model in hylo.instruments.critic)."""
 
 from __future__ import annotations
 

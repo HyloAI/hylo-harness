@@ -3,7 +3,7 @@ name = "hylo-policy-lerobot"
 version = "0.1.0.dev0"
 description = "Hylo adapter that runs LeRobot policies (SmolVLA, pi0, ...) as Agents, usually behind an AgentServer"
 requires-python = ">=3.10"
-dependencies = ["hylo-core", "hylo-agents", "hylo-memory"]
+dependencies = ["hylo-core", "hylo-agents[critic]", "hylo-memory"]
 license = "Apache-2.0"
 
 [build-system]
@@ -34,6 +34,7 @@ packages = ["src/hylo"]
 [tool.uv.sources]
 hylo-core = { workspace = true }
 hylo-agents = { workspace = true }
+hylo-instruments = { workspace = true }
 hylo-memory = { workspace = true }
 
 [project.entry-points."hylo.meta"]

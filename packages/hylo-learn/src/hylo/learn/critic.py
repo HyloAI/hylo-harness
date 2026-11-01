@@ -30,7 +30,7 @@ from hylo.core.artifact import ArtifactManifest, Provenance, check_splits, devel
 from hylo.core.artifact import find_runs as _find_runs
 from hylo.core.trace import TraceStore
 
-from hylo.agents.critic import ChunkCritic, FeatureConfig, chunk_features, state_features
+from hylo.instruments.critic import ChunkCritic, FeatureConfig, chunk_features, state_features
 
 N_CHUNK_FEATURES = 15
 

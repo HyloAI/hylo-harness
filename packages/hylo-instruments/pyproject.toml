@@ -1,0 +1,26 @@
+[project]
+name = "hylo-instruments"
+version = "0.1.0.dev0"
+description = "Hylo instruments: learned models that measure or predict, never act (success judges, chunk value models, world models)"
+requires-python = ">=3.10"
+dependencies = ["hylo-core"]
+license = "Apache-2.0"
+
+[build-system]
+requires = ["hatchling>=1.24"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/hylo"]
+
+[project.entry-points."hylo.envs"]
+"world_model" = "hylo.instruments.world_model:WorldModelEnvironment"
+
+[project.entry-points."hylo.instruments"]
+"judge.trace" = "hylo.instruments.judges:TraceSuccessJudge"
+
+[tool.uv.sources]
+hylo-core = { workspace = true }
+
+[project.entry-points."hylo.meta"]
+"hylo-instruments" = "hylo.instruments:META"

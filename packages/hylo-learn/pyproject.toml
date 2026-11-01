@@ -3,7 +3,7 @@ name = "hylo-learn"
 version = "0.1.0.dev0"
 description = "Hylo learning pipeline: learner jobs, instrument calibration and labelling, external data ingestion, learners for runtime components"
 requires-python = ">=3.10"
-dependencies = ["hylo-core", "hylo-eval", "hylo-agents", "numpy>=1.24"]
+dependencies = ["hylo-core", "hylo-eval", "hylo-instruments", "numpy>=1.24"]
 license = "Apache-2.0"
 
 [project.entry-points."hylo.learners"]
@@ -21,7 +21,7 @@ packages = ["src/hylo"]
 [tool.uv.sources]
 hylo-core = { workspace = true }
 hylo-eval = { workspace = true }
-hylo-agents = { workspace = true }
+hylo-instruments = { workspace = true }
 
 [project.entry-points."hylo.meta"]
 "hylo-learn" = "hylo.learn:META"

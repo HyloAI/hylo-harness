@@ -12,7 +12,9 @@ in `hylo-core`.
 |---|---|---|
 | `packages/hylo-core` | `hylo.core`, `hylo.testing` | contracts, kernel, SafetyShield, events and traces, plugin registry, experiment config, remote protocols and wire codec, artifacts and the split guard, cross-repository formats (active version, scorecard, workcell API), conformance kit, the `hylo` dispatcher |
 | `packages/hylo-eval` | `hylo.eval` | benchmark contract and splits, evaluation runner, scorers, paired statistics and gate tests, the test benchmark (testing/reach-v0) |
-| `packages/hylo-agents` | `hylo.agents` | agents that run any policy (chunked, ACT temporal ensemble, steered), memory / critic / noise steering, skills, planner, success judges, world-model environment, shadow agent |
+| `packages/hylo-agents` | `hylo.agents` | decision-making: agents that run any policy (chunked, ACT temporal ensemble, steered), memory / critic / noise steering, skills, planner, shadow agent; installs with hylo-core alone (extras `critic`, `rules`) |
+| `packages/hylo-instruments` | `hylo.instruments` | models that measure or predict, never act: success judges, chunk value models, world models and the world-model environment |
+| `packages/hylo-reasoners` | `hylo.reasoners.rules` | rule-based reasoners and choosers (the LLM / VLM ones are in `adapters/hylo-reasoner-llm`) |
 | `packages/hylo-memory` | `hylo.memory` | action and noise banks, skill library, lesson book, SQLite memory |
 | `packages/hylo-policies` | `hylo.policies.reference` | reference policies, one per family (kNN, BC, flow matching, tokens, MPC), numpy only, trained from your runs |
 | `packages/hylo-learn` | `hylo.learn` | learner jobs and sealed artifacts, judge calibration and labelling, external-data ingestion, online learning |

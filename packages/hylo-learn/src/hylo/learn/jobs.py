@@ -1,7 +1,7 @@
 """Run learner jobs (RFC-0004): in this process, or with another venv's interpreter.
 
 `launch` starts `python -m hylo.learn.jobs job.json` with any interpreter that has hylo-learn installed
-(it is light: hylo-core + hylo-agents), which resolves the learner through the plugin registry ("learners" group).
+(it is light: hylo-core + hylo-instruments), which resolves the learner through the plugin registry ("learners" group).
 A job whose output is already sealed with the same job digest is not re-run (resumable campaigns).
 
     job = TrainJob(learner="critic.chunk_value", inputs=["runs/rsi/cycle-01/runs"], out="runs/critics/c1",

@@ -3,7 +3,7 @@ name = "hylo-policies"
 version = "0.1.0.dev0"
 description = "Hylo reference policies: one small, weights-free implementation per policy family (retrieval, regression, generative, tokenized, model-based), trained from your own runs"
 requires-python = ">=3.10"
-dependencies = ["hylo-core", "hylo-agents", "numpy>=1.24"]
+dependencies = ["hylo-core", "hylo-instruments", "numpy>=1.24"]
 license = "Apache-2.0"
 
 [build-system]
@@ -28,7 +28,7 @@ packages = ["src/hylo"]
 
 [tool.uv.sources]
 hylo-core = { workspace = true }
-hylo-agents = { workspace = true }
+hylo-instruments = { workspace = true }
 
 [project.entry-points."hylo.meta"]
 "hylo-policies" = "hylo.policies.reference:META"

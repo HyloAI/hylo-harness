@@ -1,6 +1,6 @@
 # Interface: Reasoner / Planner / Tools
 
-> Package: `hylo-agents` **[Validated in prototype: synchronous, rule-based]**
+> Package: `hylo-reasoners` (rule-based, `hylo.reasoners.rules`); contract in `hylo-core` **[Validated in prototype: synchronous, rule-based]**
 
 ## 1. Role split
 

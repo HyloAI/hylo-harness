@@ -3,7 +3,7 @@ import json
 import numpy as np
 import pytest
 
-from hylo.agents.judges import TraceSuccessJudge
+from hylo.instruments.judges import TraceSuccessJudge
 from hylo.learn.judges import TraceJudgeLearner
 from hylo.core.artifact import SplitLeak, verify
 from hylo.core.events import Event
