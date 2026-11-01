@@ -19,8 +19,8 @@ META = {
         "agents/lerobot.memory_steered": {"weights": WEIGHTS},
         "agents/lerobot.noise_steered": {"weights": WEIGHTS},
         "datasources/lerobot.dataset": {
-            "maturity": "unverified",
-            "notes": "dataset downloads not yet approved here; each dataset has its own licence",
+            "notes": "ingested a local LeRobotDataset v3 (external-selftrain-smoke-demos); hub downloads not yet approved "
+                     "here; each dataset has its own licence",
         },
         "learners/lerobot.expert_iteration": {
             "maturity": "unverified",

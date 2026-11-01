@@ -7,7 +7,7 @@ META = {
             "weights": "the served model's own licence (e.g. a Qwen or GLM model run by Ollama)",
         },
         "reflectors/llm.reflector": {
-            "maturity": "unverified",
+            "notes": "lessons from the LIBERO-10 search run (runs/lessons/libero10) and inside MuJoCo experience campaigns",
             "weights": "the served model's own licence (e.g. a Qwen or GLM model run by Ollama)",
         },
     },
