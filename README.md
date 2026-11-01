@@ -1,5 +1,8 @@
 # hylo-harness
 
+Part of [Hylo](https://hyloai.github.io/), the stack for physical AI. This repository holds the **kernel** and the
+shared layers built on it: **cognition**, the **evaluation** engine and **evolution**.
+
 The base of Hylo: contracts and execution kernel, evaluation engine, agents, memory, learning, gated
 improvement campaigns, the run catalog and the adapters to policy stacks and LLMs. Every other Hylo
 repository (bench, serve, studio, plugins) builds on this one and talks to the others only through formats defined
