@@ -8,7 +8,7 @@ Every archived candidate becomes a skill version whose status follows the eviden
 - archived (not significant on search_val) -> proposed
 Refuted skills stay in the library so proposers can see what was tried and failed.
 
-    hylo evolve skills <campaign dir | archive.jsonl> --out runs/skills/libero10 --tags libero libero_10 --env libero
+    hylo skills <campaign dir | archive.jsonl> --out runs/skills/libero10 --tags libero libero_10 --env libero
 """
 
 from __future__ import annotations
@@ -170,7 +170,7 @@ def main(argv: list[str] | None = None) -> int:
 
     from hylo.core.registry import registry
 
-    ap = argparse.ArgumentParser(prog="hylo evolve skills")
+    ap = argparse.ArgumentParser(prog="hylo skills")
     ap.add_argument("archive", help="campaign directory (with archive.jsonl) or an archive.jsonl file")
     ap.add_argument("--out", required=True, help="skill library directory")
     ap.add_argument("--tags", nargs="*", default=[])
