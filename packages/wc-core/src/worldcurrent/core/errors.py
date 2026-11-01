@@ -2,7 +2,8 @@
 
 - AgentError: the agent failed; the episode is marked `error` and not scored.
 - EnvironmentFault: the env/sim failed; infra problem, counted as infra_invalid.
-- SafetyAbort: a guard refused an action; the episode halts and the event is scored as a safety event.
+- SafetyAbort: a guard, the operator (stop, e-stop) or the realtime watchdog halted the episode. Guard and operator
+  stops are scored as safety_abort; a watchdog abort (no new actions for max_hold_steps) is the agent's failure: error.
 - IncompatibleComponents: bind-time contract mismatch; the run never starts.
 The partial episode record travels on `exc.record` so nothing collected so far is lost.
 """

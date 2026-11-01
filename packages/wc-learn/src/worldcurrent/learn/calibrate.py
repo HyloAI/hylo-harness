@@ -109,7 +109,7 @@ def main(argv: Sequence[str] | None = None) -> int:
 
     from worldcurrent.core.registry import registry
 
-    ap = argparse.ArgumentParser(prog="python -m worldcurrent.learn.calibrate")
+    ap = argparse.ArgumentParser(prog="wc calibrate")
     ap.add_argument("--judge", required=True, help='instrument spec as JSON: {"type": ..., "params": {...}}')
     ap.add_argument("--runs", nargs="+", required=True)
     ap.add_argument("--splits", nargs="+", default=list(DEV_SPLITS))

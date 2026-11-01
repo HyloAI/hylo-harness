@@ -1,5 +1,6 @@
 """The harness's `wc` subcommands (registered through commands.py; dispatched by core.cli).
 
+```text
     wc run CONFIG [--split SPLIT] [--output DIR] [--set key=value ...]
                                                      run an experiment config, print metrics
     wc plugins [--all] [--json]                      list plugins: contract version, maturity, licence
@@ -9,6 +10,7 @@
     wc evolve status|approve|rollback CONFIG_OR_DIR  inspect, approve a pending promotion, roll back
     wc skills ARCHIVE --out LIB [--tags ...] [--env E]   turn an improvement archive into a skill library
     wc conformance CONFIG [--agent] [--set ...]      run the conformance kit on a config's env (and agent)
+```
 """
 
 from __future__ import annotations
@@ -89,11 +91,16 @@ def _skills(args: argparse.Namespace) -> int:
 
 
 def _learn(args: argparse.Namespace) -> int:
+    from worldcurrent.core.artifact import ArtifactError
     from worldcurrent.core.learning import TrainJob
     from worldcurrent.learn.jobs import launch, run_job
 
     job = TrainJob.model_validate_json(Path(args.job).read_text())
-    m = launch(job, python=args.python, timeout_s=args.timeout) if args.python else run_job(job)
+    try:
+        m = launch(job, python=args.python, timeout_s=args.timeout) if args.python else run_job(job)
+    except ArtifactError as exc:                          # SplitLeak and friends: a refusal, not a crash
+        print(f"wc learn: {type(exc).__name__}: {exc}", file=sys.stderr)
+        return 1
     print(json.dumps({"out": job.out, "kind": m.kind, "role": m.role, "digest": m.digest,
                       "splits": sorted(m.provenance.splits()), "metrics": m.metrics}, indent=2, default=str))
     return 0
