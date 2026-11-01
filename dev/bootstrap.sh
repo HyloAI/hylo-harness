@@ -8,7 +8,8 @@
 set -euo pipefail
 HARNESS=$(cd "$(dirname "$0")/.." && pwd)
 DIR=${1:-$(dirname "$HARNESS")}
-REPOS=$(python3 -c 'import sys, tomllib; r = tomllib.load(open(sys.argv[1], "rb"))["repos"]; print(" ".join(k for k in r if k != "deployments-template"))' "$HARNESS/dev/repos.toml")
+PY="uv run --no-project --quiet --python >=3.11 python"   # the scripts read TOML (tomllib): any Python 3.11+ uv can find or fetch
+REPOS=$($PY -c 'import sys, tomllib; r = tomllib.load(open(sys.argv[1], "rb"))["repos"]; print(" ".join(k for k in r if k != "deployments-template"))' "$HARNESS/dev/repos.toml")
 for repo in $REPOS; do
   if [ -d "$DIR/$repo" ]; then
     continue
@@ -18,6 +19,6 @@ for repo in $REPOS; do
     echo "not checked out: $repo (set HYLO_GIT_BASE to clone it)"
   fi
 done
-python3 "$HARNESS/dev/workspace.py" "$DIR"
+$PY "$HARNESS/dev/workspace.py" "$DIR"
 cd "$DIR" && uv sync
 echo "workspace ready in $DIR: uv run pytest   (boundaries: uv run pytest harness/dev)"
