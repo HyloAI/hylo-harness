@@ -4,25 +4,11 @@ A Score of None is an abstention (infra failure, agent error) and is excluded fr
 from __future__ import annotations
 
 import math
-from typing import Any, Iterable, Mapping, Protocol
+from typing import Iterable, Mapping
 
-from pydantic import Field
-
-from worldcurrent.core.contract import Contract
+from worldcurrent.core.scoring import PairedComparison, Score, Scorer  # noqa: F401 - the contracts, re-exported
 from worldcurrent.core.task import TaskInstance
 from worldcurrent.core.trace import EpisodeTrace
-
-
-class Score(Contract):
-    value: float | None
-    explanation: str = ""
-    metadata: dict[str, Any] = Field(default_factory=dict)
-
-
-class Scorer(Protocol):
-    name: str
-
-    def score(self, trace: EpisodeTrace, task: TaskInstance) -> Score: ...
 
 
 class SuccessScorer:
@@ -61,13 +47,6 @@ DEFAULT_SCORERS: tuple[Scorer, ...] = (SuccessScorer(), SafetyInterventionScorer
 def mean_ignoring_none(values: Iterable[float | None]) -> float | None:
     vals = [v for v in values if v is not None]
     return sum(vals) / len(vals) if vals else None
-
-
-class PairedComparison(Contract):
-    n_pairs: int
-    candidate_wins: int          # candidate success, parent failure
-    parent_wins: int             # parent success, candidate failure
-    p_value: float               # one-sided exact McNemar, H1: candidate better
 
 
 def one_sided_exact_mcnemar(candidate_wins: int, parent_wins: int) -> float:

@@ -10,7 +10,7 @@ from typing import Any
 
 import numpy as np
 
-from worldcurrent.agents.planner import Plan, Subgoal
+from worldcurrent.core.reasoning import Plan, Subgoal
 from worldcurrent.core.types import Observation
 
 from .client import LLMClient, LLMError

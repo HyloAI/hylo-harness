@@ -47,7 +47,8 @@ implements; `wc plugin check` warns when a declaration is missing.
 | `gate_tests` | `GateTest.compare(candidate, parent) -> PairedComparison`, `metric` (eval/stats.py) | mcnemar, sign, paired_permutation, examples.min_effect | the statistic the gate decides with | `wc plugin check gate_test` |
 | `guards` | `review(action, ctx) -> GuardVerdict`, `name` (core/safety.py) | delta_limit, workspace, norm_limit, keep_out, examples.slow_zone | safety rules | `wc plugin check guard` |
 | `memory` | `MemoryStore`, `ActionMemory` (core/memory.py, core/experience.py) | action_bank, skill_library, lesson_book, sqlite | experience stores | conformance kit `check_memory_store` |
-| `scorers`, `benchmarks`, `reasoners` | see core/ and eval/ | success, steps, libero, planner.llm | metrics, task sets, LLM / VLM reasoning | – |
+| `scorers`, `benchmarks` | `Scorer` (core/scoring.py), a factory returning a `Benchmark` (core/benchmark.py) | success, steps, mujoco/reach-v0, libero | metrics, task sets | – |
+| `reasoners`, `choosers`, `planners`, `reflectors` | `Reasoner`, `Chooser`, `Planner`, `Reflector` (core/reasoning.py) | testing.rule_landmark, chooser.llm, planner.llm, llm.reflector | deliberation, object choice, subgoal planning, lessons from campaigns | – |
 
 ## 3. What a plugin gets for free, and what it cannot change
 

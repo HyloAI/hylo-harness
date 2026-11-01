@@ -48,7 +48,8 @@ def test_conformance():
 
 from __future__ import annotations
 
-from worldcurrent.eval.scoring import PairedComparison, one_sided_exact_mcnemar
+from worldcurrent.core.scoring import PairedComparison
+from worldcurrent.eval.scoring import one_sided_exact_mcnemar
 
 
 class {cls}Test:
@@ -213,7 +214,7 @@ def test_conformance():
 
 from __future__ import annotations
 
-from worldcurrent.evolve.candidate import Candidate
+from worldcurrent.core.improvement import Candidate
 
 
 class {cls}Proposer:

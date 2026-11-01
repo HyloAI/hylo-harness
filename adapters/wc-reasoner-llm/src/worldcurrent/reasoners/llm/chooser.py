@@ -8,7 +8,7 @@ from __future__ import annotations
 
 from typing import Any
 
-from worldcurrent.agents.object_reasoner import Choice, SceneObject
+from worldcurrent.core.reasoning import Choice, SceneObject
 from worldcurrent.core.types import Observation
 
 from .client import LLMClient, LLMError

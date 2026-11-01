@@ -8,8 +8,8 @@ import os
 from importlib.metadata import entry_points
 from typing import Any, Callable
 
-GROUPS = ("envs", "agents", "policies", "reasoners", "memory", "scorers", "benchmarks", "generators", "learners",
-          "instruments", "datasources", "guards", "gate_tests")
+GROUPS = ("envs", "agents", "policies", "reasoners", "choosers", "planners", "reflectors", "memory", "scorers",
+          "benchmarks", "generators", "learners", "instruments", "datasources", "guards", "gate_tests")
 
 
 class Registry:

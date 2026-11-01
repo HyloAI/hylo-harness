@@ -134,7 +134,7 @@ class ExperienceProposer:
         build = lambda group, spec: registry.build(group, spec) if isinstance(spec, dict) else spec  # noqa: E731
         self.inner = build("generators", inner)
         self.lessons, self.skills = build("memory", lessons), build("memory", skills)
-        self.reflector = build("reasoners", reflector)
+        self.reflector = build("reflectors", reflector)
         self.skill_tags, self.env, self.prefix = tuple(skill_tags or ()), env, prefix
         self.top_lessons, self.max_skills = top_lessons, max_skills
         self.name = f"experience({getattr(self.inner, 'name', type(self.inner).__name__)})"

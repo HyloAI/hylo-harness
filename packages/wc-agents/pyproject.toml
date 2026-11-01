@@ -34,7 +34,11 @@ packages = ["src/worldcurrent"]
 
 [project.entry-points."worldcurrent.reasoners"]
 "testing.rule_landmark" = "worldcurrent.agents.reasoner:LandmarkReasoner"
+
+[project.entry-points."worldcurrent.choosers"]
 "chooser.rule_color" = "worldcurrent.agents.object_reasoner:RuleColorChooser"
+
+[project.entry-points."worldcurrent.planners"]
 "planner.identity" = "worldcurrent.agents.planner:IdentityPlanner"
 
 [project.entry-points."worldcurrent.instruments"]

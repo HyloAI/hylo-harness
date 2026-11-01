@@ -3,7 +3,7 @@ import pytest
 from worldcurrent.core.config import ExperimentConfig
 from worldcurrent.core.errors import ProtectedScopeViolation
 from worldcurrent.evolve.candidate import Candidate, CandidateRegistry, check_protected_scope
-from worldcurrent.evolve.loop import GainRuleGenerator, improvement_cycle
+from worldcurrent.evolve.loop import GainProposer, improvement_cycle
 from worldcurrent.eval.experiment import run_experiment
 
 
@@ -42,7 +42,7 @@ def test_improvement_cycle_promotes_a_validated_candidate(tmp_path):
     def evaluate(c, split, label):
         return run_experiment(c, split=split, run_root=tmp_path / "runs", label=label)
 
-    report = improvement_cycle(cfg, reg, GainRuleGenerator(), evaluate)
+    report = improvement_cycle(cfg, reg, GainProposer(factors=(2.0, 4.0, 8.0), adaptive=True), evaluate)
     assert report.diagnosis.buckets.get("timeout_far", 0) > 0
     assert report.promoted is not None and reg.active == report.promoted
     assert report.heldout["used_for_selection"] is False

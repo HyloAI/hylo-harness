@@ -9,7 +9,7 @@ license = "Apache-2.0"
 [project.entry-points."worldcurrent.generators"]
 "llm.steering" = "worldcurrent.proposers.llm.proposer:LLMSteeringProposer"
 
-[project.entry-points."worldcurrent.reasoners"]
+[project.entry-points."worldcurrent.reflectors"]
 "llm.reflector" = "worldcurrent.proposers.llm.reflector:LLMReflector"
 
 [build-system]

@@ -3,7 +3,7 @@ import os
 
 import pytest
 
-from worldcurrent.agents.object_reasoner import SceneObject
+from worldcurrent.core.reasoning import SceneObject
 from worldcurrent.reasoners.llm.chooser import LLMChooser
 from worldcurrent.reasoners.llm.client import LLMClient, LLMError, _parse_json
 

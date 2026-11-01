@@ -15,7 +15,7 @@ from __future__ import annotations
 import json
 import time
 from pathlib import Path
-from typing import Any, Callable, Mapping, Protocol
+from typing import Any, Callable
 
 from pydantic import Field
 
@@ -26,29 +26,9 @@ from worldcurrent.core.artifact import referenced_artifacts
 from worldcurrent.core.config import ExperimentConfig
 from worldcurrent.core.contract import Contract
 from worldcurrent.core.errors import ProtectedScopeViolation
+from worldcurrent.core.improvement import ArchiveEntry, Proposer, StageResult  # noqa: F401 - the contract, re-exported
 
 from .candidate import Candidate, CandidateRegistry, check_protected_scope
-
-class StageResult(Contract):
-    stage: int
-    success: float | None = None
-    parent_success: float | None = None
-    wins: int = 0
-    losses: int = 0
-    n_pairs: int = 0
-    p_value: float | None = None
-    notes: str = ""
-
-
-class ArchiveEntry(Contract):
-    candidate: Candidate
-    hypothesis: str
-    stage_reached: int
-    stages: list[StageResult] = Field(default_factory=list)
-    verdict: str = "pending"             # rejected | archived | gated_fail | promoted
-    evidence: dict[str, Any] = Field(default_factory=dict)
-    created_at: float = Field(default_factory=time.time)
-
 
 class Archive:
     """Every evaluated candidate with lineage, hypothesis and outcome (append-only JSONL)."""
@@ -80,13 +60,6 @@ def holm(p_values: list[float], alpha: float) -> list[bool]:
         else:
             break
     return passed
-
-
-class Proposer(Protocol):
-    name: str
-
-    def propose(self, diagnosis: Mapping[str, Any], cfg: ExperimentConfig, parent_id: str | None,
-                archive: list[ArchiveEntry]) -> list[tuple[Candidate, str]]: ...   # (candidate, hypothesis)
 
 
 Evaluate = Callable[[ExperimentConfig, str, str], EvalResult]          # (cfg, split, label) -> result

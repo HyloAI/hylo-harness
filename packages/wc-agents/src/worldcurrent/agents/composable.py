@@ -149,6 +149,6 @@ def make_object_reach_agent(kp: float = 0.3, chooser: dict | None = None, memory
     objects in spatial memory while they are visible, and an IK policy drives the arm to it."""
     from .object_reasoner import ObjectReasoner
 
-    chooser_obj = registry.build("reasoners", chooser or {"type": "chooser.rule_color"})
+    chooser_obj = registry.build("choosers", chooser or {"type": "chooser.rule_color"})
     store = registry.build("memory", memory) if memory else None
     return ComposableAgent(PlanarIKGoalPolicy(kp=kp), ObjectReasoner(chooser_obj), store, replan_every=replan_every)

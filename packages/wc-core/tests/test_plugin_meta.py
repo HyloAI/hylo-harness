@@ -5,12 +5,17 @@ from importlib.metadata import entry_points
 import pytest
 
 import worldcurrent.core.plugins as plugins
-from worldcurrent.core.plugins import CONTRACTS, MATURITY, IncompatiblePlugin, catalogue, compatible
+from worldcurrent.core.plugins import CONTRACT_OBJECTS, CONTRACTS, MATURITY, IncompatiblePlugin, catalogue, compatible
 from worldcurrent.core.registry import GROUPS, Registry
 
 
-def test_every_plugin_group_is_a_versioned_contract():
-    assert set(CONTRACTS) == set(GROUPS)
+def test_every_plugin_group_is_a_versioned_contract_defined_in_core():
+    import importlib
+
+    assert set(CONTRACTS) == set(GROUPS) == set(CONTRACT_OBJECTS)
+    for group, ref in CONTRACT_OBJECTS.items():
+        module, _, name = ref.partition(":")
+        assert module.startswith("worldcurrent.core.") and hasattr(importlib.import_module(module), name), group
     assert compatible("wc.policy/v0.1", "wc.policy/v0.1")
     assert compatible("wc.policy/v1.0", "wc.policy/v1.3")              # older minor: still runs
     assert not compatible("wc.policy/v1.4", "wc.policy/v1.3")          # needs features this core lacks

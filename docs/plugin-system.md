@@ -14,14 +14,26 @@
 
 | Group (entry point group) | Protocol | Examples |
 |---|---|---|
-| `worldcurrent.envs` | `Environment` | `testing.point_reach`, `mujoco.planar_reach`, `libero.remote` |
-| `worldcurrent.agents` | `Agent` factory | `testing.p_controller`, `testing.landmark` |
-| `worldcurrent.policies` | `Policy` | `openpi.remote`, `lerobot.local` |
-| `worldcurrent.reasoners` | `Reasoner` | `testing.rule_landmark`, `llm.openai_compatible`, `langgraph.graph` |
-| `worldcurrent.memory` | `MemoryStore` | `sqlite`, `sparkdsg`, `mem0` |
-| `worldcurrent.scorers` | `Scorer` | `success`, `safety_interventions`, `vlm_judge` |
-| `worldcurrent.benchmarks` | `Benchmark` factory | `testing/reach-v0`, `libero/libero_10` |
-| `worldcurrent.generators` | `CandidateGenerator` | `rule.gain`, `dspy.gepa`, `llm.structured` |
+Every contract is defined in wc-core (module in brackets), so a plugin of any group depends on wc-core alone.
+
+| Group (entry point group) | Contract (wc-core module) | Examples |
+|---|---|---|
+| `worldcurrent.envs` | `Environment` (`core.env`) | `testing.point_reach`, `mujoco.planar_reach`, `libero` |
+| `worldcurrent.agents` | `Agent` or a factory returning one (`core.agent`) | `testing.p_controller`, `policy`, `steered`, `lerobot.steered` |
+| `worldcurrent.policies` | `ChunkPolicy` (`core.policy`) | `policy.flow`, `policy.bc`, `lerobot` |
+| `worldcurrent.reasoners` | `Reasoner` (`core.reasoning`) | `testing.rule_landmark` |
+| `worldcurrent.choosers` | `Chooser` (`core.reasoning`) | `chooser.rule_color`, `chooser.llm`, `chooser.vlm` |
+| `worldcurrent.planners` | `Planner` (`core.reasoning`) | `planner.identity`, `planner.llm` |
+| `worldcurrent.reflectors` | `Reflector` (`core.reasoning`) | `llm.reflector` |
+| `worldcurrent.memory` | `MemoryStore` / `ActionMemory` (`core.memory`, `core.experience`) | `sqlite`, `action_bank`, `lesson_book` |
+| `worldcurrent.scorers` | `Scorer` (`core.scoring`) | `success`, `steps`, `safety_interventions` |
+| `worldcurrent.gate_tests` | `GateTest` (`core.scoring`) | `mcnemar`, `sign`, `paired_permutation` |
+| `worldcurrent.benchmarks` | a factory returning a `Benchmark` (`core.benchmark`) | `testing/reach-v0`, `mujoco/reach-v0`, `libero` |
+| `worldcurrent.generators` | `Proposer` (`core.improvement`) | `rule.gain`, `rule.steering`, `llm.steering`, `learn` |
+| `worldcurrent.learners` | `Learner` / `OnlineLearner` (`core.learning`) | `critic.chunk_value`, `policy.flow` |
+| `worldcurrent.instruments` | `SuccessJudge` / `ValueModel` / `WorldModel` (`core.instrument`) | `judge.trace`, `judge.vlm` |
+| `worldcurrent.datasources` | `DataSource` (`core.learning`) | `video.frames`, `lerobot.dataset` |
+| `worldcurrent.guards` | `Guard` (`core.safety`) | `delta_limit`, `keep_out` |
 
 ## 3. Resolution rules
 

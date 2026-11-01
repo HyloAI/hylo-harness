@@ -1,4 +1,7 @@
-"""Offline improvement cycle: Execute(train) -> Diagnose -> Generate -> Check -> Validate -> Held-out -> Promote.
+"""A single improvement cycle on standard splits: Execute(train) -> Diagnose -> Propose -> Check -> Validate ->
+Held-out -> Promote. For benchmarks with train / validation / heldout splits and quick demonstrations; campaigns
+(the cascade and sequential gate of RFC-0002) use protocol.run_cycle. Both take the same generators (the
+`Proposer` contract, worldcurrent.core.improvement).
 
 Split discipline: diagnosis reads the `train` split (privileged state allowed); candidate
 selection uses the `validation` split (paired, same seeds); `heldout` is only reported.
@@ -7,8 +10,7 @@ selection uses the `validation` split (paired, same seeds); `heldout` is only re
 from __future__ import annotations
 
 from collections import Counter
-from pathlib import Path
-from typing import Any, Callable, Mapping, Protocol
+from typing import Any, Callable, Mapping
 
 from pydantic import Field
 
@@ -17,6 +19,7 @@ from worldcurrent.eval.scoring import paired_compare
 from worldcurrent.core.config import ExperimentConfig
 from worldcurrent.core.contract import Contract
 from worldcurrent.core.errors import ProtectedScopeViolation
+from worldcurrent.core.improvement import Proposer
 from worldcurrent.core.trace import TraceStore
 from .candidate import Candidate, CandidateRegistry, check_protected_scope
 
@@ -57,30 +60,6 @@ def diagnose(result: EvalResult, near_threshold: float = 0.2) -> FailureReport:
         examples.setdefault(b, []).append(s["episode_id"])
     return FailureReport(n_episodes=len(result.log["samples"]), n_failures=failures, buckets=dict(buckets),
                          examples=examples)
-
-
-class CandidateGenerator(Protocol):
-    name: str
-
-    def propose(self, report: FailureReport, cfg: ExperimentConfig, parent_id: str | None) -> list[Candidate]: ...
-
-
-class GainRuleGenerator:
-    """Maps failure buckets to gain changes. Stands in for an LLM/DSPy generator."""
-
-    name = "rule.gain@0.1"
-
-    def __init__(self, path: str = "agent.params.kp", factors: tuple[float, ...] = (2.0, 4.0, 8.0)) -> None:
-        self.path, self.factors = path, factors
-
-    def propose(self, report: FailureReport, cfg: ExperimentConfig, parent_id: str | None) -> list[Candidate]:
-        kp = float(cfg.agent.params.get("kp", 1.0))
-        too_slow = report.buckets.get("timeout_far", 0) + report.buckets.get("timeout_near", 0)
-        too_fast = report.buckets.get("oscillation_or_aggressive", 0) + report.buckets.get("safety_abort", 0)
-        factors = self.factors if too_slow >= too_fast else tuple(1 / f for f in self.factors)
-        return [Candidate(patch={self.path: round(kp * f, 4)}, parent_id=parent_id, generator=self.name,
-                          rationale=f"{report.buckets} -> scale kp by {f:g}", evidence={"buckets": report.buckets})
-                for f in factors]
 
 
 class GateResult(Contract):
@@ -130,7 +109,7 @@ class CycleReport(Contract):
     heldout: dict[str, Any] | None
 
 
-def improvement_cycle(base_cfg: ExperimentConfig, registry: CandidateRegistry, generator: CandidateGenerator,
+def improvement_cycle(base_cfg: ExperimentConfig, registry: CandidateRegistry, proposer: Proposer,
                       evaluate: Evaluate, *, approve: Callable[[Candidate, GateResult], bool] = lambda c, g: True,
                       alpha: float = 0.05, gate_kwargs: Mapping[str, Any] | None = None) -> CycleReport:
     parent_id = registry.active
@@ -140,7 +119,7 @@ def improvement_cycle(base_cfg: ExperimentConfig, registry: CandidateRegistry, g
     parent_val = evaluate(parent_cfg, "validation", "parent-validation")
     evaluated: list[dict[str, Any]] = []
     best: tuple[Candidate, GateResult, EvalResult] | None = None
-    for cand in generator.propose(report, parent_cfg, parent_id):
+    for cand, _hypothesis in proposer.propose(report.model_dump(), parent_cfg, parent_id, []):
         try:
             check_protected_scope(cand)
         except ProtectedScopeViolation as exc:
@@ -172,19 +151,27 @@ def improvement_cycle(base_cfg: ExperimentConfig, registry: CandidateRegistry, g
 
 
 class GainProposer:
-    """`Proposer`-protocol version of GainRuleGenerator for campaigns: scale one numeric config path."""
+    """Scale one numeric config path. adaptive=True reads the diagnosis' failure buckets: mostly timeouts scale up,
+    mostly oscillation or safety aborts scale down (by the inverse factors)."""
 
     name = "rule.gain@0.2"
 
-    def __init__(self, path: str = "agent.params.kp", factors: tuple[float, ...] = (2.0, 4.0)) -> None:
-        self.path, self.factors = path, tuple(factors)
+    def __init__(self, path: str = "agent.params.kp", factors: tuple[float, ...] = (2.0, 4.0),
+                 adaptive: bool = False) -> None:
+        self.path, self.factors, self.adaptive = path, tuple(factors), adaptive
 
     def propose(self, diagnosis: Mapping[str, Any], cfg: ExperimentConfig, parent_id: str | None,
                 archive: list[Any]) -> list[tuple[Candidate, str]]:
         node: Any = cfg.model_dump(mode="json")
         for part in self.path.split("."):
             node = node[part]
-        return [(Candidate(patch={self.path: round(float(node) * f, 4)}, rationale="", parent_id=parent_id,
-                           generator=self.name, evidence={"buckets": dict(diagnosis.get("buckets", {}))}),
-                 f"scaling {self.path} by {f:g} reduces the failures in {dict(diagnosis.get('buckets', {}))}")
-                for f in self.factors]
+        buckets = dict(diagnosis.get("buckets", {}))
+        factors = self.factors
+        if self.adaptive:
+            too_slow = buckets.get("timeout_far", 0) + buckets.get("timeout_near", 0)
+            too_fast = buckets.get("oscillation_or_aggressive", 0) + buckets.get("safety_abort", 0)
+            factors = factors if too_slow >= too_fast else tuple(1 / f for f in factors)
+        return [(Candidate(patch={self.path: round(float(node) * f, 4)}, rationale=f"{buckets} -> scale by {f:g}",
+                           parent_id=parent_id, generator=self.name, evidence={"buckets": buckets}),
+                 f"scaling {self.path} by {f:g} reduces the failures in {buckets}")
+                for f in factors]

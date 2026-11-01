@@ -8,32 +8,13 @@ attributed to planning vs execution. The planner's prompt and check cadence are 
 
 from __future__ import annotations
 
-from typing import Any, Protocol
+from typing import Any
 
-from pydantic import Field
 
 from worldcurrent.core.agent import Agent, AgentSpec, EpisodeContext, EpisodeOutcome
-from worldcurrent.core.contract import Contract
+from worldcurrent.core.reasoning import Plan, Planner, Subgoal  # noqa: F401 - the contract, re-exported
 from worldcurrent.core.registry import registry
 from worldcurrent.core.types import ActionChunk, Observation, StepResult
-
-
-class Subgoal(Contract):
-    instruction: str
-    max_steps: int = Field(default=250, ge=1)
-
-
-class Plan(Contract):
-    subgoals: list[Subgoal] = Field(min_length=1, max_length=6)
-    rationale: str = ""
-    meta: dict[str, Any] = Field(default_factory=dict)
-
-
-class Planner(Protocol):
-    name: str
-
-    def plan(self, instruction: str, observation: Observation) -> Plan: ...
-    def done(self, subgoal: Subgoal, observation: Observation) -> tuple[bool, str, dict[str, Any]]: ...
 
 
 class IdentityPlanner:
@@ -52,7 +33,7 @@ class SubgoalAgent:
     def __init__(self, inner: Agent | dict[str, Any], planner: Planner | dict[str, Any] | None = None,
                  check_every: int = 1, final_instruction: str = "original") -> None:
         self.inner = registry.build("agents", inner) if isinstance(inner, dict) else inner
-        self.planner = (registry.build("reasoners", planner) if isinstance(planner, dict)
+        self.planner = (registry.build("planners", planner) if isinstance(planner, dict)
                         else planner or IdentityPlanner())
         self.check_every = max(1, int(check_every))       # ask "done?" every N chunks
         self.final_instruction = final_instruction          # after the last subgoal: "original" | "last"

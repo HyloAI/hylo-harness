@@ -16,8 +16,7 @@ import numpy as np
 from worldcurrent.agents.steering import SteeringConfig
 from worldcurrent.core.config import ExperimentConfig
 from worldcurrent.core.trace import TraceStore
-from worldcurrent.evolve.candidate import Candidate
-from worldcurrent.evolve.protocol import ArchiveEntry
+from worldcurrent.core.improvement import ArchiveEntry, Candidate
 from worldcurrent.evolve.steering import STEERING_PATH
 
 from worldcurrent.reasoners.llm.client import LLMClient, LLMError

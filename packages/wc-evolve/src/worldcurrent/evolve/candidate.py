@@ -9,40 +9,20 @@
 
 from __future__ import annotations
 
-import hashlib
 import json
 import time
-import uuid
 from pathlib import Path
-from typing import Any, Literal, Mapping
+from typing import Any, Mapping
 
-from pydantic import Field
-
-from worldcurrent.core.contract import Contract
 from worldcurrent.core.errors import ProtectedScopeViolation
+from worldcurrent.core.improvement import Candidate, CandidateKind  # noqa: F401 - the contract, re-exported
 
 PROTECTED_PREFIXES = ("safety", "benchmark", "trace", "scorers", "evolution", "schema_version", "env")
 
 
-CandidateKind = Literal["config_patch", "critic_rule", "recovery_rule", "prompt", "skill", "policy_ref", "code"]
-
 # Kinds accepted by the v0.1 gate. "code" (model-generated executable code) is deliberately not
 # enabled: the decision is pending (RFC-0001 D5) and requires an isolated execution runtime first.
 ENABLED_KINDS: frozenset[str] = frozenset({"config_patch"})
-
-
-class Candidate(Contract):
-    patch: dict[str, Any]                    # {"agent.params.kp": 2.0}
-    rationale: str
-    parent_id: str | None
-    generator: str
-    kind: CandidateKind = "config_patch"
-    evidence: dict[str, Any] = Field(default_factory=dict)   # diagnosis refs
-    id: str = Field(default_factory=lambda: "cand-" + uuid.uuid4().hex[:10])
-
-    def digest(self) -> str:
-        return hashlib.sha256(json.dumps({"patch": self.patch, "parent": self.parent_id, "kind": self.kind},
-                                         sort_keys=True, default=str).encode()).hexdigest()[:16]
 
 
 def check_protected_scope(candidate: Candidate, protected: tuple[str, ...] = PROTECTED_PREFIXES) -> None:

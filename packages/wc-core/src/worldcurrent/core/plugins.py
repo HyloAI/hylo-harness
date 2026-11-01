@@ -38,9 +38,21 @@ from .contract import Contract
 
 CONTRACTS: dict[str, str] = {
     "envs": "wc.env/v0.1", "agents": "wc.agent/v0.1", "policies": "wc.policy/v0.1", "reasoners": "wc.reasoner/v0.1",
+    "choosers": "wc.chooser/v0.1", "planners": "wc.planner/v0.1", "reflectors": "wc.reflector/v0.1",
     "memory": "wc.memory/v0.1", "scorers": "wc.scorer/v0.1", "benchmarks": "wc.benchmark/v0.1",
     "generators": "wc.generator/v0.1", "learners": "wc.learner/v0.1", "instruments": "wc.instrument/v0.1",
     "datasources": "wc.datasource/v0.1", "guards": "wc.guard/v0.1", "gate_tests": "wc.gate_test/v0.1",
+}
+# where each contract is defined: always wc-core, so a plugin of any group depends on wc-core alone
+CONTRACT_OBJECTS: dict[str, str] = {
+    "envs": "worldcurrent.core.env:Environment", "agents": "worldcurrent.core.agent:Agent",
+    "policies": "worldcurrent.core.policy:ChunkPolicy", "reasoners": "worldcurrent.core.reasoning:Reasoner",
+    "choosers": "worldcurrent.core.reasoning:Chooser", "planners": "worldcurrent.core.reasoning:Planner",
+    "reflectors": "worldcurrent.core.reasoning:Reflector", "memory": "worldcurrent.core.memory:MemoryStore",
+    "scorers": "worldcurrent.core.scoring:Scorer", "benchmarks": "worldcurrent.core.benchmark:Benchmark",
+    "generators": "worldcurrent.core.improvement:Proposer", "learners": "worldcurrent.core.learning:Learner",
+    "instruments": "worldcurrent.core.instrument:SuccessJudge", "datasources": "worldcurrent.core.learning:DataSource",
+    "guards": "worldcurrent.core.safety:Guard", "gate_tests": "worldcurrent.core.scoring:GateTest",
 }
 MATURITY = ("implemented", "unverified", "needs-hardware", "test-double")
 Maturity = Literal["implemented", "unverified", "needs-hardware", "test-double", "undeclared"]
@@ -141,5 +153,5 @@ def catalogue(groups: tuple[str, ...] | None = None) -> list[PluginMeta]:
     return out
 
 
-__all__ = ["CONTRACTS", "MATURITY", "IncompatiblePlugin", "PluginMeta", "catalogue", "check", "compatible",
+__all__ = ["CONTRACTS", "CONTRACT_OBJECTS", "MATURITY", "IncompatiblePlugin", "PluginMeta", "catalogue", "check", "compatible",
            "declarations", "describe", "parse"]

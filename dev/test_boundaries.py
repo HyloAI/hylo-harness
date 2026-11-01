@@ -66,15 +66,15 @@ ALLOWED = {
     "wc-evolve": {"wc-core", "wc-eval", "wc-learn"},
     "wc-catalog": {"wc-core", "wc-eval"},
     "worldcurrent-cli": {"wc-core", "wc-eval", "wc-agents", "wc-memory", "wc-evolve", "wc-learn"},
-    "wc-reasoner-llm": {"wc-core", "wc-agents"},
+    "wc-reasoner-llm": {"wc-core"},
     "wc-proposer-llm": {"wc-core", "wc-agents", "wc-evolve", "wc-reasoner-llm"},
     "wc-policy-lerobot": {"wc-core", "wc-agents", "wc-memory"},
     "wc-policy-openpi": {"wc-core"},
     "wc-data-video": {"wc-core"},
     # bench
     "wc-bench": {"wc-core", "wc-eval"},
-    "wc-env-libero": {"wc-core", "wc-eval"},
-    "wc-env-mujoco": {"wc-core", "wc-eval"},
+    "wc-env-libero": {"wc-core"},
+    "wc-env-mujoco": {"wc-core"},
     # serve
     "wc-serve": {"wc-core"},
     "wc-env-lerobot-robot": {"wc-core"},

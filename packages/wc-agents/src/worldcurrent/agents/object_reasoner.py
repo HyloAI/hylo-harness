@@ -10,38 +10,16 @@ from __future__ import annotations
 
 import re
 import time
-from typing import Any, Literal, Protocol
+from typing import Any
 
 import numpy as np
-from pydantic import Field
 
-from worldcurrent.core.contract import Contract
 from worldcurrent.core.memory import MemoryItem, MemoryKind, MemoryQuery, Pose, TimeSpan
 from worldcurrent.core.types import Observation
 
-from .reasoner import Decision, ReasonerContext
+from worldcurrent.core.reasoning import Choice, Chooser, Decision, ReasonerContext, SceneObject  # noqa: F401
 
 FRAME = "table"
-
-
-class SceneObject(Contract):
-    id: str
-    rgb: tuple[float, float, float]
-    position: tuple[float, float]
-    source: Literal["seen", "remembered"]
-
-
-class Choice(Contract):
-    object_id: str | None
-    rationale: str
-    meta: dict[str, Any] = Field(default_factory=dict)   # model, latency_s, cached, raw output ...
-
-
-class Chooser(Protocol):
-    name: str
-
-    def choose(self, instruction: str, objects: list[SceneObject], robot_xy: tuple[float, float],
-               obs: Observation | None = None) -> Choice: ...   # obs gives access to camera images if any
 
 
 COLOR_NAMES: dict[str, tuple[float, float, float]] = {

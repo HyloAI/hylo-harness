@@ -13,7 +13,7 @@ from typing import Any
 import numpy as np
 from PIL import Image, ImageDraw, ImageFont
 
-from worldcurrent.agents.object_reasoner import Choice, SceneObject
+from worldcurrent.core.reasoning import Choice, SceneObject
 from worldcurrent.core.types import Observation
 
 from .client import LLMClient, LLMError

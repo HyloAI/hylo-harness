@@ -15,19 +15,13 @@ Built in:
 
 from __future__ import annotations
 
-from typing import Literal, Mapping, Protocol, runtime_checkable
+from typing import Literal, Mapping
 
 import numpy as np
 
-from .scoring import PairedComparison, one_sided_exact_mcnemar, paired_compare
+from worldcurrent.core.scoring import GateTest, PairedComparison  # noqa: F401 - the contract, re-exported
 
-
-@runtime_checkable
-class GateTest(Protocol):
-    name: str
-    metric: str                     # the scorer whose per-episode value is compared
-
-    def compare(self, candidate: Mapping[str, float | None], parent: Mapping[str, float | None]) -> PairedComparison: ...
+from .scoring import one_sided_exact_mcnemar, paired_compare
 
 
 def _pairs(candidate: Mapping[str, float | None], parent: Mapping[str, float | None]) -> list[tuple[float, float]]:

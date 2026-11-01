@@ -6,6 +6,8 @@ META = {
         "envs": "wc.env/v0.1",
         "agents": "wc.agent/v0.1",
         "reasoners": "wc.reasoner/v0.1",
+        "choosers": "wc.chooser/v0.1",
+        "planners": "wc.planner/v0.1",
         "instruments": "wc.instrument/v0.1",
     },
     "maturity": "implemented",
@@ -21,7 +23,7 @@ META = {
             "maturity": "unverified",
             "notes": "the LeRobot variant (lerobot.noise_steered) has run",
         },
-        "reasoners/planner.identity": {"maturity": "unverified"},
+        "planners/planner.identity": {"maturity": "unverified"},
         "envs/world_model": {
             "maturity": "unverified",
             "notes": "world-model pre-screening not yet used in a campaign",

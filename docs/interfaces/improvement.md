@@ -45,14 +45,17 @@ class Candidate(Contract):
     id: str
     def digest(self) -> str
 
-class CandidateGenerator(Protocol):
+class Proposer(Protocol):                                             # the `generators` contract (core.improvement)
     name: str
-    def propose(self, report: FailureReport, cfg: ExperimentConfig, parent_id: str | None) -> list[Candidate]
+    def propose(self, diagnosis: Mapping[str, Any], cfg: ExperimentConfig, parent_id: str | None,
+                archive: list[ArchiveEntry]) -> list[tuple[Candidate, str]]    # (candidate, hypothesis)
 
 def diagnose(result: EvalResult) -> FailureReport                     # deterministic bucketing; v0.2 layers on LLM multi-hypothesis diagnosis
 def check_protected_scope(c: Candidate) -> None                       # violation → ProtectedScopeViolation
-def gate(candidate_val, parent_val, *, alpha, max_safety_increase, max_task_regression) -> GateResult
-def improvement_cycle(base_cfg, registry, generator, evaluate, *, approve) -> CycleReport
+def run_cycle(base_cfg, registry, archive, proposer, evaluate, diagnose, *, protocol, approve) -> CycleReport
+                                                                      # campaigns: cascade + sequential gate (RFC-0002)
+def improvement_cycle(base_cfg, registry, proposer, evaluate, *, approve) -> CycleReport
+                                                                      # one cycle on train / validation / heldout splits
 
 class CandidateRegistry:
     def register(c); def promote(id, *, gate, approved_by); def reject(id, *, gate)

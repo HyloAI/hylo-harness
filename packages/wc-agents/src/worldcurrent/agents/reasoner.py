@@ -1,4 +1,4 @@
-"""Reasoner contract and a rule-based reference reasoner.
+"""A rule-based reference reasoner (the Reasoner contract is worldcurrent.core.reasoning).
 
 A Reasoner is the slow, event-triggered part of an Agent. It turns observations + memory into
 Decisions (here: a subgoal position). An LLM/VLM reasoner, a LangGraph graph or a DSPy program
@@ -7,46 +7,12 @@ implements the same protocol; the kernel never sees the difference.
 
 from __future__ import annotations
 
-from dataclasses import dataclass
-from typing import Any, Callable, Mapping, Protocol
 
 import numpy as np
-from pydantic import Field
 
+from worldcurrent.core.reasoning import Decision, Emit, Reasoner, ReasonerContext  # noqa: F401 - re-exported
 from worldcurrent.core.types import Observation
-from worldcurrent.core.contract import Contract, JsonAny
-from worldcurrent.core.memory import MemoryItem, MemoryKind, MemoryQuery, MemoryStore, Pose, TimeSpan, WorkingMemory
-
-Emit = Callable[[str, Mapping[str, Any]], None]
-
-
-class Decision(Contract):
-    kind: str                                  # "subgoal" | "skill" | "abort" | ...
-    output: JsonAny
-    rationale: str
-    trigger: str
-    component: str
-    inputs: dict[str, JsonAny] = Field(default_factory=dict)
-
-
-@dataclass
-class ReasonerContext:
-    task_id: str
-    episode_id: str
-    working: WorkingMemory
-    memory: MemoryStore | None
-    emit: Emit
-
-
-class Reasoner(Protocol):
-    name: str
-    required_state: tuple[str, ...]     # observation.state keys this reasoner reads
-    visibility_key: str                 # state key whose 0/1 change triggers re-deliberation
-
-    def begin(self, rctx: ReasonerContext) -> None: ...
-    def deliberate(self, obs: Observation, trigger: str, rctx: ReasonerContext) -> Decision: ...
-    def end(self, success: bool | None, rctx: ReasonerContext) -> None: ...
-
+from worldcurrent.core.memory import MemoryItem, MemoryKind, MemoryQuery, Pose, TimeSpan
 
 # Lawnmower sweep over the test arena (testing.point_reach); spacing < 2 * sense_radius.
 SWEEP = [(-0.8, 0.8), (0.8, 0.8), (0.8, 0.4), (-0.8, 0.4), (-0.8, 0.0), (0.8, 0.0),
