@@ -1,0 +1,37 @@
+[project]
+name = "worldcurrent-cli"
+version = "0.1.0.dev0"
+description = "the harness subcommands of wc (run, evolve, learn, ...); wc itself is in wc-core"
+requires-python = ">=3.10"
+dependencies = ["wc-core", "wc-eval", "wc-agents", "wc-memory", "wc-evolve", "wc-learn"]
+license = "Apache-2.0"
+
+[build-system]
+requires = ["hatchling>=1.24"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/worldcurrent"]
+
+[project.entry-points."worldcurrent.commands"]
+run = "worldcurrent.cli.commands:run"
+plugins = "worldcurrent.cli.commands:plugins"
+schema = "worldcurrent.cli.commands:schema"
+trace = "worldcurrent.cli.commands:trace"
+evolve = "worldcurrent.cli.commands:evolve"
+skills = "worldcurrent.cli.commands:skills"
+learn = "worldcurrent.cli.commands:learn"
+calibrate = "worldcurrent.cli.commands:calibrate"
+ingest = "worldcurrent.cli.commands:ingest"
+label = "worldcurrent.cli.commands:label"
+contamination = "worldcurrent.cli.commands:contamination"
+artifact = "worldcurrent.cli.commands:artifact"
+plugin = "worldcurrent.cli.commands:plugin"
+conformance = "worldcurrent.cli.commands:conformance"
+
+[tool.uv.sources]
+wc-core = { workspace = true }
+wc-eval = { workspace = true }
+wc-agents = { workspace = true }
+wc-memory = { workspace = true }
+wc-evolve = { workspace = true }

@@ -1,0 +1,29 @@
+[project]
+name = "wc-proposer-llm"
+version = "0.1.0.dev0"
+description = "worldcurrent self-improvement with an LLM: steering-candidate proposer and lesson reflector (evolve time, never in the control loop)"
+requires-python = ">=3.10"
+dependencies = ["wc-core", "wc-agents", "wc-evolve", "wc-reasoner-llm"]
+license = "Apache-2.0"
+
+[project.entry-points."worldcurrent.generators"]
+"llm.steering" = "worldcurrent.proposers.llm.proposer:LLMSteeringProposer"
+
+[project.entry-points."worldcurrent.reasoners"]
+"llm.reflector" = "worldcurrent.proposers.llm.reflector:LLMReflector"
+
+[build-system]
+requires = ["hatchling>=1.24"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/worldcurrent"]
+
+[tool.uv.sources]
+wc-core = { workspace = true }
+wc-agents = { workspace = true }
+wc-evolve = { workspace = true }
+wc-reasoner-llm = { workspace = true }
+
+[project.entry-points."worldcurrent.meta"]
+"wc-proposer-llm" = "worldcurrent.proposers.llm:META"

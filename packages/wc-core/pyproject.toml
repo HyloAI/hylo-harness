@@ -1,0 +1,41 @@
+[project]
+name = "wc-core"
+version = "0.1.0.dev0"
+description = "worldcurrent core: contracts, kernel, safety shield, events, trace, registry, config, remote env protocol"
+requires-python = ">=3.10"
+dependencies = ["numpy>=1.24", "pydantic>=2.7", "pyyaml>=6", "websockets>=13", "msgpack>=1.0"]
+license = "Apache-2.0"
+
+[project.scripts]
+wc = "worldcurrent.core.cli:main"
+
+[project.entry-points."worldcurrent.commands"]
+profile = "worldcurrent.core.profile:main"
+store = "worldcurrent.core.store:main"
+
+[build-system]
+requires = ["hatchling>=1.24"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/worldcurrent"]
+
+[project.entry-points."worldcurrent.envs"]
+"testing.point_reach" = "worldcurrent.testing.point_reach:PointReachEnv"
+"remote.ws" = "worldcurrent.core.remote.ws:WSEnvironment"
+
+[project.entry-points."worldcurrent.guards"]
+"delta_limit" = "worldcurrent.core.safety:DeltaLimitGuard"
+"workspace" = "worldcurrent.core.safety:workspace_guard"
+"norm_limit" = "worldcurrent.core.safety:NormLimitGuard"
+"keep_out" = "worldcurrent.core.safety:KeepOutGuard"
+
+[project.entry-points."worldcurrent.learners"]
+"testing.summary" = "worldcurrent.testing.learners:SummaryLearner"
+
+[project.entry-points."worldcurrent.agents"]
+"remote" = "worldcurrent.core.remote.agent_client:RemoteAgent"
+"remote.ws" = "worldcurrent.core.remote.ws:WSAgent"
+
+[project.entry-points."worldcurrent.meta"]
+"wc-core" = "worldcurrent.core:META"

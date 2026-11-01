@@ -1,0 +1,30 @@
+[project]
+name = "wc-evolve"
+version = "0.1.0.dev0"
+description = "worldcurrent evolution layer: diagnosis, candidates, validation gate, registry"
+requires-python = ">=3.10"
+dependencies = ["wc-core", "wc-eval", "wc-learn"]
+license = "Apache-2.0"
+
+[build-system]
+requires = ["hatchling>=1.24"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/worldcurrent"]
+
+[project.entry-points."worldcurrent.generators"]
+"rule.gain" = "worldcurrent.evolve.loop:GainProposer"
+"rule.steering" = "worldcurrent.evolve.steering:SteeringRuleProposer"
+"experience" = "worldcurrent.evolve.experience:ExperienceProposer"
+"critic.chunk_value" = "worldcurrent.evolve.critic:CriticProposer"
+"selftrain.expert_iteration" = "worldcurrent.evolve.selftrain:ExpertIterationProposer"
+"learn" = "worldcurrent.evolve.learning:LearningProposer"
+
+[tool.uv.sources]
+wc-core = { workspace = true }
+wc-eval = { workspace = true }
+wc-learn = { workspace = true }
+
+[project.entry-points."worldcurrent.meta"]
+"wc-evolve" = "worldcurrent.evolve:META"

@@ -1,0 +1,34 @@
+[project]
+name = "wc-policies"
+version = "0.1.0.dev0"
+description = "worldcurrent reference policies: one small, weights-free implementation per policy family (retrieval, regression, generative, tokenized, model-based), trained from your own runs"
+requires-python = ">=3.10"
+dependencies = ["wc-core", "wc-agents", "numpy>=1.24"]
+license = "Apache-2.0"
+
+[build-system]
+requires = ["hatchling>=1.24"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/worldcurrent"]
+
+[project.entry-points."worldcurrent.policies"]
+"policy.knn" = "worldcurrent.policies.reference.knn:KNNPolicy"
+"policy.bc" = "worldcurrent.policies.reference.bc:BCPolicy"
+"policy.flow" = "worldcurrent.policies.reference.flow:FlowPolicy"
+"policy.tokens" = "worldcurrent.policies.reference.tokens:TokenPolicy"
+"policy.mpc" = "worldcurrent.policies.reference.mpc:MPCPolicy"
+
+[project.entry-points."worldcurrent.learners"]
+"policy.knn" = "worldcurrent.policies.reference.learners:KNNLearner"
+"policy.bc" = "worldcurrent.policies.reference.learners:BCLearner"
+"policy.flow" = "worldcurrent.policies.reference.learners:FlowLearner"
+"policy.tokens" = "worldcurrent.policies.reference.learners:TokenLearner"
+
+[tool.uv.sources]
+wc-core = { workspace = true }
+wc-agents = { workspace = true }
+
+[project.entry-points."worldcurrent.meta"]
+"wc-policies" = "worldcurrent.policies.reference:META"

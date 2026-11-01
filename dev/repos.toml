@@ -1,0 +1,37 @@
+# The worldcurrent repositories and how they may depend on each other (docs/design/repository-structure.md).
+#
+# Code repositories depend only on the harness (the base). Leaves never import each other: they cooperate through
+# formats defined in wc-core (registry names, traces, artifacts, active.json, scorecards, wire protocols, the
+# workcell API, `wc` subcommands). docs and deployments hold no importable code.
+#
+# Development: the repositories sit side by side in one directory; dev/bootstrap.sh writes a uv workspace there
+# (dev/workspace.py) so all of them install editable into one venv. dev/test_boundaries.py checks the rules below.
+
+[repos.harness]
+description = "the base: core, eval, agents, memory, learn, evolve, catalog, adapters, the harness's wc commands"
+depends = []
+
+[repos.bench]
+description = "benchmarking: protocols, scorecards, leaderboards, LIBERO / MuJoCo suites and their setup"
+depends = ["harness"]
+
+[repos.serve]
+description = "deployment: policy server, workcell, real-time runner, operator channel, robot adapters"
+depends = ["harness"]
+robot_side = true          # what installs on a robot computer: its packages may declare only wc-core
+
+[repos.studio]
+description = "the playground: control plane, roles, live sandbox, campaigns, React front end"
+depends = ["harness"]
+
+[repos.plugins]
+description = "example and community plugins, written the way a third party would"
+depends = ["harness"]
+
+[repos.docs]
+description = "unified documentation: architecture, RFCs, research notes and experiment records"
+code = false
+
+[repos.deployments-template]
+description = "template for a lab's private deployment repository: workcell configs, calibration, safety limits"
+code = false
