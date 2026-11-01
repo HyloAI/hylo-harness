@@ -1,4 +1,4 @@
-# The worldcurrent repositories and how they may depend on each other (docs/design/repository-structure.md).
+# The worldcurrent repositories and how they may depend on each other (worldcurrent-docs: docs/design/repository-structure.md).
 #
 # Code repositories depend only on the harness (the base). Leaves never import each other: they cooperate through
 # formats defined in wc-core (registry names, traces, artifacts, active.json, scorecards, wire protocols, the

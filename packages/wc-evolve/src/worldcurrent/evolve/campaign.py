@@ -33,7 +33,7 @@ EVOLVE_SCHEMA = "wc.evolve/v0.1"
 class EvolveConfig(Contract):
     schema_version: Literal["wc.evolve/v0.1"] = EVOLVE_SCHEMA
     name: str
-    experiment: str                                          # path to a wc.experiment config
+    experiment: str                                          # path to a wc.experiment config, relative to this file
     experiment_overrides: dict[str, Any] = Field(default_factory=dict)
     proposer: ComponentRef = Field(default_factory=lambda: ComponentRef(type="rule.steering"))
     diagnosis: dict[str, Any] = Field(default_factory=dict)  # kwargs for diagnose_traces
@@ -46,9 +46,16 @@ class EvolveConfig(Contract):
 
     @classmethod
     def load(cls, path: str | Path) -> "EvolveConfig":
+        """A relative `experiment` path is resolved against the campaign file (else the working directory, as
+        configs written before 2026-11-01 assumed), so a campaign runs from any directory."""
         import yaml
 
-        return cls.model_validate(yaml.safe_load(Path(path).read_text()))
+        cfg = cls.model_validate(yaml.safe_load(Path(path).read_text()))
+        exp = Path(cfg.experiment).expanduser()
+        if not exp.is_absolute():
+            near = Path(path).resolve().parent / exp
+            exp = near if near.exists() or not exp.exists() else exp.resolve()
+        return cfg.model_copy(update={"experiment": str(exp)})
 
 
 class CampaignState(Contract):

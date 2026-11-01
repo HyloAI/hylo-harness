@@ -71,7 +71,8 @@ class ExperimentConfig(Contract):
         (env.remote, a remote agent's runtime / python / env), so the same experiment has the same digest on every
         machine. Timing is left out while it is the default (sync), so older digests stay valid."""
         d = self.model_dump(mode="json", exclude={"output_dir", "workers"})
-        d["env"].pop("remote", None)
+        if "remote" in d["env"]:
+            d["env"]["remote"] = None                  # hashed as a local environment, as digests always were
         if d.get("timing") == Timing().model_dump(mode="json"):
             d.pop("timing")
         _strip_placement(d["agent"])

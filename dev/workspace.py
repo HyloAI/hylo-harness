@@ -40,6 +40,7 @@ def render(root: Path) -> str:
         "[dependency-groups]",
         'dev = ["pytest>=8", "httpx>=0.27"]',
         'demo = ["imageio>=2.38.0", "imageio-ffmpeg>=0.7.0", "matplotlib>=3.10.9", "pillow>=12.3.0"]',
+        'docs = ["mkdocs-material>=9.6", "mkdocstrings[python]>=0.29", "mkdocs-gen-files>=0.5", "mkdocs-glightbox>=0.4"]',
         "",
         "[tool.uv]",
         "package = false",

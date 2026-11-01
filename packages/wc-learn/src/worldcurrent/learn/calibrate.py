@@ -117,9 +117,13 @@ def main(argv: Sequence[str] | None = None) -> int:
     ap.add_argument("--seed", type=int, default=0)
     ap.add_argument("--task-prefix")
     ap.add_argument("--target-precision", type=float, default=0.95)
-    ap.add_argument("--artifact", help="the judge's artifact directory: excludes its training runs, stores the report")
+    ap.add_argument("--artifact", help="the judge's artifact (directory or store id): excludes its training runs, "
+                                       "stores the report")
     ap.add_argument("--out", help="write report + per-episode records here (JSON)")
     a = ap.parse_args(argv)
+    from worldcurrent.core.store import resolve_refs
+
+    a.artifact, a.runs = resolve_refs(a.artifact), resolve_refs(a.runs)    # store ids -> this machine's paths
     judge = registry.build("instruments", json.loads(a.judge))
     records: list[dict[str, Any]] = []
     rep = calibrate_judge(judge, a.runs, splits=a.splits, judge_artifact=a.artifact, limit=a.limit, seed=a.seed,

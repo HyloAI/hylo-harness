@@ -24,7 +24,8 @@ class AgentSpec(Contract):
     weights_license: str | None = None          # mandatory for learned policies
 
 
-EpisodeStatus = Literal["success", "failure", "error", "safety_abort", "infra_invalid"]
+EpisodeStatus = Literal["success", "failure", "error", "safety_abort", "infra_invalid", "unlabeled"]  # unlabeled:
+# nobody could judge the outcome (a robot episode before the operator's verdict, an external episode)
 
 
 class EpisodeOutcome(Contract):

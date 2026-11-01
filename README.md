@@ -69,3 +69,5 @@ A subset works too (the harness alone, or the harness and one leaf): the workspa
 `dev/repos.toml` lists the repositories and their allowed dependencies; `dev/test_boundaries.py` checks package
 layering and repository rules. Rules: core functionality before infrastructure; third-party code stays out of the
 packages (see worldcurrent-docs); every package keeps its own tests and dependencies.
+
+Documentation (worldcurrent-docs, `uv run mkdocs serve -f docs/mkdocs.yml` from the workspace): [home](../docs/docs/index.md), [installation](../docs/docs/getting-started/installation.md), [concepts](../docs/docs/getting-started/concepts.md), [design overview](../docs/docs/design/overview.md).

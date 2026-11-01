@@ -133,6 +133,9 @@ def _label(args: argparse.Namespace) -> int:
     from worldcurrent.learn.calibrate import label_run
     from worldcurrent.core.registry import registry
 
+    from worldcurrent.core.store import resolve_refs
+
+    args.judge, args.run = resolve_refs(args.judge), resolve_refs(args.run)    # store ids -> this machine's paths
     judge = registry.build("instruments", {"type": args.judge_type, "params": {"path": args.judge}})
     print(json.dumps(label_run(args.run, judge, args.judge, threshold=args.threshold), indent=2))
     return 0
@@ -312,7 +315,7 @@ def main(argv: list[str] | None = None) -> int:
     ig.set_defaults(fn=_ingest)
     lb = sub.add_parser("label", help="label an ingested run's unlabeled episodes with a calibrated success judge")
     lb.add_argument("run")
-    lb.add_argument("--judge", required=True, help="the judge's artifact directory")
+    lb.add_argument("--judge", required=True, help="the judge's artifact (directory or store id)")
     lb.add_argument("--judge-type", default="judge.trace")
     lb.add_argument("--threshold", type=float)
     lb.set_defaults(fn=_label)

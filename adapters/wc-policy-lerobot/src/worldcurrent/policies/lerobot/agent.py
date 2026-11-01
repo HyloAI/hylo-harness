@@ -24,7 +24,7 @@ class LeRobotAgent(AgentBase):
     def __init__(self, repo_id: str = "lerobot/smolvla_libero", device: str = "cpu",
                  camera_map: dict[str, str] | None = None, state_keys: list[str] | tuple[str, ...] = LIBERO_STATE,
                  empty_cameras: int | None = 1, n_action_steps: int | None = None, num_threads: int | None = None,
-                 weights_license: str = "apache-2.0",
+                 weights_license: str | None = None,
                  action_semantics: dict[str, Any] | None = None) -> None:
         import torch
 
@@ -47,7 +47,7 @@ class LeRobotAgent(AgentBase):
         self.torch, self.cfg, self.repo_id, self.device = torch, cfg, repo_id, device
         self.camera_map = dict(camera_map or LIBERO_CAMERAS)
         self.state_keys = tuple(state_keys)
-        self.weights_license = weights_license
+        self.weights_license = weights_license or f"per checkpoint: see the model card of {repo_id}"
         self.semantics = ActionSemantics(**(action_semantics or {"control_mode": "eef_delta_pose", "frame": "base",
                                                                  "rotation_repr": "axis_angle",
                                                                  "gripper": "binary_close_positive"}))
