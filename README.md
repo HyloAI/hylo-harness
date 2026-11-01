@@ -58,7 +58,9 @@ The repositories sit side by side in one directory (named `harness/`, `bench/`, 
 workspace over all of them (`dev/workspace.py`) and installs every package editable into one venv:
 
 ```bash
-harness/dev/bootstrap.sh                 # in the directory holding the checkouts; Python 3.10+
+mkdir hylo && cd hylo                    # Python 3.10+, uv
+git clone https://github.com/HyloAI/hylo-harness.git harness
+HYLO_GIT_BASE=https://github.com/HyloAI harness/dev/bootstrap.sh   # clones the other repositories, one venv
 uv run pytest                            # every present repository, plus the boundary lint (harness/dev)
 uv run hylo --help                         # subcommands contributed by the installed packages
 uv run hylo run bench/examples/configs/mujoco_table_memory.yaml    # language + spatial memory, MuJoCo table
@@ -71,3 +73,7 @@ layering and repository rules. Rules: core functionality before infrastructure; 
 packages (see hylo-docs); every package keeps its own tests and dependencies.
 
 Documentation (hylo-docs, `uv run mkdocs serve -f docs/mkdocs.yml` from the workspace): [home](../docs/docs/index.md), [installation](../docs/docs/getting-started/installation.md), [concepts](../docs/docs/getting-started/concepts.md), [design overview](../docs/docs/design/overview.md).
+
+## License
+
+Apache License 2.0 (see [LICENSE](LICENSE)). Copyright 2026 Hylo AI.
