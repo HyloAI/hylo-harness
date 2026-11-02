@@ -1,0 +1,45 @@
+{
+ "task": "line up the red, green and blue blocks in a row along the y axis, in that order (red, then green, then blue)",
+ "model": "ollama:qwen3.5:35b-a3b (vision)",
+ "built": true,
+ "attempts": 2,
+ "records": [
+  {
+   "attempt": 1,
+   "model_error": "http://localhost:11434/v1/chat/completions: TimeoutError('timed out')",
+   "ok": false,
+   "problems": []
+  },
+  {
+   "attempt": 2,
+   "model": "qwen3.5:35b-a3b",
+   "backend": "ollama",
+   "tokens_in": 6984,
+   "tokens_out": 588,
+   "cached_tokens": 6615,
+   "latency_s": 855.102,
+   "cost_usd": 0.0,
+   "ok": true,
+   "problems": [],
+   "warnings": [],
+   "stages": [
+    "schema",
+    "static",
+    "physics",
+    "reach",
+    "satisfiable"
+   ],
+   "reply_chars": 1576
+  }
+ ],
+ "usage": {
+  "calls": 1,
+  "tokens_in": 6984,
+  "tokens_out": 588,
+  "cost_usd": 0.0,
+  "cost_usd_known_part": 0.0,
+  "latency_s": 855.1
+ },
+ "wall_s": 3558.9,
+ "scene": "/tmp/claude-1002/-home-bingao-hyloai/49f6a616-2836-40ee-84cf-972b09b8fd75/scratchpad/live/colour_row/scene.json"
+}

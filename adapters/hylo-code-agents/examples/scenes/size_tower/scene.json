@@ -1,0 +1,86 @@
+{
+ "name": "stack_three_blocks",
+ "instruction": "stack the three blocks into a tower ordered by size: the largest block at the bottom and the smallest on top",
+ "objects": [
+  {
+   "name": "large_block",
+   "label": "largest block",
+   "shape": "box",
+   "size": [
+    0.06,
+    0.06,
+    0.04
+   ],
+   "colour": "blue",
+   "mass": 0.15,
+   "region": {
+    "x": [
+     -0.2,
+     -0.1
+    ],
+    "y": [
+     -0.25,
+     -0.15
+    ]
+   }
+  },
+  {
+   "name": "medium_block",
+   "label": "medium block",
+   "shape": "box",
+   "size": [
+    0.05,
+    0.05,
+    0.04
+   ],
+   "colour": "green",
+   "mass": 0.12,
+   "region": {
+    "x": [
+     -0.1,
+     0.0
+    ],
+    "y": [
+     -0.15,
+     -0.05
+    ]
+   }
+  },
+  {
+   "name": "small_block",
+   "label": "smallest block",
+   "shape": "box",
+   "size": [
+    0.04,
+    0.04,
+    0.04
+   ],
+   "colour": "red",
+   "region": {
+    "x": [
+     0.0,
+     0.1
+    ],
+    "y": [
+     -0.25,
+     -0.15
+    ]
+   }
+  }
+ ],
+ "success": {
+  "op": "sequence",
+  "terms": [
+   {
+    "op": "on",
+    "a": "medium_block",
+    "b": "large_block"
+   },
+   {
+    "op": "on",
+    "a": "small_block",
+    "b": "medium_block"
+   }
+  ]
+ }
+}

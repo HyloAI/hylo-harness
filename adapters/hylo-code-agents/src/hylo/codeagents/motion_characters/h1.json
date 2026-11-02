@@ -1,0 +1,89 @@
+{
+ "name": "h1",
+ "title": "Unitree H1",
+ "kind": "mjcf",
+ "height_m": 1.66,
+ "asset": {
+  "menagerie": "menagerie_h1.json",
+  "xml": "h1.xml"
+ },
+ "licence": "BSD-3-Clause",
+ "credit": "Unitree H1 model from MuJoCo Menagerie (Unitree Robotics, BSD-3-Clause)",
+ "bodies": {
+  "pelvis": [
+   "pelvis",
+   [
+    0,
+    0,
+    -0.12
+   ]
+  ],
+  "chest": [
+   "torso_link",
+   [
+    0,
+    0,
+    0.14
+   ]
+  ],
+  "head": [
+   "torso_link",
+   [
+    0.02,
+    0,
+    0.6
+   ]
+  ],
+  "left_hip": "left_hip_roll_link",
+  "right_hip": "right_hip_roll_link",
+  "left_knee": "left_knee_link",
+  "right_knee": "right_knee_link",
+  "left_ankle": "left_ankle_link",
+  "right_ankle": "right_ankle_link",
+  "left_toe": [
+   "left_ankle_link",
+   [
+    0.14,
+    0,
+    -0.06
+   ]
+  ],
+  "right_toe": [
+   "right_ankle_link",
+   [
+    0.14,
+    0,
+    -0.06
+   ]
+  ],
+  "left_shoulder": "left_shoulder_roll_link",
+  "right_shoulder": "right_shoulder_roll_link",
+  "left_elbow": "left_elbow_link",
+  "right_elbow": "right_elbow_link",
+  "left_wrist": [
+   "left_elbow_link",
+   [
+    0.22,
+    0,
+    -0.01
+   ]
+  ],
+  "right_wrist": [
+   "right_elbow_link",
+   [
+    0.22,
+    0,
+    -0.01
+   ]
+  ]
+ },
+ "feet": [
+  "left_ankle_link",
+  "right_ankle_link"
+ ],
+ "clearance": {
+  "wrist": 0.25,
+  "elbow": 0.22
+ },
+ "camera_distance": 3.4
+}

@@ -1,0 +1,183 @@
+{
+ "task": "open the drawer and put the red block in it",
+ "model": "ollama:qwen3.5:35b-a3b (vision)",
+ "built": true,
+ "attempts": 6,
+ "records": [
+  {
+   "attempt": 1,
+   "model": "qwen3.5:35b-a3b",
+   "backend": "ollama",
+   "tokens_in": 6965,
+   "tokens_out": 666,
+   "cached_tokens": null,
+   "latency_s": 42.89,
+   "cost_usd": 0.0,
+   "ok": false,
+   "problems": [
+    {
+     "code": "unstable",
+     "message": "the joint of drawer drifts from 0.000 to -0.050 m without being touched; check its axis, range and spring",
+     "objects": [
+      "drawer"
+     ],
+     "severity": "error"
+    }
+   ],
+   "warnings": [],
+   "stages": [
+    "schema",
+    "static",
+    "physics"
+   ],
+   "reply_chars": 1808
+  },
+  {
+   "attempt": 2,
+   "model": "qwen3.5:35b-a3b",
+   "backend": "ollama",
+   "tokens_in": 7754,
+   "tokens_out": 1257,
+   "cached_tokens": 6961,
+   "latency_s": 47.223,
+   "cost_usd": 0.0,
+   "ok": false,
+   "problems": [
+    {
+     "code": "predicate_true_at_start",
+     "message": "the first step of the sequence already holds at the start, so it asks the robot nothing; make every step something the robot has to change",
+     "objects": [],
+     "severity": "error"
+    }
+   ],
+   "warnings": [],
+   "stages": [
+    "schema",
+    "static",
+    "physics"
+   ],
+   "reply_chars": 3741
+  },
+  {
+   "attempt": 3,
+   "model": "qwen3.5:35b-a3b",
+   "backend": "ollama",
+   "tokens_in": 7840,
+   "tokens_out": 834,
+   "cached_tokens": 6961,
+   "latency_s": 50.741,
+   "cost_usd": 0.0,
+   "ok": false,
+   "problems": [
+    {
+     "code": "predicate_true_at_start",
+     "message": "the first step of the sequence already holds at the start, so it asks the robot nothing; make every step something the robot has to change",
+     "objects": [],
+     "severity": "error"
+    },
+    {
+     "code": "unstable",
+     "message": "the joint of drawer drifts from -0.050 to -0.000 m without being touched; check its axis, range and spring",
+     "objects": [
+      "drawer"
+     ],
+     "severity": "error"
+    }
+   ],
+   "warnings": [],
+   "stages": [
+    "schema",
+    "static",
+    "physics"
+   ],
+   "reply_chars": 2410
+  },
+  {
+   "attempt": 4,
+   "model": "qwen3.5:35b-a3b",
+   "backend": "ollama",
+   "tokens_in": 7953,
+   "tokens_out": 939,
+   "cached_tokens": 6961,
+   "latency_s": 45.165,
+   "cost_usd": 0.0,
+   "ok": false,
+   "problems": [
+    {
+     "code": "unsatisfiable",
+     "message": "inside(red_block, drawer) does not hold even with the objects placed where the predicate asks (privileged arrangement: red_block ended at [-0.022, 0.1, 0.02]): check sizes, that containers / drawers are hollow and open far enough, and the predicate itself",
+     "objects": [],
+     "severity": "error"
+    }
+   ],
+   "warnings": [],
+   "stages": [
+    "schema",
+    "static",
+    "physics",
+    "reach",
+    "satisfiable"
+   ],
+   "reply_chars": 2505
+  },
+  {
+   "attempt": 5,
+   "model": "qwen3.5:35b-a3b",
+   "backend": "ollama",
+   "tokens_in": 7982,
+   "tokens_out": 824,
+   "cached_tokens": 6961,
+   "latency_s": 38.895,
+   "cost_usd": 0.0,
+   "ok": false,
+   "problems": [
+    {
+     "code": "unstable",
+     "message": "the joint of drawer drifts from 0.000 to -0.100 m without being touched; check its axis, range and spring",
+     "objects": [
+      "drawer"
+     ],
+     "severity": "error"
+    }
+   ],
+   "warnings": [],
+   "stages": [
+    "schema",
+    "static",
+    "physics"
+   ],
+   "reply_chars": 2410
+  },
+  {
+   "attempt": 6,
+   "model": "qwen3.5:35b-a3b",
+   "backend": "ollama",
+   "tokens_in": 8000,
+   "tokens_out": 2002,
+   "cached_tokens": 6961,
+   "latency_s": 70.508,
+   "cost_usd": 0.0,
+   "ok": true,
+   "problems": [],
+   "warnings": [],
+   "stages": [
+    "schema",
+    "static",
+    "physics",
+    "reach",
+    "satisfiable"
+   ],
+   "reply_chars": 6043
+  }
+ ],
+ "usage": {
+  "calls": 6,
+  "tokens_in": 46494,
+  "tokens_out": 6522,
+  "cost_usd": 0.0,
+  "cost_usd_known_part": 0.0,
+  "latency_s": 295.42
+ },
+ "wall_s": 296.3,
+ "scene": "/tmp/claude-1002/-home-bingao-hyloai/49f6a616-2836-40ee-84cf-972b09b8fd75/scratchpad/live/drawer_block/scene.json"
+}

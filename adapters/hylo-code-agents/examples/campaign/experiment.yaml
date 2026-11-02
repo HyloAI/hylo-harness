@@ -1,0 +1,83 @@
+schema_version: hylo.experiment/v0.1
+name: campaign-stack
+benchmark:
+  type: mujoco/manip-v0
+  params:
+    tasks:
+    - stack
+    rsi_states: 100
+  split: search
+env:
+  type: mujoco.panda_table
+  params:
+    cameras:
+    - front
+    - side
+    - wrist
+    segmentation: true
+agent:
+  type: code.program
+  params:
+    source: "\"\"\"stack (deliberately weak parent for a campaign): places only the first block of the named order (two-block\n\
+      stacks), with no grasp retry and no second try of a level.\"\"\"\nimport math\n\nimport numpy as np\n\nARM = \"arm\"\
+      \n\n\ndef mentioned(text, labels):\n    \"\"\"Segment labels the text names, in the order they appear (longest label\
+      \ wins where labels overlap).\"\"\"\n    text = \" \" + text.lower().replace(\",\", \" \").replace(\".\", \" \").replace(\"\
+      :\", \" \") + \" \"\n    found, taken = [], []\n    for lab in sorted(labels, key=len, reverse=True):\n        start\
+      \ = 0\n        while True:\n            i = text.find(\" \" + lab + \" \", start)\n            if i < 0:\n         \
+      \       break\n            span = (i, i + len(lab) + 1)\n            if not any(a < span[1] and span[0] < b for a, b\
+      \ in taken):\n                taken.append(span)\n                found.append((i, lab))\n            start = i + 1\n\
+      \    return [pair[1] for pair in sorted(found)]\n\n\ndef stack_order(instruction, labels):\n    \"\"\"Blocks bottom\
+      \ first. \"X at the bottom, (then) Y ..., Z on top\" lists them bottom first; otherwise each\n    clause \"A on (top\
+      \ of) B\" puts A on B.\"\"\"\n    text = instruction.lower().strip().rstrip(\".\")\n    names = mentioned(text, labels)\n\
+      \    if \"bottom\" in text:\n        order = []\n        for n in names:\n            if n not in order:\n         \
+      \       order.append(n)\n        return order\n    on = {}\n    for clause in text.replace(\", then\", \";\").replace(\"\
+      \ then \", \";\").split(\";\"):\n        cut = clause.rfind(\" on \")\n        if cut < 0:\n            continue\n \
+      \       a, b = mentioned(clause[:cut], labels), mentioned(clause[cut:], labels)\n        if not a and b and names: \
+      \                       # \"then the Z on the Y\": Z is the last block named before\n            a = [n for n in mentioned(clause,\
+      \ labels) if n not in b][:1]\n        if a and b:\n            on[a[0]] = b[0]\n    lowers = set(on.values())\n    bottom\
+      \ = [b for b in lowers if b not in on]\n    if not bottom:\n        return names\n    order = [bottom[0]]\n    above\
+      \ = {v: k for k, v in on.items()}\n    while order[-1] in above and above[order[-1]] not in order:\n        order.append(above[order[-1]])\n\
+      \    return order\n\n\ndef detect(robot, view, table, label):\n    dets = robot.objects(view, robot.find(view, label),\
+      \ table)\n    dets = [d for d in dets if len(d.points) >= 20]\n    return max(dets, key=lambda d: (d.score, len(d.points)))\
+      \ if dets else None\n\n\ndef up(robot, dz, table, scene=None):\n    t = robot.status()[\"tcp\"][ARM].copy()\n    t[2,\
+      \ 3] += dz\n    p = robot.plan(robot.Goal(\"lift\", ARM, tcp=t), table, scene)\n    return robot.run(p) if p is not\
+      \ None else None\n\n\ndef pick(robot, label, table, tries=1):\n    \"\"\"Grasp and lift the object; returns (grasp tcp,\
+      \ box) or None.\"\"\"\n    for attempt in range(tries):\n        view = robot.look()\n        det = detect(robot, view,\
+      \ table, label)\n        if det is None:\n            print(\"cannot see\", label)\n            return None\n      \
+      \  box = robot.box(det.points, table)\n        plan = robot.plan(robot.grasps(ARM, det.points, table, scene=view.points),\
+      \ table, view.points)\n        if plan is None:\n            print(\"no grasp plan:\", robot.why())\n            return\
+      \ None\n        out = robot.run(plan)\n        if out.get(\"ended\"):\n            return None\n        held = robot.holding(ARM)\n\
+      \        up(robot, 0.12, table)\n        if held and robot.holding(ARM):\n            return plan.goal.tcp, box\n  \
+      \      print(\"grasp attempt\", attempt, \"missed; retrying\")\n        p = robot.plan(robot.Goal(\"retreat\", ARM,\
+      \ tcp=robot.status()[\"tcp\"][ARM], hand=(1.0,)), table)\n        if p is not None:\n            robot.run(p)\n    return\
+      \ None\n\n\ndef held_yaw(robot, grasp_tcp, box):\n    T = robot.status()[\"tcp\"][ARM] @ np.linalg.inv(grasp_tcp) @\
+      \ box.pose\n    return math.atan2(T[1, 0], T[0, 0])\n\n\ndef aligned(yaw, ref):\n    \"\"\"The yaw nearest `yaw` that\
+      \ lines a cube up with one at `ref` (quarter-turn symmetry).\"\"\"\n    k = round((yaw - ref) / (math.pi / 2))\n   \
+      \ return ref + k * math.pi / 2\n\n\ndef stacked(lower_box, upper_box):\n    return (np.linalg.norm(upper_box.center[:2]\
+      \ - lower_box.center[:2]) < 0.015\n            and abs((upper_box.bottom + upper_box.size[2]) - (lower_box.bottom +\
+      \ lower_box.size[2]) - 0.045) < 0.01)\n\n\ndef solve(robot):\n    instruction = robot.status()[\"instruction\"]\n  \
+      \  view = robot.look()\n    table = robot.table(view)\n    labels = [v for v in view.segments.values() if v not in (\"\
+      table\", \"robot\")]\n    order = stack_order(instruction, labels)\n    print(\"bottom to top:\", order)\n    for level\
+      \ in range(1, min(2, len(order))):\n        for attempt in range(1):\n            view = robot.look()\n            lower\
+      \ = detect(robot, view, table, order[level - 1])\n            if lower is None:\n                print(\"cannot see\"\
+      , order[level - 1])\n                return\n            lbox = robot.box(lower.points, table)\n            got = pick(robot,\
+      \ order[level], table)\n            if got is None:\n                break\n            yaw = aligned(held_yaw(robot,\
+      \ got[0], got[1]), lbox.yaw)\n            view = robot.look()\n            goal = robot.place_at(ARM, np.linalg.inv(got[0])\
+      \ @ got[1].pose, got[1], lbox.center[:2], yaw=yaw,\n                                  table=table, hover=0.004, scene=view.points)\n\
+      \            plan = robot.plan(goal, table, view.points)\n            if plan is None:\n                print(\"no place\
+      \ plan:\", robot.why())\n                return\n            out = robot.run(plan)\n            up(robot, 0.08, table)\n\
+      \            if out.get(\"ended\"):\n                return\n            view = robot.look()\n            top = detect(robot,\
+      \ view, table, order[level])\n            if top is not None:\n                tbox = robot.box(top.points, table)\n\
+      \                print(\"level\", level, \"offset\", np.round(tbox.center[:2] - lbox.center[:2], 3),\n             \
+      \         \"top\", round(tbox.bottom + tbox.size[2], 3))\n                if tbox.bottom + tbox.size[2] > lbox.bottom\
+      \ + lbox.size[2] + 0.03:\n                    break\n            print(\"level\", level, \"not on the stack; retrying\"\
+      )\n"
+    timeout_s: 600
+trace:
+  record_privileged: false
+  image_every: 0
+output_dir: runs/campaign/runs
+tags:
+- campaign
+- stack
+workers: 10

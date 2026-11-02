@@ -1,0 +1,1 @@
+{"video": "tools_llm_stack.mp4", "bytes": 675804, "seconds": 17.4, "success": true, "steps": 127, "turns": 5, "task": "mujoco/manip_stack", "seed": 10000, "workflow": "tools.llm (tool calls)", "model": "qwen3.5:35b-a3b", "renderer": "MuJoCo, re-simulated from the trace", "replay": {"success": true, "steps": 127, "mjb": null}}

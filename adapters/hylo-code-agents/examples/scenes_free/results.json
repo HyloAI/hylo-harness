@@ -1,0 +1,62 @@
+[
+ {
+  "task": "cable_lift",
+  "text": "lift the cable off the table by both of its ends, using two arms",
+  "deformable": true,
+  "reproduce": "uv run python harness/adapters/hylo-code-agents/examples/scenes_free/run_all.py --tasks cable_lift",
+  "build": "not run yet",
+  "robot": "not run yet",
+  "solve": "not run yet",
+  "scripted": "not run yet",
+  "newton": "not run yet",
+  "blender": "not run yet"
+ },
+ {
+  "task": "cloth_drape",
+  "text": "drape the cloth over the box",
+  "deformable": true,
+  "reproduce": "uv run python harness/adapters/hylo-code-agents/examples/scenes_free/run_all.py --tasks cloth_drape",
+  "build": "not run yet",
+  "robot": "not run yet",
+  "solve": "not run yet",
+  "scripted": "not run yet",
+  "newton": "not run yet",
+  "blender": "not applicable"
+ },
+ {
+  "task": "rope_line",
+  "text": "lay the rope straight along the white line on the table",
+  "deformable": true,
+  "reproduce": "uv run python harness/adapters/hylo-code-agents/examples/scenes_free/run_all.py --tasks rope_line",
+  "build": "not run yet",
+  "robot": "not run yet",
+  "solve": "not run yet",
+  "scripted": "not run yet",
+  "newton": "not run yet",
+  "blender": "not applicable"
+ },
+ {
+  "task": "rope_ring",
+  "text": "thread the end of the rope through the ring",
+  "deformable": true,
+  "reproduce": "uv run python harness/adapters/hylo-code-agents/examples/scenes_free/run_all.py --tasks rope_ring",
+  "build": "not run yet",
+  "robot": "not run yet",
+  "solve": "not run yet",
+  "scripted": "not run yet",
+  "newton": "not run yet",
+  "blender": "not applicable"
+ },
+ {
+  "task": "hinged_lid",
+  "text": "open the hinged lid of the box",
+  "deformable": false,
+  "reproduce": "uv run python harness/adapters/hylo-code-agents/examples/scenes_free/run_all.py --tasks hinged_lid",
+  "build": "not run yet",
+  "robot": "not run yet",
+  "solve": "not run yet",
+  "scripted": "not run yet",
+  "newton": "not applicable",
+  "blender": "not applicable"
+ }
+]

@@ -1,0 +1,101 @@
+{
+ "task": "a cylinder is lying on its side on the table; stand it upright on top of the wooden box",
+ "model": "ollama:qwen3.5:35b-a3b (vision)",
+ "built": true,
+ "attempts": 5,
+ "records": [
+  {
+   "attempt": 1,
+   "model": "qwen3.5:35b-a3b",
+   "backend": "ollama",
+   "tokens_in": 6975,
+   "tokens_out": 513,
+   "cached_tokens": 5953,
+   "latency_s": 253.318,
+   "cost_usd": 0.0,
+   "ok": false,
+   "problems": [
+    {
+     "code": "schema",
+     "message": "objects.1: Value error, object cylinder: give `pose` or `region`, not both",
+     "objects": [],
+     "severity": "error"
+    }
+   ],
+   "warnings": [],
+   "stages": [
+    "schema"
+   ],
+   "reply_chars": 1371
+  },
+  {
+   "attempt": 2,
+   "model_error": "http://localhost:11434/v1/chat/completions: TimeoutError('timed out')",
+   "ok": false,
+   "problems": []
+  },
+  {
+   "attempt": 3,
+   "model": "qwen3.5:35b-a3b",
+   "backend": "ollama",
+   "tokens_in": 7508,
+   "tokens_out": 416,
+   "cached_tokens": 7504,
+   "latency_s": 1745.581,
+   "cost_usd": 0.0,
+   "ok": false,
+   "problems": [
+    {
+     "code": "predicate_true_at_start",
+     "message": "the first step of the sequence already holds at the start, so it asks the robot nothing; make every step something the robot has to change",
+     "objects": [],
+     "severity": "error"
+    }
+   ],
+   "warnings": [],
+   "stages": [
+    "schema",
+    "static",
+    "physics"
+   ],
+   "reply_chars": 1033
+  },
+  {
+   "attempt": 4,
+   "model_error": "http://localhost:11434/v1/chat/completions: TimeoutError('timed out')",
+   "ok": false,
+   "problems": []
+  },
+  {
+   "attempt": 5,
+   "model": "qwen3.5:35b-a3b",
+   "backend": "ollama",
+   "tokens_in": 7639,
+   "tokens_out": 1911,
+   "cached_tokens": 6615,
+   "latency_s": 1435.783,
+   "cost_usd": 0.0,
+   "ok": true,
+   "problems": [],
+   "warnings": [],
+   "stages": [
+    "schema",
+    "static",
+    "physics",
+    "reach",
+    "satisfiable"
+   ],
+   "reply_chars": 6634
+  }
+ ],
+ "usage": {
+  "calls": 3,
+  "tokens_in": 22122,
+  "tokens_out": 2840,
+  "cost_usd": 0.0,
+  "cost_usd_known_part": 0.0,
+  "latency_s": 3434.68
+ },
+ "wall_s": 8841.7,
+ "scene": "/tmp/claude-1002/-home-bingao-hyloai/49f6a616-2836-40ee-84cf-972b09b8fd75/scratchpad/live/cylinder_upright/scene.json"
+}

@@ -1,0 +1,116 @@
+{
+ "note": "Inputs and assets are fetched from their original pages into the asset cache and verified by sha256; none is stored in the repository. Only the outputs of the runs are stored here.",
+ "inputs": {
+  "jumping_jacks": {
+   "file": "Jumping_jacks_and_burpees.webm",
+   "url": "https://upload.wikimedia.org/wikipedia/commons/5/57/Jumping_jacks_and_burpees.webm",
+   "page": "https://commons.wikimedia.org/wiki/File:Jumping_jacks_and_burpees.webm",
+   "sha256": "1c8370a29c52b5b1538f03f8c63be6cdc9333dea3cbd77cc8f2af0dbe496d5b4",
+   "author": "Taco Fleur (Cavemantraining), own work, 2017-11-15",
+   "licence": "CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)",
+   "used": "10.6 s to 13.4 s (jumping jacks)",
+   "note": "videos derived from this clip (a motion estimated from it) are shared under CC BY-SA 4.0 with this attribution"
+  },
+  "warrior_ii": {
+   "file": "Warrior_II.jpg",
+   "url": "https://upload.wikimedia.org/wikipedia/commons/0/06/Warrior_II.jpg",
+   "page": "https://commons.wikimedia.org/wiki/File:Warrior_II.jpg",
+   "sha256": "bf888f44625f7bc50766dbb8dd851e4abc85e120feb4e1491d16f8b2be519367",
+   "author": "lululemon athletica (Flickr: Wunder Groove Crop, Warrior II)",
+   "licence": "CC BY 2.0 (https://creativecommons.org/licenses/by/2.0/)",
+   "used": "the whole photo: a woman in the Warrior II yoga pose"
+  }
+ },
+ "characters": {
+  "apollo": {
+   "title": "Apptronik Apollo",
+   "kind": "mjcf",
+   "licence": "Apache-2.0",
+   "credit": "Apptronik Apollo model from MuJoCo Menagerie (Apptronik, Apache-2.0)",
+   "repo": "https://github.com/google-deepmind/mujoco_menagerie",
+   "commit": "b0655057a9df2abe39ea7fc989914ba6f248301c",
+   "folder": "apptronik_apollo",
+   "files_verified": 48
+  },
+  "g1": {
+   "title": "Unitree G1",
+   "kind": "mjcf",
+   "licence": "BSD-3-Clause",
+   "credit": "Unitree G1 model from MuJoCo Menagerie (Unitree Robotics, BSD-3-Clause)",
+   "repo": "https://github.com/google-deepmind/mujoco_menagerie",
+   "commit": "b0655057a9df2abe39ea7fc989914ba6f248301c",
+   "folder": "unitree_g1",
+   "files_verified": 39
+  },
+  "h1": {
+   "title": "Unitree H1",
+   "kind": "mjcf",
+   "licence": "BSD-3-Clause",
+   "credit": "Unitree H1 model from MuJoCo Menagerie (Unitree Robotics, BSD-3-Clause)",
+   "repo": "https://github.com/google-deepmind/mujoco_menagerie",
+   "commit": "b0655057a9df2abe39ea7fc989914ba6f248301c",
+   "folder": "unitree_h1",
+   "files_verified": 25
+  },
+  "human": {
+   "title": "Hylo stick human",
+   "kind": "mjcf",
+   "licence": "Apache-2.0 (part of Hylo)",
+   "credit": "Hylo's generic capsule humanoid (hylo-tools text_motion)",
+   "builtin": "hylo_humanoid"
+  },
+  "kenney_survivor": {
+   "title": "Kenney survivor",
+   "kind": "rig",
+   "licence": "CC0-1.0",
+   "credit": "Animated Characters 1 by Kenney (www.kenney.nl), CC0 1.0, skin survivorMaleB",
+   "page": "https://opengameart.org/content/animated-characters-1",
+   "url": "https://opengameart.org/sites/default/files/kenney_animated-characters-1.zip",
+   "sha256": "9cc53e82c941781f26aa8fb39d40887cf14b1d74cca2d10ccc6e7c140a68f820",
+   "members": [
+    "Model/characterMedium.fbx",
+    "Skins/survivorMaleB.png",
+    "License.txt"
+   ]
+  },
+  "n1": {
+   "title": "Fourier N1",
+   "kind": "mjcf",
+   "licence": "Apache-2.0",
+   "credit": "Fourier N1 model from MuJoCo Menagerie (Fourier, Apache-2.0)",
+   "repo": "https://github.com/google-deepmind/mujoco_menagerie",
+   "commit": "b0655057a9df2abe39ea7fc989914ba6f248301c",
+   "folder": "fourier_n1",
+   "files_verified": 33
+  },
+  "quaternius_casual": {
+   "title": "Quaternius casual woman",
+   "kind": "rig",
+   "licence": "CC0-1.0",
+   "credit": "Ultimate Animated Character Pack by Quaternius (Casual_Female), CC0 1.0",
+   "page": "https://opengameart.org/content/animated-characters-pack",
+   "url": "https://opengameart.org/sites/default/files/ultimate_animated_character_pack_by_quaternius.zip",
+   "sha256": "0295062cbc72da52ee804f39ac38694901a40458011f9b2638fc7ef13ed509da",
+   "members": [
+    "Ultimate Animated Character Pack - Nov 2019/FBX/Casual_Female.fbx"
+   ]
+  },
+  "t1": {
+   "title": "Booster T1",
+   "kind": "mjcf",
+   "licence": "Apache-2.0",
+   "credit": "Booster T1 model from MuJoCo Menagerie (Booster Robotics, Apache-2.0)",
+   "repo": "https://github.com/google-deepmind/mujoco_menagerie",
+   "commit": "b0655057a9df2abe39ea7fc989914ba6f248301c",
+   "folder": "booster_t1",
+   "files_verified": 28
+  }
+ },
+ "models_and_programs": {
+  "text_motion": "NVIDIA Kimodo (nvidia/Kimodo-SOMA-RP-v1.2), its own model licence, run on the CPU",
+  "human": "MediaPipe Pose (Apache-2.0), the hylo-tools human fallback",
+  "physics_and_retargeting": "MuJoCo (Apache-2.0)",
+  "render": "Blender 5.2.3 Cycles on the CPU (GPL-3.0-or-later, an external program)",
+  "agent": "qwen3.5:35b-a3b (vision) through Ollama, the model's own licence"
+ }
+}

@@ -1,0 +1,107 @@
+{
+  "request": "strike the pose shown in the image and hold it for a second",
+  "robot": "g1",
+  "inputs": {
+    "image": "/home/bingao/.cache/hylo/tools/media/mediapipe-assets/pose.jpg"
+  },
+  "model": "ollama:qwen3.5:35b-a3b (vision)",
+  "stopped": "finished",
+  "finished_by_model": true,
+  "note": "holds the pose from the image for one second",
+  "turns": 3,
+  "usage": {
+    "calls": 3,
+    "tokens_in": 4737,
+    "tokens_out": 441,
+    "cost_usd": 0.0,
+    "cost_usd_known_part": 0.0,
+    "latency_s": 2702.16
+  },
+  "cost_usd": 0.0,
+  "wall_s": 2732.0,
+  "tool_seconds": {
+    "pose_from_image": {
+      "calls": 2,
+      "seconds": 1.328
+    },
+    "retarget": {
+      "calls": 1,
+      "seconds": 0.822
+    },
+    "check": {
+      "calls": 2,
+      "seconds": 1.142
+    },
+    "render": {
+      "calls": 1,
+      "seconds": 26.508
+    }
+  },
+  "final": "Motion(hold(pose_from_image:pose.jpg): 1.0 s, 30 frames, path 0.0 m, turn 0.0 deg)",
+  "files": {
+    "motion": "motion.npz",
+    "check": "check.json",
+    "video": "motion.mp4"
+  },
+  "video_bytes": {
+    "video": 34334
+  },
+  "render_backend": "blender",
+  "check": {
+    "robot": "g1",
+    "seconds": 1.0,
+    "frames": 30,
+    "fps": 30.0,
+    "nq": 36,
+    "scale": 0.8002,
+    "mean_keypoint_err_m": 0.0422,
+    "max_keypoint_err_m": 0.0422,
+    "ground_correction_m": [
+      0.023,
+      0.023
+    ],
+    "sim_qpos": "examples/motion/image_pose/tools/003-check-g1/sim_qpos.npy",
+    "ground_penetration_max_m": 0.0011,
+    "frames_below_floor_1cm": 0,
+    "frames_floating_5cm": 0,
+    "flight_frames": 0,
+    "foot_skate_m": [
+      0.002,
+      0.0
+    ],
+    "foot_skate_mean_speed_mps": 0.002,
+    "stance_frames": [
+      29,
+      0
+    ],
+    "joint_limit_violation_frames": 0,
+    "joints_at_limit": [
+      [
+        "right_ankle_roll_joint",
+        1.0
+      ],
+      [
+        "left_ankle_roll_joint",
+        1.0
+      ]
+    ],
+    "self_collision_frames": 0,
+    "self_collision_pairs": {},
+    "com_outside_support_frac": 1.0,
+    "com_outside_support_max_m": 0.545,
+    "physics": "position servos (PD) track the joint trajectory; no balance controller",
+    "upright_s": 0.97,
+    "clip_s": 0.97,
+    "upright_frac": 0.999,
+    "fell": false,
+    "fall_reason": null,
+    "joint_track_err_rad": 0.0087,
+    "root_drift_m": 0.251,
+    "with_ankle_strategy": {
+      "upright_s": 0.97,
+      "fell": false,
+      "fall_reason": null,
+      "joint_track_err_rad": 0.022
+    }
+  }
+}

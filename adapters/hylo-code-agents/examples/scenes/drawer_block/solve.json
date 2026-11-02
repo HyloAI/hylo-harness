@@ -1,0 +1,47 @@
+{
+ "scene": "/tmp/claude-1002/-home-bingao-hyloai/49f6a616-2836-40ee-84cf-972b09b8fd75/scratchpad/live/drawer_block/scene.json",
+ "instruction": "open the drawer and put the red block in it",
+ "model": "ollama:qwen3.5:35b-a3b (vision)",
+ "seed": 0,
+ "privileged": true,
+ "env": {
+  "type": "mujoco.panda_scene",
+  "params": {
+   "scene": "/tmp/claude-1002/-home-bingao-hyloai/49f6a616-2836-40ee-84cf-972b09b8fd75/scratchpad/live/drawer_block/scene.json",
+   "cameras": [
+    "front",
+    "side",
+    "wrist"
+   ],
+   "segmentation": true,
+   "privileged_obs": true
+  }
+ },
+ "tools": "hylo.codeagents.scenes:PrivilegedSceneTools",
+ "status": "failure",
+ "success": false,
+ "steps": 448,
+ "reason": "agent_done: budget: 10 turns used",
+ "turns": 10,
+ "errors": 1,
+ "usage": {
+  "calls": 10,
+  "tokens_in": 113295,
+  "tokens_out": 11123,
+  "cost_usd": 0.0,
+  "cost_usd_known_part": 0.0,
+  "latency_s": 5262.53
+ },
+ "wall_s": 5284.7,
+ "model_s": 5262.5,
+ "trace": "/tmp/claude-1002/-home-bingao-hyloai/49f6a616-2836-40ee-84cf-972b09b8fd75/scratchpad/live/drawer_block/solve/trace",
+ "episode_id": "scene.open_drawer_put_block-s0-43cbbee2",
+ "video": {
+  "written": true,
+  "path": "/tmp/claude-1002/-home-bingao-hyloai/49f6a616-2836-40ee-84cf-972b09b8fd75/scratchpad/live/drawer_block/front.mp4",
+  "bytes": 176342,
+  "frames": 449,
+  "fps": 20.0,
+  "crf": 26
+ }
+}

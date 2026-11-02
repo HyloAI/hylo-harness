@@ -1,0 +1,71 @@
+{
+ "status": "code complete; no experiment has been run yet (the values below fill in with collect.py after the runs)",
+ "grasp_benchmark": {
+  "what": "camera-only program dex_lift.py on mujoco/dexterous-v0 (mujoco.dex_table), success = object held 8 cm above its start",
+  "command": "MUJOCO_GL=osmesa PYOPENGL_PLATFORM=osmesa LD_LIBRARY_PATH=$HOME/.local/mesa/root/usr/lib/x86_64-linux-gnu uv run python harness/adapters/hylo-code-agents/examples/dexterous/grasp_benchmark.py --out runs/dex-grasps --episodes 10 --videos",
+  "hands": {
+   "g1_right": "Unitree G1 right hand (MuJoCo Menagerie unitree_g1, BSD-3-Clause)",
+   "allegro_right": "Wonik Allegro right hand (MuJoCo Menagerie wonik_allegro, BSD-2-Clause)"
+  },
+  "results": {
+   "g1_right": {
+    "box": "not run yet",
+    "cylinder": "not run yet",
+    "sphere": "not run yet",
+    "mug": "not run yet",
+    "rock": "not run yet"
+   },
+   "allegro_right": {
+    "box": "not run yet",
+    "cylinder": "not run yet",
+    "sphere": "not run yet",
+    "mug": "not run yet",
+    "rock": "not run yet"
+   }
+  },
+  "videos": "not run yet"
+ },
+ "retargeting": {
+  "what": "MediaPipe keypoints of the mug video retargeted onto each hand: fingertip error per frame (robot scale, palm frame) and solve time per frame",
+  "command": "MUJOCO_GL=osmesa PYOPENGL_PLATFORM=osmesa LD_LIBRARY_PATH=$HOME/.local/mesa/root/usr/lib/x86_64-linux-gnu uv run python harness/adapters/hylo-code-agents/examples/dexterous/retarget_eval.py hf:rli14/10132025_human_demonstrations_hurricanemug_plaintable:0 --profile video --camera observation.image.ego_global --out runs/dex-retarget --hands g1 allegro --video",
+  "results": {
+   "g1": {
+    "tip_error_mm": "not run yet",
+    "ms_per_frame": "not run yet"
+   },
+   "allegro": {
+    "tip_error_mm": "not run yet",
+    "ms_per_frame": "not run yet"
+   }
+  },
+  "video": "not run yet"
+ },
+ "replays": {
+  "mug": {
+   "source": "hf:rli14/10132025_human_demonstrations_hurricanemug_plaintable:0",
+   "licence": "apache-2.0 (Hugging Face dataset card)",
+   "command_after": "MUJOCO_GL=osmesa PYOPENGL_PLATFORM=osmesa LD_LIBRARY_PATH=$HOME/.local/mesa/root/usr/lib/x86_64-linux-gnu uv run hylo replay hf:rli14/10132025_human_demonstrations_hurricanemug_plaintable:0 --profile video --camera observation.image.ego_global --labels \"wooden spatula,white mug\" --hand allegro --out runs/dex-replay-mug --video-path harness/adapters/hylo-code-agents/examples/dexterous/human_mug_allegro.mp4",
+   "command_before": "MUJOCO_GL=osmesa PYOPENGL_PLATFORM=osmesa LD_LIBRARY_PATH=$HOME/.local/mesa/root/usr/lib/x86_64-linux-gnu uv run hylo replay hf:rli14/10132025_human_demonstrations_hurricanemug_plaintable:0 --profile video --camera observation.image.ego_global --labels \"wooden spatula,white mug\" --out runs/dex-replay-mug-gripper",
+   "previous_gripper_run": {
+    "from": "examples/replay/results.json (human_mug_0_full)",
+    "events_matched": "0/2",
+    "object_error_final_m": {
+     "white_mug": 0.1197
+    },
+    "final_state_success": false
+   },
+   "before": "not run yet",
+   "after": "not run yet"
+  },
+  "flask": {
+   "source": "hf:rli14/10132025_human_demonstrations_hydroflask_plaintable_reorient:0",
+   "licence": "apache-2.0 (Hugging Face dataset card)",
+   "object": "a Hydro Flask bottle, reoriented",
+   "command_after": "MUJOCO_GL=osmesa PYOPENGL_PLATFORM=osmesa LD_LIBRARY_PATH=$HOME/.local/mesa/root/usr/lib/x86_64-linux-gnu uv run hylo replay hf:rli14/10132025_human_demonstrations_hydroflask_plaintable_reorient:0 --profile video --camera observation.image.ego_global --labels \"water bottle\" --hand allegro --out runs/dex-replay-flask --video-path harness/adapters/hylo-code-agents/examples/dexterous/human_flask_allegro.mp4",
+   "command_before": "MUJOCO_GL=osmesa PYOPENGL_PLATFORM=osmesa LD_LIBRARY_PATH=$HOME/.local/mesa/root/usr/lib/x86_64-linux-gnu uv run hylo replay hf:rli14/10132025_human_demonstrations_hydroflask_plaintable_reorient:0 --profile video --camera observation.image.ego_global --labels \"water bottle\" --out runs/dex-replay-flask-gripper",
+   "before": "not run yet",
+   "after": "not run yet"
+  }
+ },
+ "collect": "uv run python harness/adapters/hylo-code-agents/examples/dexterous/collect.py"
+}

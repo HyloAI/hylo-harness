@@ -1,0 +1,33 @@
+{
+ "repo": "google-deepmind/mujoco_menagerie",
+ "commit": "b0655057a9df2abe39ea7fc989914ba6f248301c",
+ "folder": "unitree_h1",
+ "licence": "BSD-3-Clause (Unitree Robotics), LICENSE kept",
+ "sha256": {
+  "LICENSE": "98335465f43a20b5850e4651db6e74c4aa1e9fc8e8813d38f345178045c0da50",
+  "README.md": "37a85d01a4f45225e1a14519489f8c70b05a4d7e158f9949a48bc445522f00e0",
+  "assets/left_ankle_link.stl": "f623223b59d0f8cd86a799f409f4e8680da3e48d9b60e9f4bf9dad5c5dc8ac25",
+  "assets/left_elbow_link.stl": "5ccf9bc83a751c1965b692e75534e57ee3c8a0916cbcff2ccccd8fe2b9d818d7",
+  "assets/left_hip_pitch_link.stl": "aa790c31ffc100cd182f2bf4480e7bfda675edc58ed8f361b6553a4975c9de3b",
+  "assets/left_hip_roll_link.stl": "8ed880cf1171e048cfe50489fe2546c32790ac0c24a2b3b4c560495401013552",
+  "assets/left_hip_yaw_link.stl": "103a854e684b84e1baba7d073822079069c64d0fa7b1592f29d38bd29f545bfb",
+  "assets/left_knee_link.stl": "efda8a6c54406c788102c0d6e59ea95e24114607bc2da9a2bf7f287ef7e48109",
+  "assets/left_shoulder_pitch_link.stl": "42e1db49464ca0f44f933114ee426e7f6d6310d20cf104bfa38b5ed4794cfab7",
+  "assets/left_shoulder_roll_link.stl": "8d3bcf767d72a9a5d7dae539eae79dc4132f0159b8803a6f6f2f9ad4b7e94d19",
+  "assets/left_shoulder_yaw_link.stl": "e22a5b53f8f307e6c5d6c17f9ceae4852c6468547a951cb39dfdec9ee414b515",
+  "assets/logo_link.stl": "ef9635c847ca7cd61aeaed86ad599935b648fb6f8688867c0448917b1811511b",
+  "assets/pelvis.stl": "dc2cbbeb07d3b63bce9fedeb8cf5252609dca1e89380734d22d5b3c8ded2f15c",
+  "assets/right_ankle_link.stl": "a72e7b10d3961b5c5bb7b0ca09f20cbc203619f5ded33ca030517c06298d2fd9",
+  "assets/right_elbow_link.stl": "bc1b2aa33cffda279b3e6a40b5b932b86de9cce6c41f0c0d860b442e81edcdc2",
+  "assets/right_hip_pitch_link.stl": "3c0300dd96432f218857886007e9d4e8be038cd8b85e04e84a59df4de7f90476",
+  "assets/right_hip_roll_link.stl": "3e95b01b0a215e1d134545d4073cf7a72ab38ca33e35c606c03f1706d63588c6",
+  "assets/right_hip_yaw_link.stl": "10badbb0ac78e22fc220f421b1c919cfcf59406b412d78313e4b8b06cbc51e47",
+  "assets/right_knee_link.stl": "6183abbaef2afc775c220853e403b8479022a99954dbeef829b39d71916ddeda",
+  "assets/right_shoulder_pitch_link.stl": "850ffa7321993bfadcdb8bab1d422239f6a20abe27daa5ef99622f55d4da3217",
+  "assets/right_shoulder_roll_link.stl": "b9e793e351e09027d27427c06df2c1cb6b37c0205d0f68686b0d73916c6821de",
+  "assets/right_shoulder_yaw_link.stl": "0c9e4bec895f24c07fb2c4d132fc5e3cc7146155547267e9c270789af6567781",
+  "assets/torso_link.stl": "3ab785cbfbd851b0e9c59a46871aabc4718f3f8e726e21a2d14360d217ec7ba8",
+  "h1.xml": "4d15bc381ee8113722fe514a6fc0059988cd114c2bedfadf2e6279b41ef0810d",
+  "scene.xml": "5d85babd8a7cce435f125cedbb3f5d82c36e282686be4f965b2353010a4d6bed"
+ }
+}

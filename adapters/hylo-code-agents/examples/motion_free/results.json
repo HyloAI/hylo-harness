@@ -1,0 +1,64 @@
+{
+ "note": "Each request lists its status; a request that has not been run has no numbers. Model, tools and renders are those of sources.json; every number below comes from that request's run directory.",
+ "commands": {
+  "one request": "uv run python harness/adapters/hylo-code-agents/examples/motion_free/showcase.py run NAME",
+  "all requests": "uv run python harness/adapters/hylo-code-agents/examples/motion_free/showcase.py run all",
+  "all characters": "uv run python harness/adapters/hylo-code-agents/examples/motion_free/showcase.py lineup text_all",
+  "check the plumbing": "uv run python harness/adapters/hylo-code-agents/examples/motion_free/showcase.py smoke --out DIR"
+ },
+ "requests": {
+  "text_all": {
+   "what": "a text request rendered on every character",
+   "mode": "guided",
+   "request": "wave with the right hand, then squat down and stand up again",
+   "inputs": [],
+   "reproduce": "uv run python harness/adapters/hylo-code-agents/examples/motion_free/showcase.py run text_all",
+   "status": "not run yet"
+  },
+  "video_jacks": {
+   "what": "a sports clip on two robots and one human character, next to the source",
+   "mode": "guided",
+   "request": "copy the jumping jacks the person does in the video between 10.6 s and 13.4 s",
+   "inputs": [
+    "jumping_jacks"
+   ],
+   "reproduce": "uv run python harness/adapters/hylo-code-agents/examples/motion_free/showcase.py run video_jacks",
+   "status": "not run yet"
+  },
+  "image_warrior": {
+   "what": "an image request",
+   "mode": "guided",
+   "request": "from standing, move into the pose of the person in the photo, hold it for two seconds, then return to standing",
+   "inputs": [
+    "warrior_ii"
+   ],
+   "reproduce": "uv run python harness/adapters/hylo-code-agents/examples/motion_free/showcase.py run image_warrior",
+   "status": "not run yet"
+  },
+  "free_loop": {
+   "what": "free mode: a motion from a video, looped and mirrored into a longer routine",
+   "mode": "free",
+   "request": "Turn the jumping jacks in the video (10.6 s to 13.4 s) into a routine of about 12 seconds: loop the movement, mirror every other repeat, make the joins smooth, and show it on two robots and one human character",
+   "inputs": [
+    "jumping_jacks"
+   ],
+   "reproduce": "uv run python harness/adapters/hylo-code-agents/examples/motion_free/showcase.py run free_loop",
+   "status": "not run yet"
+  },
+  "free_keyframe": {
+   "what": "free mode: text plus a pose image as a keyframe",
+   "mode": "free",
+   "request": "A person walks forward four steps and ends in the pose of the person in the photo, holding it for two seconds. Show it on three robots and both human characters",
+   "inputs": [
+    "warrior_ii"
+   ],
+   "reproduce": "uv run python harness/adapters/hylo-code-agents/examples/motion_free/showcase.py run free_keyframe",
+   "status": "not run yet"
+  }
+ },
+ "lineup_all_characters": {
+  "what": "the final motion of text_all on every character, one video grid",
+  "reproduce": "uv run python harness/adapters/hylo-code-agents/examples/motion_free/showcase.py run text_all && uv run python harness/adapters/hylo-code-agents/examples/motion_free/showcase.py lineup text_all",
+  "status": "not run yet"
+ }
+}

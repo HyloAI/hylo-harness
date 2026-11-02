@@ -1,0 +1,34 @@
+schema_version: hylo.evolve/v0.1
+name: campaign-stack-research
+experiment: experiment.yaml
+proposer:
+  type: research.llm
+  params:
+    model:
+      backend: ollama
+      model: gpt-oss:20b
+      vision: false
+      reasoning_effort: low
+      max_tokens: 4000
+      timeout_s: 2400
+      retries: 1
+    dev: 3
+    budget:
+      turns: 30
+      resets: 6
+      submits: 3
+    out_root: runs/campaign/research
+    program_timeout_s: 600
+protocol:
+  alpha: 0.05
+  stage1_pairs: 10
+  stage1_max_deficit: 2
+  gate_top_k: 1
+  gate_looks: 1
+  max_candidates: 1
+  gate_test:
+    type: mcnemar
+cycles: 1
+stop_after_no_progress: 1
+approval: auto
+out_dir: runs/campaign/campaign

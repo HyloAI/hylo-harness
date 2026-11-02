@@ -1,0 +1,2333 @@
+{
+ "panda_pick_place_1": {
+  "source": "panda:pick_place:1",
+  "licence": "ours (Apache-2.0)",
+  "instruction": "place the green block on the plate",
+  "frames": 97,
+  "fps": 10.0,
+  "labels": [
+   "green block",
+   "pink plate"
+  ],
+  "labels_by": "vlm",
+  "masks": [
+   "green block",
+   "pink plate"
+  ],
+  "missing_masks": [],
+  "lift": {
+   "depth": "recorded",
+   "camera": "recorded pose",
+   "table_z": 0.0006
+  },
+  "register": {
+   "method": "none needed (camera pose known)"
+  },
+  "objects": [
+   {
+    "name": "green_block",
+    "dynamic": true,
+    "mesh_backend": "depth",
+    "parts": 1,
+    "size_m": [
+     0.0467,
+     0.0435,
+     0.0445
+    ],
+    "net_motion_m": null,
+    "size_error": {
+     "est_m": [
+      0.0435,
+      0.0445,
+      0.0467
+     ],
+     "gt_m": [
+      0.045,
+      0.045,
+      0.045
+     ],
+     "abs_err_m": [
+      0.0015,
+      0.0005,
+      0.0017
+     ],
+     "max_abs_err_m": 0.0017,
+     "rel_err": [
+      0.033,
+      0.012,
+      0.037
+     ]
+    }
+   },
+   {
+    "name": "pink_plate",
+    "dynamic": false,
+    "mesh_backend": "points-hull (tool failed)",
+    "parts": 1,
+    "size_m": [
+     0.1423,
+     0.1424,
+     0.0119
+    ],
+    "net_motion_m": null,
+    "size_error": {
+     "est_m": [
+      0.0119,
+      0.1423,
+      0.1424
+     ],
+     "gt_m": [
+      0.012,
+      0.15,
+      0.15
+     ],
+     "abs_err_m": [
+      0.0001,
+      0.0077,
+      0.0076
+     ],
+     "max_abs_err_m": 0.0077,
+     "rel_err": [
+      0.009,
+      0.051,
+      0.051
+     ]
+    }
+   }
+  ],
+  "tracking": [
+   {
+    "name": "green_block",
+    "moved_m": 0.2785,
+    "lost_frames": 0,
+    "mean_inliers": 0.959
+   },
+   {
+    "name": "pink_plate",
+    "moved_m": 0.0001,
+    "lost_frames": 0,
+    "mean_inliers": 1.0
+   }
+  ],
+  "events_recorded": [
+   [
+    "grasp",
+    "green_block",
+    3.9
+   ],
+   [
+    "lift",
+    "green_block",
+    4.9
+   ],
+   [
+    "release",
+    "green_block",
+    9.2
+   ],
+   [
+    "place",
+    "green_block",
+    9.2
+   ]
+  ],
+  "events_simulated": [
+   [
+    "grasp",
+    "green_block",
+    3.8
+   ],
+   [
+    "lift",
+    "green_block",
+    5.0
+   ],
+   [
+    "release",
+    "green_block",
+    9.1
+   ],
+   [
+    "place",
+    "green_block",
+    9.1
+   ]
+  ],
+  "events_matched": "3/3",
+  "pose_error_sim_vs_tracked": {
+   "green_block": {
+    "frames": 97,
+    "trans_mean_m": 0.006,
+    "trans_median_m": 0.0021,
+    "trans_max_m": 0.0328,
+    "trans_final_m": 0.0021,
+    "rot_mean_deg": 1.4,
+    "rot_final_deg": 2.43
+   }
+  },
+  "pose_error_tracked_vs_gt": {
+   "green_block": {
+    "initial_offset_m": 0.0025,
+    "frames": 97,
+    "trans_mean_m": 0.0008,
+    "trans_median_m": 0.0003,
+    "trans_max_m": 0.0047,
+    "trans_final_m": 0.0003
+   }
+  },
+  "pose_error_sim_vs_gt": {
+   "green_block": {
+    "frames": 97,
+    "trans_mean_m": 0.0062,
+    "trans_median_m": 0.0021,
+    "trans_max_m": 0.035,
+    "trans_final_m": 0.0024
+   }
+  },
+  "final_state": {
+   "tolerance_m": 0.03,
+   "objects": {
+    "green_block": {
+     "err_m": 0.0024,
+     "ok": true
+    }
+   },
+   "success": true
+  },
+  "recording_success": true,
+  "success_reproduced": true,
+  "kinematic": {
+   "penetration_max_m": 0.0058,
+   "frames_penetrating_5mm": 1,
+   "held_hand_object_dist_m": {
+    "mean": 0.0039,
+    "max": 0.0064
+   }
+  },
+  "hands": null,
+  "render": "mujoco",
+  "timing_s": {
+   "labels": 102.87,
+   "segment": 41.94,
+   "lift": 0.1,
+   "track": 7.72,
+   "register": 0.0,
+   "events": 0.0,
+   "objects": 3.4,
+   "scene": 0.64,
+   "replay": 0.63,
+   "checks": 0.0,
+   "video": 32.65
+  },
+  "video": "panda_pick_place_1.mp4",
+  "video_bytes": 2666228
+ },
+ "panda_pick_place_2": {
+  "source": "panda:pick_place:2",
+  "licence": "ours (Apache-2.0)",
+  "instruction": "place the red block on the white plate",
+  "frames": 93,
+  "fps": 10.0,
+  "labels": [
+   "red block",
+   "white plate"
+  ],
+  "labels_by": "vlm",
+  "masks": [
+   "red block",
+   "white plate"
+  ],
+  "missing_masks": [],
+  "lift": {
+   "depth": "recorded",
+   "camera": "recorded pose",
+   "table_z": 0.0006
+  },
+  "register": {
+   "method": "none needed (camera pose known)"
+  },
+  "objects": [
+   {
+    "name": "red_block",
+    "dynamic": true,
+    "mesh_backend": "depth",
+    "parts": 1,
+    "size_m": [
+     0.0475,
+     0.0395,
+     0.0448
+    ],
+    "net_motion_m": null,
+    "size_error": {
+     "est_m": [
+      0.0395,
+      0.0448,
+      0.0475
+     ],
+     "gt_m": [
+      0.045,
+      0.045,
+      0.045
+     ],
+     "abs_err_m": [
+      0.0055,
+      0.0002,
+      0.0025
+     ],
+     "max_abs_err_m": 0.0055,
+     "rel_err": [
+      0.121,
+      0.005,
+      0.056
+     ]
+    }
+   },
+   {
+    "name": "white_plate",
+    "dynamic": false,
+    "mesh_backend": "points-hull (tool failed)",
+    "parts": 1,
+    "size_m": [
+     0.1417,
+     0.1419,
+     0.0119
+    ],
+    "net_motion_m": null,
+    "size_error": {
+     "est_m": [
+      0.0119,
+      0.1417,
+      0.1419
+     ],
+     "gt_m": [
+      0.012,
+      0.15,
+      0.15
+     ],
+     "abs_err_m": [
+      0.0001,
+      0.0083,
+      0.0081
+     ],
+     "max_abs_err_m": 0.0083,
+     "rel_err": [
+      0.007,
+      0.055,
+      0.054
+     ]
+    }
+   }
+  ],
+  "tracking": [
+   {
+    "name": "red_block",
+    "moved_m": 0.2499,
+    "lost_frames": 0,
+    "mean_inliers": 0.895
+   },
+   {
+    "name": "white_plate",
+    "moved_m": 0.0,
+    "lost_frames": 0,
+    "mean_inliers": 0.998
+   }
+  ],
+  "events_recorded": [
+   [
+    "grasp",
+    "red_block",
+    3.8
+   ],
+   [
+    "lift",
+    "red_block",
+    4.8
+   ],
+   [
+    "release",
+    "red_block",
+    8.9
+   ],
+   [
+    "place",
+    "red_block",
+    8.9
+   ]
+  ],
+  "events_simulated": [
+   [
+    "grasp",
+    "red_block",
+    3.7
+   ],
+   [
+    "lift",
+    "red_block",
+    4.9
+   ],
+   [
+    "release",
+    "red_block",
+    8.8
+   ],
+   [
+    "place",
+    "red_block",
+    8.8
+   ]
+  ],
+  "events_matched": "3/3",
+  "pose_error_sim_vs_tracked": {
+   "red_block": {
+    "frames": 93,
+    "trans_mean_m": 0.0058,
+    "trans_median_m": 0.0006,
+    "trans_max_m": 0.0324,
+    "trans_final_m": 0.0004,
+    "rot_mean_deg": 2.05,
+    "rot_final_deg": 6.17
+   }
+  },
+  "pose_error_tracked_vs_gt": {
+   "red_block": {
+    "initial_offset_m": 0.0039,
+    "frames": 93,
+    "trans_mean_m": 0.001,
+    "trans_median_m": 0.0005,
+    "trans_max_m": 0.0052,
+    "trans_final_m": 0.0008
+   }
+  },
+  "pose_error_sim_vs_gt": {
+   "red_block": {
+    "frames": 93,
+    "trans_mean_m": 0.0059,
+    "trans_median_m": 0.0008,
+    "trans_max_m": 0.034,
+    "trans_final_m": 0.0007
+   }
+  },
+  "final_state": {
+   "tolerance_m": 0.03,
+   "objects": {
+    "red_block": {
+     "err_m": 0.0007,
+     "ok": true
+    }
+   },
+   "success": true
+  },
+  "recording_success": true,
+  "success_reproduced": true,
+  "kinematic": {
+   "penetration_max_m": 0.0056,
+   "frames_penetrating_5mm": 2,
+   "held_hand_object_dist_m": {
+    "mean": 0.0058,
+    "max": 0.009
+   }
+  },
+  "hands": null,
+  "render": "mujoco",
+  "timing_s": {
+   "labels": 99.77,
+   "segment": 45.86,
+   "lift": 0.1,
+   "track": 6.47,
+   "register": 0.0,
+   "events": 0.0,
+   "objects": 3.23,
+   "scene": 0.69,
+   "replay": 0.54,
+   "checks": 0.0,
+   "video": 33.56
+  },
+  "video": "panda_pick_place_2.mp4",
+  "video_bytes": 2640596
+ },
+ "panda_stack_3": {
+  "source": "panda:stack:3",
+  "licence": "ours (Apache-2.0)",
+  "instruction": "build a tower: the blue block at the bottom, then the green block, then the yellow block on top",
+  "frames": 188,
+  "fps": 10.0,
+  "labels": [
+   "blue block",
+   "green block",
+   "yellow block"
+  ],
+  "labels_by": "vlm",
+  "masks": [
+   "blue block",
+   "yellow block",
+   "green block"
+  ],
+  "missing_masks": [],
+  "lift": {
+   "depth": "recorded",
+   "camera": "recorded pose",
+   "table_z": 0.0006
+  },
+  "register": {
+   "method": "none needed (camera pose known)"
+  },
+  "objects": [
+   {
+    "name": "blue_block",
+    "dynamic": false,
+    "mesh_backend": "depth",
+    "parts": 31,
+    "size_m": [
+     0.0452,
+     0.0408,
+     0.0446
+    ],
+    "net_motion_m": null,
+    "size_error": {
+     "est_m": [
+      0.0408,
+      0.0446,
+      0.0452
+     ],
+     "gt_m": [
+      0.045,
+      0.045,
+      0.045
+     ],
+     "abs_err_m": [
+      0.0042,
+      0.0004,
+      0.0002
+     ],
+     "max_abs_err_m": 0.0042,
+     "rel_err": [
+      0.093,
+      0.009,
+      0.004
+     ]
+    }
+   },
+   {
+    "name": "yellow_block",
+    "dynamic": true,
+    "mesh_backend": "depth",
+    "parts": 1,
+    "size_m": [
+     0.0437,
+     0.0397,
+     0.045
+    ],
+    "net_motion_m": null,
+    "size_error": {
+     "est_m": [
+      0.0397,
+      0.0437,
+      0.045
+     ],
+     "gt_m": [
+      0.045,
+      0.045,
+      0.045
+     ],
+     "abs_err_m": [
+      0.0053,
+      0.0013,
+      0.0
+     ],
+     "max_abs_err_m": 0.0053,
+     "rel_err": [
+      0.117,
+      0.03,
+      0.0
+     ]
+    }
+   },
+   {
+    "name": "green_block",
+    "dynamic": true,
+    "mesh_backend": "depth",
+    "parts": 1,
+    "size_m": [
+     0.0424,
+     0.047,
+     0.0446
+    ],
+    "net_motion_m": null,
+    "size_error": {
+     "est_m": [
+      0.0424,
+      0.0446,
+      0.047
+     ],
+     "gt_m": [
+      0.045,
+      0.045,
+      0.045
+     ],
+     "abs_err_m": [
+      0.0026,
+      0.0004,
+      0.002
+     ],
+     "max_abs_err_m": 0.0026,
+     "rel_err": [
+      0.057,
+      0.008,
+      0.045
+     ]
+    }
+   }
+  ],
+  "tracking": [
+   {
+    "name": "blue_block",
+    "moved_m": 0.0001,
+    "lost_frames": 0,
+    "mean_inliers": 0.989
+   },
+   {
+    "name": "yellow_block",
+    "moved_m": 0.2284,
+    "lost_frames": 0,
+    "mean_inliers": 0.932
+   },
+   {
+    "name": "green_block",
+    "moved_m": 0.2755,
+    "lost_frames": 0,
+    "mean_inliers": 0.93
+   }
+  ],
+  "events_recorded": [
+   [
+    "grasp",
+    "green_block",
+    4.0
+   ],
+   [
+    "lift",
+    "green_block",
+    5.1
+   ],
+   [
+    "release",
+    "green_block",
+    9.2
+   ],
+   [
+    "place",
+    "green_block",
+    9.2
+   ],
+   [
+    "grasp",
+    "yellow_block",
+    13.7
+   ],
+   [
+    "lift",
+    "yellow_block",
+    14.8
+   ],
+   [
+    "release",
+    "yellow_block",
+    18.4
+   ],
+   [
+    "place",
+    "yellow_block",
+    18.4
+   ]
+  ],
+  "events_simulated": [
+   [
+    "grasp",
+    "green_block",
+    4.0
+   ],
+   [
+    "lift",
+    "green_block",
+    5.2
+   ],
+   [
+    "release",
+    "green_block",
+    9.1
+   ],
+   [
+    "place",
+    "green_block",
+    9.1
+   ],
+   [
+    "grasp",
+    "yellow_block",
+    13.7
+   ],
+   [
+    "lift",
+    "yellow_block",
+    14.9
+   ],
+   [
+    "release",
+    "yellow_block",
+    18.3
+   ],
+   [
+    "place",
+    "yellow_block",
+    18.3
+   ]
+  ],
+  "events_matched": "6/6",
+  "pose_error_sim_vs_tracked": {
+   "yellow_block": {
+    "frames": 188,
+    "trans_mean_m": 0.0027,
+    "trans_median_m": 0.0003,
+    "trans_max_m": 0.0285,
+    "trans_final_m": 0.0054,
+    "rot_mean_deg": 2.13,
+    "rot_final_deg": 22.98
+   },
+   "green_block": {
+    "frames": 188,
+    "trans_mean_m": 0.0047,
+    "trans_median_m": 0.0029,
+    "trans_max_m": 0.0308,
+    "trans_final_m": 0.0031,
+    "rot_mean_deg": 3.41,
+    "rot_final_deg": 2.86
+   }
+  },
+  "pose_error_tracked_vs_gt": {
+   "yellow_block": {
+    "initial_offset_m": 0.0035,
+    "frames": 188,
+    "trans_mean_m": 0.0008,
+    "trans_median_m": 0.0001,
+    "trans_max_m": 0.0076,
+    "trans_final_m": 0.0076
+   },
+   "green_block": {
+    "initial_offset_m": 0.0036,
+    "frames": 188,
+    "trans_mean_m": 0.0009,
+    "trans_median_m": 0.0004,
+    "trans_max_m": 0.0067,
+    "trans_final_m": 0.0011
+   }
+  },
+  "pose_error_sim_vs_gt": {
+   "yellow_block": {
+    "frames": 188,
+    "trans_mean_m": 0.0026,
+    "trans_median_m": 0.0002,
+    "trans_max_m": 0.0323,
+    "trans_final_m": 0.0038
+   },
+   "green_block": {
+    "frames": 188,
+    "trans_mean_m": 0.0047,
+    "trans_median_m": 0.0033,
+    "trans_max_m": 0.033,
+    "trans_final_m": 0.0033
+   }
+  },
+  "final_state": {
+   "tolerance_m": 0.03,
+   "objects": {
+    "yellow_block": {
+     "err_m": 0.0038,
+     "ok": true
+    },
+    "green_block": {
+     "err_m": 0.0033,
+     "ok": true
+    }
+   },
+   "success": true
+  },
+  "recording_success": true,
+  "success_reproduced": true,
+  "kinematic": {
+   "penetration_max_m": 0.007,
+   "frames_penetrating_5mm": 8,
+   "held_hand_object_dist_m": {
+    "mean": 0.0059,
+    "max": 0.0109
+   }
+  },
+  "hands": null,
+  "render": "mujoco",
+  "timing_s": {
+   "labels": 162.25,
+   "segment": 78.01,
+   "lift": 0.15,
+   "track": 20.12,
+   "register": 0.0,
+   "events": 0.0,
+   "objects": 32.41,
+   "scene": 0.89,
+   "replay": 0.92,
+   "checks": 0.0,
+   "video": 64.41
+  },
+  "video": "panda_stack_3.mp4",
+  "video_bytes": 2906489
+ },
+ "panda_put_in_bowl_4": {
+  "source": "panda:put_in_bowl:4",
+  "licence": "ours (Apache-2.0)",
+  "instruction": "place the blue cylinder inside the pink bowl",
+  "frames": 109,
+  "fps": 10.0,
+  "labels": [
+   "pink bowl",
+   "blue cylinder"
+  ],
+  "labels_by": "vlm",
+  "masks": [
+   "blue cylinder",
+   "pink bowl"
+  ],
+  "missing_masks": [],
+  "lift": {
+   "depth": "recorded",
+   "camera": "recorded pose",
+   "table_z": 0.0009
+  },
+  "register": {
+   "method": "none needed (camera pose known)"
+  },
+  "objects": [
+   {
+    "name": "blue_cylinder",
+    "dynamic": true,
+    "mesh_backend": "depth",
+    "parts": 1,
+    "size_m": [
+     0.0356,
+     0.0367,
+     0.0596
+    ],
+    "net_motion_m": null,
+    "size_error": {
+     "est_m": [
+      0.0356,
+      0.0367,
+      0.0596
+     ],
+     "gt_m": [
+      0.042,
+      0.042,
+      0.06
+     ],
+     "abs_err_m": [
+      0.0064,
+      0.0053,
+      0.0004
+     ],
+     "max_abs_err_m": 0.0064,
+     "rel_err": [
+      0.153,
+      0.126,
+      0.007
+     ]
+    }
+   },
+   {
+    "name": "pink_bowl",
+    "dynamic": false,
+    "mesh_backend": "height-field columns (mesh tool failed)",
+    "parts": 118,
+    "size_m": [
+     0.18,
+     0.18,
+     0.0552
+    ],
+    "net_motion_m": null,
+    "size_error": {
+     "est_m": [
+      0.0552,
+      0.18,
+      0.18
+     ],
+     "gt_m": [
+      0.05,
+      0.178,
+      0.178
+     ],
+     "abs_err_m": [
+      0.0052,
+      0.002,
+      0.002
+     ],
+     "max_abs_err_m": 0.0052,
+     "rel_err": [
+      0.103,
+      0.011,
+      0.011
+     ]
+    }
+   }
+  ],
+  "tracking": [
+   {
+    "name": "blue_cylinder",
+    "moved_m": 0.4899,
+    "lost_frames": 0,
+    "mean_inliers": 0.939
+   },
+   {
+    "name": "pink_bowl",
+    "moved_m": 0.0,
+    "lost_frames": 0,
+    "mean_inliers": 0.965
+   }
+  ],
+  "events_recorded": [
+   [
+    "grasp",
+    "blue_cylinder",
+    4.2
+   ],
+   [
+    "lift",
+    "blue_cylinder",
+    5.2
+   ],
+   [
+    "release",
+    "blue_cylinder",
+    10.4
+   ],
+   [
+    "place",
+    "blue_cylinder",
+    10.6
+   ]
+  ],
+  "events_simulated": [
+   [
+    "grasp",
+    "blue_cylinder",
+    4.1
+   ],
+   [
+    "lift",
+    "blue_cylinder",
+    5.3
+   ],
+   [
+    "release",
+    "blue_cylinder",
+    10.3
+   ],
+   [
+    "place",
+    "blue_cylinder",
+    10.4
+   ]
+  ],
+  "events_matched": "3/3",
+  "pose_error_sim_vs_tracked": {
+   "blue_cylinder": {
+    "frames": 109,
+    "trans_mean_m": 0.008,
+    "trans_median_m": 0.0035,
+    "trans_max_m": 0.0366,
+    "trans_final_m": 0.005,
+    "rot_mean_deg": 27.41,
+    "rot_final_deg": 87.34
+   }
+  },
+  "pose_error_tracked_vs_gt": {
+   "blue_cylinder": {
+    "initial_offset_m": 0.0031,
+    "frames": 109,
+    "trans_mean_m": 0.0022,
+    "trans_median_m": 0.0005,
+    "trans_max_m": 0.0362,
+    "trans_final_m": 0.0049
+   }
+  },
+  "pose_error_sim_vs_gt": {
+   "blue_cylinder": {
+    "frames": 109,
+    "trans_mean_m": 0.0081,
+    "trans_median_m": 0.0027,
+    "trans_max_m": 0.0395,
+    "trans_final_m": 0.0027
+   }
+  },
+  "final_state": {
+   "tolerance_m": 0.03,
+   "objects": {
+    "blue_cylinder": {
+     "err_m": 0.0027,
+     "ok": true
+    }
+   },
+   "success": true
+  },
+  "recording_success": true,
+  "success_reproduced": true,
+  "kinematic": {
+   "penetration_max_m": 0.0021,
+   "frames_penetrating_5mm": 0,
+   "held_hand_object_dist_m": {
+    "mean": 0.0063,
+    "max": 0.0305
+   }
+  },
+  "hands": null,
+  "render": "mujoco",
+  "timing_s": {
+   "labels": 822.21,
+   "segment": 16.71,
+   "lift": 0.1,
+   "track": 17.72,
+   "register": 0.0,
+   "events": 0.0,
+   "objects": 6.55,
+   "scene": 0.59,
+   "replay": 0.67,
+   "checks": 0.0,
+   "video": 46.12
+  },
+  "video": "panda_put_in_bowl_4.mp4",
+  "video_bytes": 2737916
+ },
+ "panda_push_to_zone_5": {
+  "source": "panda:push_to_zone:5",
+  "licence": "ours (Apache-2.0)",
+  "instruction": "slide the large box onto the red zone",
+  "frames": 118,
+  "fps": 10.0,
+  "labels": [
+   "green box",
+   "yellow square",
+   "red square"
+  ],
+  "labels_by": "vlm",
+  "masks": [
+   "red square",
+   "green box",
+   "yellow square"
+  ],
+  "missing_masks": [],
+  "lift": {
+   "depth": "recorded",
+   "camera": "recorded pose",
+   "table_z": 0.0007
+  },
+  "register": {
+   "method": "none needed (camera pose known)"
+  },
+  "objects": [
+   {
+    "name": "green_box",
+    "dynamic": true,
+    "mesh_backend": "depth",
+    "parts": 1,
+    "size_m": [
+     0.1043,
+     0.1206,
+     0.0598
+    ],
+    "net_motion_m": null,
+    "size_error": {
+     "est_m": [
+      0.0598,
+      0.1043,
+      0.1206
+     ],
+     "gt_m": [
+      0.06,
+      0.11,
+      0.11
+     ],
+     "abs_err_m": [
+      0.0002,
+      0.0057,
+      0.0106
+     ],
+     "max_abs_err_m": 0.0106,
+     "rel_err": [
+      0.003,
+      0.052,
+      0.097
+     ]
+    }
+   }
+  ],
+  "tracking": [
+   {
+    "name": "green_box",
+    "moved_m": 0.2968,
+    "lost_frames": 0,
+    "mean_inliers": 0.955
+   }
+  ],
+  "events_recorded": [],
+  "events_simulated": [],
+  "events_matched": "0/0",
+  "pose_error_sim_vs_tracked": {
+   "green_box": {
+    "frames": 118,
+    "trans_mean_m": 0.0033,
+    "trans_median_m": 0.0002,
+    "trans_max_m": 0.0159,
+    "trans_final_m": 0.0105,
+    "rot_mean_deg": 2.05,
+    "rot_final_deg": 24.64
+   }
+  },
+  "pose_error_tracked_vs_gt": {
+   "green_box": {
+    "initial_offset_m": 0.0043,
+    "frames": 118,
+    "trans_mean_m": 0.0014,
+    "trans_median_m": 0.0003,
+    "trans_max_m": 0.0113,
+    "trans_final_m": 0.0082
+   }
+  },
+  "pose_error_sim_vs_gt": {
+   "green_box": {
+    "frames": 118,
+    "trans_mean_m": 0.0035,
+    "trans_median_m": 0.0017,
+    "trans_max_m": 0.0141,
+    "trans_final_m": 0.0044
+   }
+  },
+  "final_state": {
+   "tolerance_m": 0.03,
+   "objects": {
+    "green_box": {
+     "err_m": 0.0044,
+     "ok": true
+    }
+   },
+   "success": true
+  },
+  "recording_success": true,
+  "success_reproduced": true,
+  "kinematic": {
+   "penetration_max_m": 0.0242,
+   "frames_penetrating_5mm": 9,
+   "held_hand_object_dist_m": null
+  },
+  "hands": null,
+  "render": "mujoco",
+  "timing_s": {
+   "labels": 770.24,
+   "segment": 15.37,
+   "lift": 0.1,
+   "track": 3.75,
+   "register": 0.0,
+   "events": 0.0,
+   "objects": 3.08,
+   "scene": 0.65,
+   "replay": 0.75,
+   "checks": 0.0,
+   "video": 40.99
+  },
+  "video": "panda_push_to_zone_5.mp4",
+  "video_bytes": 2963359
+ },
+ "libero_1280": {
+  "source": "hf:physical-intelligence/libero:1280",
+  "licence": "cc-by-4.0",
+  "instruction": "pick up the black bowl next to the plate and place it on the plate",
+  "frames": 107,
+  "fps": 10.0,
+  "labels": [
+   "silver bowl",
+   "silver plate",
+   "red and white plate",
+   "black bowl"
+  ],
+  "labels_by": "vlm",
+  "masks": [
+   "red and white plate",
+   "silver bowl",
+   "silver plate"
+  ],
+  "missing_masks": [
+   "black bowl"
+  ],
+  "lift": {
+   "depth": "MoGe-2 per frame",
+   "fov_x_deg": 40.48,
+   "camera": "gravity-levelled (GeoCalib) and table-refined",
+   "camera_height": 0.7291,
+   "table_z": 0.0
+  },
+  "register": {
+   "method": "carried object path vs TCP path",
+   "path_extent_m": 0.143,
+   "grasp_anchor_shift_m": [
+    -0.0031,
+    -0.0009,
+    -0.0423
+   ],
+   "scale": 0.391,
+   "yaw_deg": 97.56,
+   "rmse_m": 0.0483,
+   "pairs": 22,
+   "ik": {
+    "base": [
+     -0.66,
+     0.0,
+     0.912
+    ],
+    "base_from": "profile",
+    "pos_err_mean_m": 0.0001,
+    "pos_err_max_m": 0.0003,
+    "rot_err_mean_deg": 0.02
+   }
+  },
+  "objects": [
+   {
+    "name": "red_and_white_plate",
+    "dynamic": true,
+    "mesh_backend": "points-hull (mesh tool failed)",
+    "parts": 1,
+    "size_m": [
+     0.0462,
+     0.0166,
+     0.0038
+    ],
+    "net_motion_m": 0.0343
+   },
+   {
+    "name": "silver_bowl",
+    "dynamic": true,
+    "mesh_backend": "depth",
+    "parts": 1,
+    "size_m": [
+     0.0289,
+     0.0348,
+     0.0128
+    ],
+    "net_motion_m": 0.1138
+   },
+   {
+    "name": "silver_plate",
+    "dynamic": true,
+    "mesh_backend": "depth",
+    "parts": 1,
+    "size_m": [
+     0.0298,
+     0.0142,
+     0.0113
+    ],
+    "net_motion_m": 0.0758
+   }
+  ],
+  "tracking": [
+   {
+    "name": "red_and_white_plate",
+    "moved_m": 0.0875,
+    "lost_frames": 54,
+    "mean_inliers": 0.681
+   },
+   {
+    "name": "silver_bowl",
+    "moved_m": 0.2982,
+    "lost_frames": 27,
+    "mean_inliers": 0.64
+   },
+   {
+    "name": "silver_plate",
+    "moved_m": 0.2053,
+    "lost_frames": 74,
+    "mean_inliers": 0.644
+   }
+  ],
+  "events_recorded": [
+   [
+    "grasp",
+    "silver_bowl",
+    6.1
+   ],
+   [
+    "lift",
+    "silver_bowl",
+    8.3
+   ],
+   [
+    "release",
+    "silver_bowl",
+    10.6
+   ]
+  ],
+  "events_simulated": [
+   [
+    "grasp",
+    "silver_bowl",
+    6.1
+   ],
+   [
+    "lift",
+    "silver_bowl",
+    7.1
+   ],
+   [
+    "release",
+    "silver_bowl",
+    10.6
+   ]
+  ],
+  "events_matched": "1/2",
+  "pose_error_sim_vs_tracked": {
+   "red_and_white_plate": {
+    "frames": 107,
+    "trans_mean_m": 0.0214,
+    "trans_median_m": 0.0253,
+    "trans_max_m": 0.0345,
+    "trans_final_m": 0.0345,
+    "rot_mean_deg": 13.9,
+    "rot_final_deg": 12.85
+   },
+   "silver_bowl": {
+    "frames": 107,
+    "trans_mean_m": 0.0319,
+    "trans_median_m": 0.0071,
+    "trans_max_m": 0.1057,
+    "trans_final_m": 0.075,
+    "rot_mean_deg": 85.72,
+    "rot_final_deg": 169.02
+   },
+   "silver_plate": {
+    "frames": 107,
+    "trans_mean_m": 0.0454,
+    "trans_median_m": 0.0644,
+    "trans_max_m": 0.0814,
+    "trans_final_m": 0.0644,
+    "rot_mean_deg": 31.36,
+    "rot_final_deg": 48.73
+   }
+  },
+  "pose_error_tracked_vs_gt": null,
+  "pose_error_sim_vs_gt": null,
+  "final_state": {
+   "tolerance_m": 0.03,
+   "objects": {
+    "red_and_white_plate": {
+     "err_m": 0.0345,
+     "ok": false
+    },
+    "silver_bowl": {
+     "err_m": 0.075,
+     "ok": false
+    },
+    "silver_plate": {
+     "err_m": 0.0644,
+     "ok": false
+    }
+   },
+   "success": false
+  },
+  "recording_success": null,
+  "success_reproduced": null,
+  "kinematic": {
+   "penetration_max_m": 0.0328,
+   "frames_penetrating_5mm": 16,
+   "held_hand_object_dist_m": {
+    "mean": 0.0726,
+    "max": 0.1223
+   }
+  },
+  "hands": null,
+  "render": "mujoco",
+  "timing_s": {
+   "labels": 0.0,
+   "segment": 79.61,
+   "lift": 6.98,
+   "track": 4.86,
+   "register": 0.37,
+   "events": 0.0,
+   "objects": 5.58,
+   "scene": 0.52,
+   "replay": 0.57,
+   "checks": 0.0,
+   "video": 24.49
+  },
+  "video": "libero_1280.mp4",
+  "video_bytes": 2391233
+ },
+ "libero_379": {
+  "source": "hf:physical-intelligence/libero:379",
+  "licence": "cc-by-4.0",
+  "instruction": "put the bowl on the plate",
+  "frames": 112,
+  "fps": 10.0,
+  "labels": [
+   "black bowl",
+   "white plate",
+   "blue block"
+  ],
+  "labels_by": "vlm",
+  "masks": [
+   "black bowl",
+   "white plate",
+   "blue block"
+  ],
+  "missing_masks": [],
+  "lift": {
+   "depth": "MoGe-2 per frame",
+   "fov_x_deg": 39.29,
+   "camera": "gravity-levelled (GeoCalib) and table-refined",
+   "camera_height": 1.0738,
+   "table_z": 0.0
+  },
+  "register": {
+   "method": "carried object path vs TCP path",
+   "path_extent_m": 0.175,
+   "grasp_anchor_shift_m": [
+    -0.0791,
+    0.0061,
+    -0.0577
+   ],
+   "scale": 0.0572,
+   "yaw_deg": 105.34,
+   "rmse_m": 0.0844,
+   "pairs": 45,
+   "ik": {
+    "base": [
+     -0.66,
+     0.0,
+     0.912
+    ],
+    "base_from": "profile",
+    "pos_err_mean_m": 0.0001,
+    "pos_err_max_m": 0.0004,
+    "rot_err_mean_deg": 0.02
+   }
+  },
+  "objects": [
+   {
+    "name": "black_bowl",
+    "dynamic": false,
+    "mesh_backend": "depth",
+    "parts": 3,
+    "size_m": [
+     0.0055,
+     0.002,
+     0.0015
+    ],
+    "net_motion_m": 0.0119
+   },
+   {
+    "name": "white_plate",
+    "dynamic": false,
+    "mesh_backend": "height-field columns (mesh tool failed)",
+    "parts": 2,
+    "size_m": [
+     0.03,
+     0.015,
+     0.002
+    ],
+    "net_motion_m": 0.0146
+   },
+   {
+    "name": "blue_block",
+    "dynamic": false,
+    "mesh_backend": "depth",
+    "parts": 7,
+    "size_m": [
+     0.003,
+     0.0057,
+     0.0011
+    ],
+    "net_motion_m": 0.0024
+   }
+  ],
+  "tracking": [
+   {
+    "name": "black_bowl",
+    "moved_m": 0.2111,
+    "lost_frames": 39,
+    "mean_inliers": 0.644
+   },
+   {
+    "name": "white_plate",
+    "moved_m": 0.2627,
+    "lost_frames": 21,
+    "mean_inliers": 0.843
+   },
+   {
+    "name": "blue_block",
+    "moved_m": 0.0412,
+    "lost_frames": 23,
+    "mean_inliers": 0.947
+   }
+  ],
+  "events_recorded": [
+   [
+    "missed_grasp",
+    "white_plate",
+    5.2
+   ]
+  ],
+  "events_simulated": [
+   [
+    "missed_grasp",
+    "black_bowl",
+    5.2
+   ]
+  ],
+  "events_matched": "0/0",
+  "pose_error_sim_vs_tracked": {},
+  "pose_error_tracked_vs_gt": null,
+  "pose_error_sim_vs_gt": null,
+  "final_state": {
+   "tolerance_m": 0.03,
+   "objects": {},
+   "success": false
+  },
+  "recording_success": null,
+  "success_reproduced": null,
+  "kinematic": {
+   "penetration_max_m": 0.0063,
+   "frames_penetrating_5mm": 3,
+   "held_hand_object_dist_m": null
+  },
+  "hands": null,
+  "render": "mujoco",
+  "timing_s": {
+   "labels": 0.0,
+   "segment": 77.14,
+   "lift": 7.59,
+   "track": 4.28,
+   "register": 0.4,
+   "events": 0.0,
+   "objects": 14.3,
+   "scene": 0.56,
+   "replay": 0.53,
+   "checks": 0.0,
+   "video": 24.28
+  },
+  "video": "libero_379.mp4",
+  "video_bytes": 2081133
+ },
+ "libero_813": {
+  "source": "hf:physical-intelligence/libero:813",
+  "licence": "cc-by-4.0",
+  "instruction": "pick up the alphabet soup and place it in the basket",
+  "frames": 155,
+  "fps": 10.0,
+  "labels": [
+   "silver basket",
+   "blue box",
+   "green bottle",
+   "red soup can"
+  ],
+  "labels_by": "vlm",
+  "masks": [
+   "green bottle",
+   "silver basket",
+   "blue box",
+   "red soup can"
+  ],
+  "missing_masks": [],
+  "lift": {
+   "depth": "MoGe-2 per frame",
+   "fov_x_deg": 42.6,
+   "camera": "gravity-levelled (GeoCalib) and table-refined",
+   "camera_height": 0.9589,
+   "table_z": 0.0
+  },
+  "register": {
+   "method": "fallback: no carried object; unit scale, TCP at the first grasp onto the object",
+   "scale": 1.0,
+   "yaw_deg": 0.0,
+   "rmse_m": null,
+   "pairs": 0,
+   "ik": {
+    "base": [
+     -0.605,
+     -0.0,
+     0.035
+    ],
+    "base_from": "fitted",
+    "pos_err_mean_m": 0.0001,
+    "pos_err_max_m": 0.0003,
+    "rot_err_mean_deg": 0.01
+   }
+  },
+  "objects": [
+   {
+    "name": "green_bottle",
+    "dynamic": false,
+    "mesh_backend": "depth",
+    "parts": 10,
+    "size_m": [
+     0.1887,
+     0.0795,
+     0.2076
+    ],
+    "net_motion_m": 0.0066
+   },
+   {
+    "name": "silver_basket",
+    "dynamic": true,
+    "mesh_backend": "depth",
+    "parts": 1,
+    "size_m": [
+     0.2646,
+     0.2805,
+     0.2046
+    ],
+    "net_motion_m": 0.0261
+   },
+   {
+    "name": "blue_box",
+    "dynamic": false,
+    "mesh_backend": "depth",
+    "parts": 4,
+    "size_m": [
+     0.0541,
+     0.1269,
+     0.0333
+    ],
+    "net_motion_m": 0.0018
+   },
+   {
+    "name": "red_soup_can",
+    "dynamic": false,
+    "mesh_backend": "depth",
+    "parts": 63,
+    "size_m": [
+     0.0931,
+     0.0988,
+     0.1167
+    ],
+    "net_motion_m": 0.012
+   }
+  ],
+  "tracking": [
+   {
+    "name": "green_bottle",
+    "moved_m": 0.0161,
+    "lost_frames": 0,
+    "mean_inliers": 0.911
+   },
+   {
+    "name": "silver_basket",
+    "moved_m": 0.0262,
+    "lost_frames": 1,
+    "mean_inliers": 0.824
+   },
+   {
+    "name": "blue_box",
+    "moved_m": 0.0254,
+    "lost_frames": 0,
+    "mean_inliers": 0.891
+   },
+   {
+    "name": "red_soup_can",
+    "moved_m": 0.0136,
+    "lost_frames": 0,
+    "mean_inliers": 0.958
+   }
+  ],
+  "events_recorded": [
+   [
+    "grasp",
+    "silver_basket",
+    5.6
+   ],
+   [
+    "release",
+    "silver_basket",
+    14.7
+   ],
+   [
+    "place",
+    "silver_basket",
+    14.7
+   ]
+  ],
+  "events_simulated": [
+   [
+    "missed_grasp",
+    "silver_basket",
+    5.6
+   ]
+  ],
+  "events_matched": "0/2",
+  "pose_error_sim_vs_tracked": {
+   "silver_basket": {
+    "frames": 155,
+    "trans_mean_m": 0.0094,
+    "trans_median_m": 0.008,
+    "trans_max_m": 0.0264,
+    "trans_final_m": 0.0198,
+    "rot_mean_deg": 0.22,
+    "rot_final_deg": 0.5
+   }
+  },
+  "pose_error_tracked_vs_gt": null,
+  "pose_error_sim_vs_gt": null,
+  "final_state": {
+   "tolerance_m": 0.03,
+   "objects": {},
+   "success": false
+  },
+  "recording_success": null,
+  "success_reproduced": null,
+  "kinematic": {
+   "penetration_max_m": 0.0123,
+   "frames_penetrating_5mm": 4,
+   "held_hand_object_dist_m": {
+    "mean": 0.3816,
+    "max": 0.4366
+   }
+  },
+  "hands": null,
+  "render": "mujoco",
+  "timing_s": {
+   "labels": 0.0,
+   "segment": 53.61,
+   "lift": 13.74,
+   "track": 12.61,
+   "register": 1.95,
+   "events": 0.0,
+   "objects": 41.54,
+   "scene": 0.7,
+   "replay": 0.68,
+   "checks": 0.0,
+   "video": 49.13
+  },
+  "video": "libero_813.mp4",
+  "video_bytes": 2357660
+ },
+ "droid_21": {
+  "source": "hf:lerobot/droid_100:21",
+  "licence": "mit",
+  "instruction": "Put the orange rubber duck into the pot",
+  "frames": 92,
+  "fps": 15.0,
+  "labels": [
+   "orange rubber duck",
+   "metal pot"
+  ],
+  "labels_by": "vlm",
+  "masks": [
+   "metal pot",
+   "orange rubber duck"
+  ],
+  "missing_masks": [],
+  "lift": {
+   "depth": "MoGe-2 per frame",
+   "fov_x_deg": 88.35,
+   "camera": "gravity-levelled (GeoCalib) and table-refined",
+   "camera_height": 0.35,
+   "table_z": 0.0
+  },
+  "register": {
+   "method": "carried object path vs TCP path",
+   "path_extent_m": 0.097,
+   "fitted_scale": 0.5531,
+   "scale_from": "depth model (carried path shorter than min_scale_path)",
+   "grasp_anchor_shift_m": [
+    0.0078,
+    0.049,
+    0.0068
+   ],
+   "scale": 1.0,
+   "yaw_deg": 46.34,
+   "rmse_m": 0.0382,
+   "pairs": 32,
+   "ik": {
+    "base": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "base_from": "profile",
+    "pos_err_mean_m": 0.0001,
+    "pos_err_max_m": 0.0005,
+    "rot_err_mean_deg": 0.01
+   }
+  },
+  "objects": [
+   {
+    "name": "metal_pot",
+    "dynamic": false,
+    "mesh_backend": "depth",
+    "parts": 56,
+    "size_m": [
+     0.0747,
+     0.0868,
+     0.0641
+    ],
+    "net_motion_m": 0.0155
+   },
+   {
+    "name": "orange_rubber_duck",
+    "dynamic": true,
+    "mesh_backend": "depth",
+    "parts": 1,
+    "size_m": [
+     0.0601,
+     0.0325,
+     0.0318
+    ],
+    "net_motion_m": 0.2056
+   }
+  ],
+  "tracking": [
+   {
+    "name": "metal_pot",
+    "moved_m": 0.0665,
+    "lost_frames": 3,
+    "mean_inliers": 0.733
+   },
+   {
+    "name": "orange_rubber_duck",
+    "moved_m": 0.2061,
+    "lost_frames": 28,
+    "mean_inliers": 0.799
+   }
+  ],
+  "events_recorded": [
+   [
+    "grasp",
+    "orange_rubber_duck",
+    2.27
+   ],
+   [
+    "lift",
+    "orange_rubber_duck",
+    3.13
+   ],
+   [
+    "release",
+    "orange_rubber_duck",
+    4.93
+   ],
+   [
+    "place",
+    "orange_rubber_duck",
+    4.93
+   ]
+  ],
+  "events_simulated": [
+   [
+    "grasp",
+    "orange_rubber_duck",
+    2.27
+   ],
+   [
+    "lift",
+    "orange_rubber_duck",
+    3.0
+   ],
+   [
+    "release",
+    "orange_rubber_duck",
+    4.93
+   ],
+   [
+    "place",
+    "orange_rubber_duck",
+    5.07
+   ]
+  ],
+  "events_matched": "3/3",
+  "pose_error_sim_vs_tracked": {
+   "orange_rubber_duck": {
+    "frames": 92,
+    "trans_mean_m": 0.053,
+    "trans_median_m": 0.0556,
+    "trans_max_m": 0.1276,
+    "trans_final_m": 0.0967,
+    "rot_mean_deg": 72.82,
+    "rot_final_deg": 133.02
+   }
+  },
+  "pose_error_tracked_vs_gt": null,
+  "pose_error_sim_vs_gt": null,
+  "final_state": {
+   "tolerance_m": 0.03,
+   "objects": {
+    "orange_rubber_duck": {
+     "err_m": 0.0967,
+     "ok": false
+    }
+   },
+   "success": false
+  },
+  "recording_success": null,
+  "success_reproduced": null,
+  "kinematic": {
+   "penetration_max_m": 0.023,
+   "frames_penetrating_5mm": 14,
+   "held_hand_object_dist_m": {
+    "mean": 0.0528,
+    "max": 0.1003
+   }
+  },
+  "hands": null,
+  "render": "mujoco",
+  "timing_s": {
+   "labels": 0.0,
+   "segment": 19.17,
+   "lift": 7.05,
+   "track": 2.11,
+   "register": 0.61,
+   "events": 0.0,
+   "objects": 28.34,
+   "scene": 0.63,
+   "replay": 0.52,
+   "checks": 0.0,
+   "video": 24.47
+  },
+  "video": "droid_21.mp4",
+  "video_bytes": 2105666
+ },
+ "human_mug_0_full": {
+  "source": "hf:rli14/10132025_human_demonstrations_hurricanemug_plaintable:0",
+  "licence": "apache-2.0",
+  "instruction": "pick",
+  "frames": 112,
+  "fps": 15.0,
+  "labels": [
+   "wooden spatula",
+   "white mug"
+  ],
+  "labels_by": "vlm",
+  "masks": [
+   "wooden spatula",
+   "white mug"
+  ],
+  "missing_masks": [],
+  "lift": {
+   "depth": "MoGe-2 per frame",
+   "fov_x_deg": 47.15,
+   "camera": "gravity-levelled (GeoCalib) and table-refined",
+   "camera_height": 0.5555,
+   "table_z": 0.0
+  },
+  "register": {
+   "method": "none needed (camera pose known)"
+  },
+  "objects": [
+   {
+    "name": "wooden_spatula",
+    "dynamic": false,
+    "mesh_backend": "depth",
+    "parts": 1,
+    "size_m": [
+     0.0018,
+     0.0142,
+     0.0063
+    ],
+    "net_motion_m": 0.0051
+   },
+   {
+    "name": "white_mug",
+    "dynamic": true,
+    "mesh_backend": "depth",
+    "parts": 1,
+    "size_m": [
+     0.0592,
+     0.1205,
+     0.0547
+    ],
+    "net_motion_m": 0.0673
+   }
+  ],
+  "tracking": [
+   {
+    "name": "wooden_spatula",
+    "moved_m": 0.0076,
+    "lost_frames": 81,
+    "mean_inliers": 0.955
+   },
+   {
+    "name": "white_mug",
+    "moved_m": 0.1236,
+    "lost_frames": 0,
+    "mean_inliers": 0.796
+   }
+  ],
+  "events_recorded": [
+   [
+    "missed_grasp",
+    "wooden_spatula",
+    0.07
+   ],
+   [
+    "grasp",
+    "white_mug",
+    3.4
+   ],
+   [
+    "lift",
+    "white_mug",
+    4.6
+   ],
+   [
+    "release",
+    "white_mug",
+    7.4
+   ]
+  ],
+  "events_simulated": [
+   [
+    "missed_grasp",
+    "white_mug",
+    0.07
+   ],
+   [
+    "missed_grasp",
+    "white_mug",
+    3.4
+   ]
+  ],
+  "events_matched": "0/2",
+  "pose_error_sim_vs_tracked": {
+   "white_mug": {
+    "frames": 112,
+    "trans_mean_m": 0.0687,
+    "trans_median_m": 0.0681,
+    "trans_max_m": 0.1877,
+    "trans_final_m": 0.1197,
+    "rot_mean_deg": 94.53,
+    "rot_final_deg": 168.79
+   }
+  },
+  "pose_error_tracked_vs_gt": null,
+  "pose_error_sim_vs_gt": null,
+  "final_state": {
+   "tolerance_m": 0.03,
+   "objects": {
+    "white_mug": {
+     "err_m": 0.1197,
+     "ok": false
+    }
+   },
+   "success": false
+  },
+  "recording_success": null,
+  "success_reproduced": null,
+  "kinematic": {
+   "penetration_max_m": 0.0439,
+   "frames_penetrating_5mm": 31,
+   "held_hand_object_dist_m": {
+    "mean": 0.0776,
+    "max": 0.1334
+   }
+  },
+  "hands": {
+   "backend": "mediapipe",
+   "valid_frames": 112,
+   "frames": 112,
+   "depth_scale_from_hand": {
+    "scale": 0.8860881615758472,
+    "samples": 384,
+    "iqr": [
+     0.7779222400855854,
+     1.0112496871975871
+    ]
+   },
+   "aperture_m": [
+    0.027,
+    0.035,
+    0.053
+   ],
+   "fallback": "MediaPipe (WiLoR needs MANO)"
+  },
+  "render": "mujoco",
+  "timing_s": {
+   "labels": 0.0,
+   "segment": 18.08,
+   "lift": 7.5,
+   "hands": 1.51,
+   "track": 54.22,
+   "register": 0.0,
+   "events": 0.0,
+   "objects": 3.96,
+   "scene": 0.26,
+   "replay": 0.27,
+   "checks": 0.0,
+   "video": 29.67
+  },
+  "video": "human_mug_0_full.mp4",
+  "video_bytes": 2649208
+ },
+ "agent_panda_pick_place_2": {
+  "source": "panda:pick_place:2",
+  "licence": "ours (Apache-2.0)",
+  "instruction": "place the red block on the white plate",
+  "mode": "agent (--agent): qwen3.5:35b-a3b via Ollama drives the steps from the sandbox",
+  "agent": {
+   "turns": 12,
+   "usage": {
+    "calls": 12,
+    "tokens_in": 28411,
+    "tokens_out": 1104,
+    "cost_usd": 0.0,
+    "cost_usd_known_part": 0.0,
+    "latency_s": 1558.37
+   },
+   "stopped": "finish()",
+   "note": "The physics simulation successfully reproduced the 'place the red block on the white plate' task. All manipulation events (grasp, lift, release, place) were detected and matched to the ground truth with sub-second timing accuracy. Pose errors are minimal (final position error ~1.2mm), and the final state meets the success criteria. The simulation remained stable without divergence.",
+   "steps_run": [
+    "labels",
+    "segment",
+    "lift",
+    "track",
+    "register",
+    "events",
+    "objects",
+    "scene",
+    "replay",
+    "checks"
+   ]
+  },
+  "turn_codes": [
+   "replay.info()",
+   "replay.labels()",
+   "replay.segment()",
+   "replay.lift()",
+   "replay.track(mode=\"yaw\", gate=0.04)",
+   "replay.register()",
+   "replay.events()",
+   "replay.objects()",
+   "replay.scene()",
+   "replay.replay()",
+   "replay.checks()",
+   "finish(\"The physics simulation successfully reproduced the 'place the red block on the white plate' task. All manipulation events (grasp, lift, release, place) were detected and matched to the ground truth with sub-second timing accuracy. Pose errors are minimal (final position error ~1.2mm), and the final state meets the success criteria. The simulation remained stable without divergence.\")"
+  ],
+  "turn_latency_s": [
+   6.4,
+   126.3,
+   243.0,
+   121.6,
+   129.0,
+   132.8,
+   128.6,
+   131.5,
+   132.6,
+   127.5,
+   128.9,
+   150.2
+  ],
+  "labels": [
+   "red block",
+   "white plate"
+  ],
+  "labels_by": "vlm",
+  "masks": [
+   "red block",
+   "white plate"
+  ],
+  "objects": [
+   {
+    "name": "red_block",
+    "dynamic": true,
+    "mesh_backend": "depth",
+    "parts": 1,
+    "size_m": [
+     0.0495,
+     0.0422,
+     0.0449
+    ],
+    "net_motion_m": 0.1791,
+    "size_error": {
+     "est_m": [
+      0.0422,
+      0.0449,
+      0.0495
+     ],
+     "gt_m": [
+      0.045,
+      0.045,
+      0.045
+     ],
+     "abs_err_m": [
+      0.0028,
+      0.0001,
+      0.0045
+     ],
+     "max_abs_err_m": 0.0045,
+     "rel_err": [
+      0.061,
+      0.001,
+      0.1
+     ]
+    }
+   },
+   {
+    "name": "white_plate",
+    "dynamic": false,
+    "mesh_backend": "height-field columns (mesh tool failed)",
+    "parts": 90,
+    "size_m": [
+     0.135,
+     0.15,
+     0.0119
+    ],
+    "net_motion_m": 0.0,
+    "size_error": {
+     "est_m": [
+      0.0119,
+      0.135,
+      0.15
+     ],
+     "gt_m": [
+      0.012,
+      0.15,
+      0.15
+     ],
+     "abs_err_m": [
+      0.0001,
+      0.015,
+      0.0
+     ],
+     "max_abs_err_m": 0.015,
+     "rel_err": [
+      0.007,
+      0.1,
+      0.0
+     ]
+    }
+   }
+  ],
+  "tracking": [
+   {
+    "name": "red_block",
+    "moved_m": 0.2499,
+    "lost_frames": 0,
+    "mean_inliers": 0.895
+   },
+   {
+    "name": "white_plate",
+    "moved_m": 0.0,
+    "lost_frames": 0,
+    "mean_inliers": 0.998
+   }
+  ],
+  "events_recorded": [
+   [
+    "grasp",
+    "red_block",
+    3.8
+   ],
+   [
+    "lift",
+    "red_block",
+    4.8
+   ],
+   [
+    "release",
+    "red_block",
+    8.9
+   ],
+   [
+    "place",
+    "red_block",
+    8.9
+   ]
+  ],
+  "events_simulated": [
+   [
+    "grasp",
+    "red_block",
+    3.7
+   ],
+   [
+    "lift",
+    "red_block",
+    4.9
+   ],
+   [
+    "release",
+    "red_block",
+    8.8
+   ],
+   [
+    "place",
+    "red_block",
+    8.8
+   ]
+  ],
+  "events_matched": "3/3",
+  "pose_error_sim_vs_tracked": {
+   "red_block": {
+    "frames": 93,
+    "trans_mean_m": 0.0061,
+    "trans_median_m": 0.0018,
+    "trans_max_m": 0.0339,
+    "trans_final_m": 0.0018,
+    "rot_mean_deg": 1.17,
+    "rot_final_deg": 2.9
+   }
+  },
+  "pose_error_tracked_vs_gt": {
+   "red_block": {
+    "initial_offset_m": 0.0021,
+    "frames": 93,
+    "trans_mean_m": 0.001,
+    "trans_median_m": 0.0006,
+    "trans_max_m": 0.0052,
+    "trans_final_m": 0.0009
+   }
+  },
+  "pose_error_sim_vs_gt": {
+   "red_block": {
+    "frames": 93,
+    "trans_mean_m": 0.0061,
+    "trans_median_m": 0.0011,
+    "trans_max_m": 0.0355,
+    "trans_final_m": 0.0012
+   }
+  },
+  "final_state": {
+   "tolerance_m": 0.03,
+   "objects": {
+    "red_block": {
+     "err_m": 0.0012,
+     "ok": true
+    }
+   },
+   "success": true
+  },
+  "recording_success": true,
+  "success_reproduced": true,
+  "kinematic": {
+   "penetration_max_m": 0.0065,
+   "frames_penetrating_5mm": 4,
+   "held_hand_object_dist_m": {
+    "mean": 0.0041,
+    "max": 0.0077
+   }
+  },
+  "timing_s": {
+   "labels": 434.1,
+   "segment": 14.48,
+   "lift": 0.09,
+   "track": 5.04,
+   "register": 0.0,
+   "events": 0.0,
+   "objects": 2.86,
+   "scene": 0.44,
+   "replay": 0.39,
+   "checks": 0.0
+  },
+  "video": "agent_panda_pick_place_2.mp4",
+  "video_note": "the agent did not call replay.video(); rendered afterwards from the agent run's own physics replay (scene.xml + qpos), MuJoCo offscreen",
+  "compared_with": "panda_pick_place_2 (scripted pipeline, same episode)"
+ }
+}

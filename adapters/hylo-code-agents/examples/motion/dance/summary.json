@@ -1,0 +1,112 @@
+{
+  "request": "a short dance",
+  "robot": "g1",
+  "inputs": {},
+  "model": "ollama:qwen3.5:35b-a3b (vision)",
+  "stopped": "finished",
+  "finished_by_model": true,
+  "note": "short energetic dance with side steps and arm waves",
+  "turns": 2,
+  "usage": {
+    "calls": 2,
+    "tokens_in": 2471,
+    "tokens_out": 183,
+    "cost_usd": 0.0,
+    "cost_usd_known_part": 0.0,
+    "latency_s": 104.09
+  },
+  "cost_usd": 0.0,
+  "wall_s": 338.2,
+  "tool_seconds": {
+    "text_motion": {
+      "calls": 1,
+      "seconds": 148.147
+    },
+    "retarget": {
+      "calls": 1,
+      "seconds": 1.413
+    },
+    "check": {
+      "calls": 2,
+      "seconds": 1.396
+    },
+    "render": {
+      "calls": 1,
+      "seconds": 79.871
+    }
+  },
+  "final": "Motion(text:'a person does a short energetic dance with side steps and arm waves': 4.0 s, 120 frames, path 0.99 m, turn -1.3 deg)",
+  "files": {
+    "motion": "motion.npz",
+    "check": "check.json",
+    "video": "motion.mp4"
+  },
+  "video_bytes": {
+    "video": 240114
+  },
+  "render_backend": "blender",
+  "check": {
+    "robot": "g1",
+    "seconds": 4.0,
+    "frames": 120,
+    "fps": 30.0,
+    "nq": 36,
+    "scale": 0.7481,
+    "mean_keypoint_err_m": 0.0389,
+    "max_keypoint_err_m": 0.0606,
+    "ground_correction_m": [
+      -0.01,
+      0.002
+    ],
+    "ground_penetration_max_m": 0.0,
+    "frames_below_floor_1cm": 0,
+    "frames_floating_5cm": 0,
+    "flight_frames": 0,
+    "foot_skate_m": [
+      0.125,
+      0.117
+    ],
+    "foot_skate_mean_speed_mps": 0.032,
+    "stance_frames": [
+      119,
+      110
+    ],
+    "joint_limit_violation_frames": 0,
+    "joints_at_limit": [
+      [
+        "waist_pitch_joint",
+        0.13
+      ],
+      [
+        "left_elbow_joint",
+        0.1
+      ],
+      [
+        "left_shoulder_yaw_joint",
+        0.07
+      ],
+      [
+        "left_wrist_pitch_joint",
+        0.03
+      ]
+    ],
+    "self_collision_frames": 0,
+    "self_collision_pairs": {},
+    "com_outside_support_frac": 0.017,
+    "com_outside_support_max_m": 0.081,
+    "physics": "position servos (PD) track the joint trajectory; no balance controller",
+    "upright_s": 1.68,
+    "clip_s": 3.97,
+    "upright_frac": 0.423,
+    "fell": true,
+    "fall_reason": "right_knee_link touched the floor",
+    "joint_track_err_rad": 0.0704,
+    "root_drift_m": 0.871,
+    "with_ankle_strategy": {
+      "upright_s": 2.68,
+      "fell": true,
+      "fall_reason": "pelvis dropped below 40% of its start height",
+      "joint_track_err_rad": 0.0807
+    }
+  }
+}

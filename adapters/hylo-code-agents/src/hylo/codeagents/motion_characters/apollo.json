@@ -1,0 +1,75 @@
+{
+ "name": "apollo",
+ "title": "Apptronik Apollo",
+ "kind": "mjcf",
+ "height_m": 1.82,
+ "asset": {
+  "menagerie": "menagerie_apollo.json",
+  "xml": "apptronik_apollo.xml"
+ },
+ "licence": "Apache-2.0",
+ "credit": "Apptronik Apollo model from MuJoCo Menagerie (Apptronik, Apache-2.0)",
+ "bodies": {
+  "pelvis": [
+   "base_link",
+   [
+    0,
+    0,
+    -0.11
+   ]
+  ],
+  "chest": [
+   "torso_link",
+   [
+    0,
+    0,
+    0.08
+   ]
+  ],
+  "head": [
+   "torso_link",
+   [
+    0.02,
+    0,
+    0.5
+   ]
+  ],
+  "left_hip": "l_hip_fe_link",
+  "right_hip": "r_hip_fe_link",
+  "left_knee": "l_knee_fe_link",
+  "right_knee": "r_knee_fe_link",
+  "left_ankle": "l_foot_link",
+  "right_ankle": "r_foot_link",
+  "left_toe": [
+   "l_foot_link",
+   [
+    0.14,
+    0,
+    -0.07
+   ]
+  ],
+  "right_toe": [
+   "r_foot_link",
+   [
+    0.14,
+    0,
+    -0.07
+   ]
+  ],
+  "left_shoulder": "l_shoulder_fe_link",
+  "right_shoulder": "r_shoulder_fe_link",
+  "left_elbow": "l_elbow_fe_link",
+  "right_elbow": "r_elbow_fe_link",
+  "left_wrist": "l_wrist_pitch_link",
+  "right_wrist": "r_wrist_pitch_link"
+ },
+ "feet": [
+  "l_foot_link",
+  "r_foot_link"
+ ],
+ "clearance": {
+  "wrist": 0.37,
+  "elbow": 0.31
+ },
+ "camera_distance": 3.3
+}

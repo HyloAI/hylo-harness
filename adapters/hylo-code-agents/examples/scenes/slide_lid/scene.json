@@ -1,0 +1,58 @@
+{
+ "name": "open_box_lid",
+ "instruction": "slide the lid of the box open so that the box is uncovered",
+ "objects": [
+  {
+   "name": "box_base",
+   "label": "box",
+   "shape": "box",
+   "size": [
+    0.12,
+    0.12,
+    0.04
+   ],
+   "colour": "brown",
+   "mass": 0.2,
+   "fixed": true,
+   "pose": {
+    "pos": [
+     0.05,
+     0.1
+    ]
+   }
+  },
+  {
+   "name": "lid",
+   "label": "lid",
+   "shape": "box",
+   "size": [
+    0.12,
+    0.12,
+    0.02
+   ],
+   "colour": "brown",
+   "mass": 0.05,
+   "parent": "box_base",
+   "joint": {
+    "type": "slide",
+    "range": [
+     0.0,
+     0.06
+    ],
+    "damping": 2.0
+   },
+   "pose": {
+    "pos": [
+     0.0,
+     0.0,
+     0.04
+    ]
+   }
+  }
+ ],
+ "success": {
+  "op": "joint_at_least",
+  "object": "lid",
+  "value": 0.04
+ }
+}

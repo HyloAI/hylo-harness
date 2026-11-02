@@ -1,0 +1,71 @@
+{
+ "task": "slide the lid of the box open so that the box is uncovered",
+ "model": "ollama:qwen3.5:35b-a3b (vision)",
+ "built": true,
+ "attempts": 3,
+ "records": [
+  {
+   "attempt": 1,
+   "model_error": "http://localhost:11434/v1/chat/completions: TimeoutError('timed out')",
+   "ok": false,
+   "problems": []
+  },
+  {
+   "attempt": 2,
+   "model": "qwen3.5:35b-a3b",
+   "backend": "ollama",
+   "tokens_in": 6968,
+   "tokens_out": 457,
+   "cached_tokens": 6615,
+   "latency_s": 887.475,
+   "cost_usd": 0.0,
+   "ok": false,
+   "problems": [
+    {
+     "code": "predicate_true_at_start",
+     "message": "the success predicate already holds at the start: the robot would have nothing to do; place the objects so the goal is not met initially",
+     "objects": [],
+     "severity": "error"
+    }
+   ],
+   "warnings": [],
+   "stages": [
+    "schema",
+    "static",
+    "physics"
+   ],
+   "reply_chars": 1212
+  },
+  {
+   "attempt": 3,
+   "model": "qwen3.5:35b-a3b",
+   "backend": "ollama",
+   "tokens_in": 7571,
+   "tokens_out": 2025,
+   "cached_tokens": 6615,
+   "latency_s": 583.292,
+   "cost_usd": 0.0,
+   "ok": true,
+   "problems": [],
+   "warnings": [],
+   "stages": [
+    "schema",
+    "static",
+    "physics",
+    "reach",
+    "satisfiable"
+   ],
+   "reply_chars": 5437
+  }
+ ],
+ "usage": {
+  "calls": 2,
+  "tokens_in": 14539,
+  "tokens_out": 2482,
+  "cost_usd": 0.0,
+  "cost_usd_known_part": 0.0,
+  "latency_s": 1470.77
+ },
+ "wall_s": 4174.5,
+ "scene": "/tmp/claude-1002/-home-bingao-hyloai/49f6a616-2836-40ee-84cf-972b09b8fd75/scratchpad/live/slide_lid/scene.json"
+}

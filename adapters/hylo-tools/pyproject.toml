@@ -1,0 +1,27 @@
+[project]
+name = "hylo-tools"
+version = "0.1.0.dev0"
+description = "Hylo tool adapters: segmentation, depth, gravity, image-to-mesh, convex decomposition, hand and human motion, text-to-motion, offline rendering; each model runs in its own uv environment on the CPU"
+requires-python = ">=3.10"
+dependencies = ["numpy>=1.26", "pillow>=10"]
+license = "Apache-2.0"
+
+[project.optional-dependencies]
+# the hylo.manip segmenter interface (Sam3Segmenter returns hylo.manip.Mask)
+manip = ["hylo-manip"]
+
+[project.entry-points."hylo.commands"]
+tool = "hylo.tools.cli:tool"
+
+[project.entry-points."hylo.meta"]
+"hylo-tools" = "hylo.tools:META"
+
+[build-system]
+requires = ["hatchling>=1.24"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/hylo"]
+
+[tool.uv.sources]
+hylo-manip = { workspace = true }

@@ -1,0 +1,92 @@
+{
+ "name": "line_up_blocks",
+ "instruction": "line up the red, green and blue blocks in a row along the y axis, in that order (red, then green, then blue)",
+ "objects": [
+  {
+   "name": "red_block",
+   "label": "red block",
+   "shape": "box",
+   "size": [
+    0.04,
+    0.04,
+    0.04
+   ],
+   "colour": "red",
+   "mass": 0.05,
+   "region": {
+    "x": [
+     -0.15,
+     -0.05
+    ],
+    "y": [
+     0.2,
+     0.3
+    ],
+    "yaw_deg": [
+     -10.0,
+     10.0
+    ]
+   }
+  },
+  {
+   "name": "green_block",
+   "label": "green block",
+   "shape": "box",
+   "size": [
+    0.04,
+    0.04,
+    0.04
+   ],
+   "colour": "green",
+   "mass": 0.05,
+   "region": {
+    "x": [
+     -0.15,
+     -0.05
+    ],
+    "y": [
+     0.0,
+     0.1
+    ],
+    "yaw_deg": [
+     -10.0,
+     10.0
+    ]
+   }
+  },
+  {
+   "name": "blue_block",
+   "label": "blue block",
+   "shape": "box",
+   "size": [
+    0.04,
+    0.04,
+    0.04
+   ],
+   "colour": "blue",
+   "mass": 0.05,
+   "region": {
+    "x": [
+     -0.15,
+     -0.05
+    ],
+    "y": [
+     -0.2,
+     -0.1
+    ],
+    "yaw_deg": [
+     -10.0,
+     10.0
+    ]
+   }
+  }
+ ],
+ "success": {
+  "op": "row",
+  "objects": [
+   "red_block",
+   "green_block",
+   "blue_block"
+  ]
+ }
+}

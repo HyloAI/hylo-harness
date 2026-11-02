@@ -1,0 +1,230 @@
+{
+ "recorded": "2026-11-01/02 on this workstation's CPU (shared with other agents; Ollama and CPU contention dominate the wall times)",
+ "model": "ollama:qwen3.5:35b-a3b (vision), temperature 0, reasoning off",
+ "robot": "Unitree G1 (MuJoCo Menagerie b0655057, BSD-3-Clause)",
+ "render": "Blender 5.2.3 Cycles CPU, 640x360, 16 spp",
+ "runs": {
+  "wave_bow": {
+   "request": "wave with the right hand, then bow",
+   "inputs": {},
+   "final": "Motion(text:['a person waves with the right hand', 'a person bows']: 5.0 s, 150 frames, path 0.29 m, turn -7.7 deg)",
+   "turns": 2,
+   "wall_s": 2095.6,
+   "model_latency_s": 1132.55,
+   "cost_usd": 0.0,
+   "tool_seconds": {
+    "text_motion": 740.354,
+    "retarget": 3.504,
+    "check": 1.396,
+    "render": 213.203,
+    "compose": 0.906
+   },
+   "videos": {
+    "video": "wave_bow/motion.mp4",
+    "split": "wave_bow/split.mp4"
+   },
+   "video_bytes": {
+    "video": 255168,
+    "split": 260502
+   },
+   "metrics": {
+    "seconds": 5.0,
+    "mean_keypoint_err_m": 0.0557,
+    "ground_penetration_max_m": 0.0,
+    "foot_skate_mean_speed_mps": 0.019,
+    "self_collision_frames": 0,
+    "joint_limit_violation_frames": 0,
+    "com_outside_support_frac": 0.0,
+    "flight_frames": 0,
+    "upright_s": 1.48,
+    "clip_s": 4.97,
+    "fall_reason": "right_wrist_yaw_link touched the floor"
+   },
+   "upright_s_with_ankle_strategy": 4.35
+  },
+  "walk_turn": {
+   "request": "walk forward four steps and turn around",
+   "inputs": {},
+   "final": "Motion(text:['a person walks forward four steps with clear foot lifts', 'a person turns around smoothly']: 9.0 s, 270 frames, path 5.88 m, turn -174.8 deg)",
+   "turns": 3,
+   "wall_s": 2257.9,
+   "model_latency_s": 478.83,
+   "cost_usd": 0.0,
+   "tool_seconds": {
+    "text_motion": 1570.235,
+    "retarget": 6.074,
+    "check": 2.238,
+    "render": 197.079
+   },
+   "videos": {
+    "video": "walk_turn/motion.mp4"
+   },
+   "video_bytes": {
+    "video": 541122
+   },
+   "metrics": {
+    "seconds": 9.0,
+    "mean_keypoint_err_m": 0.0454,
+    "ground_penetration_max_m": 0.0,
+    "foot_skate_mean_speed_mps": 0.077,
+    "self_collision_frames": 0,
+    "joint_limit_violation_frames": 0,
+    "com_outside_support_frac": 0.311,
+    "flight_frames": 0,
+    "upright_s": 1.22,
+    "clip_s": 8.97,
+    "fall_reason": "pelvis dropped below 40% of its start height"
+   },
+   "upright_s_with_ankle_strategy": 1.13
+  },
+  "dance": {
+   "request": "a short dance",
+   "inputs": {},
+   "final": "Motion(text:'a person does a short energetic dance with side steps and arm waves': 4.0 s, 120 frames, path 0.99 m, turn -1.3 deg)",
+   "turns": 2,
+   "wall_s": 338.2,
+   "model_latency_s": 104.09,
+   "cost_usd": 0.0,
+   "tool_seconds": {
+    "text_motion": 148.147,
+    "retarget": 1.413,
+    "check": 1.396,
+    "render": 79.871
+   },
+   "videos": {
+    "video": "dance/motion.mp4"
+   },
+   "video_bytes": {
+    "video": 240114
+   },
+   "metrics": {
+    "seconds": 4.0,
+    "mean_keypoint_err_m": 0.0389,
+    "ground_penetration_max_m": 0.0,
+    "foot_skate_mean_speed_mps": 0.032,
+    "self_collision_frames": 0,
+    "joint_limit_violation_frames": 0,
+    "com_outside_support_frac": 0.017,
+    "flight_frames": 0,
+    "upright_s": 1.68,
+    "clip_s": 3.97,
+    "fall_reason": "right_knee_link touched the floor"
+   },
+   "upright_s_with_ankle_strategy": 2.68
+  },
+  "jump": {
+   "request": "jump in place twice",
+   "inputs": {},
+   "final": "RobotMotion(g1: 5.0 s, keypoint error 0.0683 m, from text:'a person jumps in place twice')",
+   "turns": 2,
+   "wall_s": 1376.8,
+   "model_latency_s": 1159.71,
+   "cost_usd": 0.0,
+   "tool_seconds": {
+    "text_motion": 79.887,
+    "retarget": 2.006,
+    "check": 1.819,
+    "render": 131.019
+   },
+   "videos": {
+    "video": "jump/motion.mp4"
+   },
+   "video_bytes": {
+    "video": 202346
+   },
+   "metrics": {
+    "seconds": 5.0,
+    "mean_keypoint_err_m": 0.0683,
+    "ground_penetration_max_m": 0.0017,
+    "foot_skate_mean_speed_mps": 0.009,
+    "self_collision_frames": 0,
+    "joint_limit_violation_frames": 0,
+    "com_outside_support_frac": 0.007,
+    "flight_frames": 10,
+    "upright_s": 1.44,
+    "clip_s": 4.97,
+    "fall_reason": "pelvis dropped below 40% of its start height"
+   },
+   "upright_s_with_ankle_strategy": 1.7
+  },
+  "video_jumping_jacks": {
+   "request": "do what the person in the reference video does",
+   "inputs": {
+    "video": "jumping_jacks_10.6-13.4s.mp4"
+   },
+   "final": "RobotMotion(g1: 2.803 s, keypoint error 0.0423 m, from video_motion:jumping_jacks_10.6-13.4s.mp4)",
+   "turns": 6,
+   "wall_s": 5699.2,
+   "model_latency_s": 2922.79,
+   "cost_usd": 0.0,
+   "tool_seconds": {
+    "video_motion": 4.871,
+    "retarget": 1.36,
+    "check": 1.617,
+    "render": 65.229
+   },
+   "videos": {
+    "video": "video_jumping_jacks/motion.mp4"
+   },
+   "video_bytes": {
+    "video": 201559
+   },
+   "metrics": {
+    "seconds": 2.803,
+    "mean_keypoint_err_m": 0.0423,
+    "ground_penetration_max_m": 0.0075,
+    "foot_skate_mean_speed_mps": 0.333,
+    "self_collision_frames": 0,
+    "joint_limit_violation_frames": 0,
+    "com_outside_support_frac": 0.464,
+    "flight_frames": 0,
+    "upright_s": 1.05,
+    "clip_s": 2.77,
+    "fall_reason": "left_knee_link touched the floor"
+   },
+   "upright_s_with_ankle_strategy": 1.12
+  },
+  "image_pose": {
+   "request": "strike the pose shown in the image and hold it for a second",
+   "inputs": {
+    "image": "pose.jpg"
+   },
+   "final": "Motion(hold(pose_from_image:pose.jpg): 1.0 s, 30 frames, path 0.0 m, turn 0.0 deg)",
+   "turns": 3,
+   "wall_s": 2732.0,
+   "model_latency_s": 2702.16,
+   "cost_usd": 0.0,
+   "tool_seconds": {
+    "pose_from_image": 1.328,
+    "retarget": 0.822,
+    "check": 1.142,
+    "render": 26.508
+   },
+   "videos": {
+    "video": "image_pose/motion.mp4"
+   },
+   "video_bytes": {
+    "video": 34334
+   },
+   "metrics": {
+    "seconds": 1.0,
+    "mean_keypoint_err_m": 0.0422,
+    "ground_penetration_max_m": 0.0011,
+    "foot_skate_mean_speed_mps": 0.002,
+    "self_collision_frames": 0,
+    "joint_limit_violation_frames": 0,
+    "com_outside_support_frac": 1.0,
+    "flight_frames": 0,
+    "upright_s": 0.97,
+    "clip_s": 0.97,
+    "fall_reason": null
+   },
+   "upright_s_with_ankle_strategy": 0.97
+  }
+ },
+ "earlier_sessions": {
+  "wave_bow, walk_turn (first prompt)": "the model was shown the PD rollout's 'fell' and kept regenerating to make the robot stay up (one replaced the bow by a nod); both used the 8-turn budget without finishing (wall 7977 s and 7627 s, of which 4900 s / 4231 s waiting for the model). Since then check() shows the model only kinematic problems; physics is in check.json.",
+  "dance (first prompt)": "finished after 4 turns with 'a person slowly sways side to side' chosen for stability; replaced by the run here",
+  "wave_bow, walk_turn, dance (third try)": "ended on connection errors when Ollama was stopped; rerun one at a time afterwards (the runs here)"
+ }
+}

@@ -1,0 +1,93 @@
+{
+ "name": "open_drawer_put_block",
+ "instruction": "open the drawer and put the red block in it",
+ "objects": [
+  {
+   "name": "cabinet_base",
+   "label": "cabinet base",
+   "shape": "box",
+   "size": [
+    0.15,
+    0.25,
+    0.1
+   ],
+   "colour": "brown",
+   "fixed": true,
+   "pose": {
+    "pos": [
+     0.1,
+     0.1
+    ]
+   }
+  },
+  {
+   "name": "drawer",
+   "label": "drawer",
+   "shape": "tray",
+   "size": [
+    0.13,
+    0.23,
+    0.08
+   ],
+   "wall": 0.01,
+   "colour": "white",
+   "mass": 0.2,
+   "parent": "cabinet_base",
+   "joint": {
+    "type": "slide",
+    "range": [
+     -0.1,
+     0.0
+    ],
+    "initial": -0.1,
+    "damping": 2.0,
+    "spring": 50.0,
+    "spring_ref": -0.1
+   },
+   "pose": {
+    "pos": [
+     0.0,
+     0.0,
+     0.04
+    ]
+   }
+  },
+  {
+   "name": "red_block",
+   "label": "red block",
+   "shape": "box",
+   "size": [
+    0.04,
+    0.04,
+    0.04
+   ],
+   "colour": "red",
+   "mass": 0.05,
+   "region": {
+    "x": [
+     -0.2,
+     -0.1
+    ],
+    "y": [
+     -0.2,
+     -0.1
+    ]
+   }
+  }
+ ],
+ "success": {
+  "op": "sequence",
+  "terms": [
+   {
+    "op": "joint_at_least",
+    "object": "drawer",
+    "value": -0.05
+   },
+   {
+    "op": "inside",
+    "a": "red_block",
+    "b": "drawer"
+   }
+  ]
+ }
+}

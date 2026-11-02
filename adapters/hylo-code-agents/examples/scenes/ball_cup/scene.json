@@ -1,0 +1,48 @@
+{
+ "name": "ball_in_cup",
+ "instruction": "put the ball in the cup",
+ "objects": [
+  {
+   "name": "cup",
+   "label": "cup",
+   "shape": "cup",
+   "size": [
+    0.045,
+    0.08
+   ],
+   "colour": "blue",
+   "fixed": true,
+   "pose": {
+    "pos": [
+     0.1,
+     0.2
+    ]
+   }
+  },
+  {
+   "name": "ball",
+   "label": "ball",
+   "shape": "sphere",
+   "size": [
+    0.025
+   ],
+   "colour": "red",
+   "mass": 0.05,
+   "region": {
+    "x": [
+     -0.15,
+     -0.05
+    ],
+    "y": [
+     -0.25,
+     -0.15
+    ]
+   }
+  }
+ ],
+ "success": {
+  "op": "inside",
+  "a": "ball",
+  "b": "cup"
+ }
+}

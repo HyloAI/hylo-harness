@@ -1,0 +1,56 @@
+{
+ "name": "cylinder_upright_on_box",
+ "instruction": "a cylinder is lying on its side on the table; stand it upright on top of the wooden box",
+ "objects": [
+  {
+   "name": "wooden_box",
+   "label": "wooden box",
+   "shape": "box",
+   "size": [
+    0.08,
+    0.08,
+    0.04
+   ],
+   "colour": "brown",
+   "mass": 0.15,
+   "fixed": true,
+   "pose": {
+    "pos": [
+     0.1,
+     0.1
+    ]
+   }
+  },
+  {
+   "name": "cylinder",
+   "label": "cylinder",
+   "shape": "cylinder",
+   "size": [
+    0.025,
+    0.06
+   ],
+   "mass": 0.05,
+   "pose": {
+    "pos": [
+     -0.15,
+     -0.2
+    ],
+    "roll_deg": 90.0
+   }
+  }
+ ],
+ "success": {
+  "op": "sequence",
+  "terms": [
+   {
+    "op": "upright",
+    "a": "cylinder"
+   },
+   {
+    "op": "on",
+    "a": "cylinder",
+    "b": "wooden_box"
+   }
+  ]
+ }
+}

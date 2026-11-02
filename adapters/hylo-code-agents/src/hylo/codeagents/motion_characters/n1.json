@@ -1,0 +1,75 @@
+{
+ "name": "n1",
+ "title": "Fourier N1",
+ "kind": "mjcf",
+ "height_m": 1.1,
+ "asset": {
+  "menagerie": "menagerie_n1.json",
+  "xml": "n1.xml"
+ },
+ "licence": "Apache-2.0",
+ "credit": "Fourier N1 model from MuJoCo Menagerie (Fourier, Apache-2.0)",
+ "bodies": {
+  "pelvis": [
+   "base_link",
+   [
+    0,
+    0,
+    -0.03
+   ]
+  ],
+  "chest": [
+   "torso_link",
+   [
+    0,
+    0,
+    -0.165
+   ]
+  ],
+  "head": [
+   "torso_link",
+   [
+    0.01,
+    0,
+    0.13
+   ]
+  ],
+  "left_hip": "left_thigh_roll_link",
+  "right_hip": "right_thigh_roll_link",
+  "left_knee": "left_shank_pitch_link",
+  "right_knee": "right_shank_pitch_link",
+  "left_ankle": "left_foot_pitch_link",
+  "right_ankle": "right_foot_pitch_link",
+  "left_toe": [
+   "left_foot_pitch_link",
+   [
+    0.11,
+    0,
+    -0.035
+   ]
+  ],
+  "right_toe": [
+   "right_foot_pitch_link",
+   [
+    0.11,
+    0,
+    -0.035
+   ]
+  ],
+  "left_shoulder": "left_upper_arm_roll_link",
+  "right_shoulder": "right_upper_arm_roll_link",
+  "left_elbow": "left_lower_arm_pitch_link",
+  "right_elbow": "right_lower_arm_pitch_link",
+  "left_wrist": "left_hand_yaw_link",
+  "right_wrist": "right_hand_yaw_link"
+ },
+ "feet": [
+  "left_foot_pitch_link",
+  "right_foot_pitch_link"
+ ],
+ "clearance": {
+  "wrist": 0.17,
+  "elbow": 0.15
+ },
+ "camera_distance": 2.5
+}

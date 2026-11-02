@@ -1,0 +1,261 @@
+[
+ {
+  "task": "drawer_block",
+  "text": "open the drawer and put the red block in it",
+  "built": true,
+  "build_attempts": 6,
+  "problems_per_attempt": [
+   [
+    "unstable"
+   ],
+   [
+    "predicate_true_at_start"
+   ],
+   [
+    "predicate_true_at_start",
+    "unstable"
+   ],
+   [
+    "unsatisfiable"
+   ],
+   [
+    "unstable"
+   ],
+   []
+  ],
+  "build_wall_s": 296.3,
+  "solved": false,
+  "solve_status": "failure",
+  "turns": 10,
+  "steps": 448,
+  "solve_wall_s": 5284.7,
+  "model_s": 5262.5,
+  "usage": {
+   "calls": 10,
+   "tokens_in": 113295,
+   "tokens_out": 11123,
+   "cost_usd": 0.0,
+   "cost_usd_known_part": 0.0,
+   "latency_s": 5262.53
+  },
+  "reason": "agent_done: budget: 10 turns used",
+  "video": null,
+  "video_bytes": null,
+  "note": "model failure (rerun after the Ollama restart): never opened the drawer; a reach goal was refused as in collision with observed points, a home Goal was malformed, a block was rejected by the sandbox (locals); 10-turn budget used, block still on the table",
+  "earlier_runs": [
+   {
+    "status": "failure",
+    "turns": 0,
+    "reason": "agent_done: agent_timeout: no action from the program within 1800 s",
+    "note": "earlier run lost to Ollama queueing (kernel act wait 1800 s), before act_wait_s was raised"
+   },
+   {
+    "status": "failure",
+    "turns": 10,
+    "steps": 367,
+    "reason": "agent_done: budget: 10 turns used",
+    "note": "interrupted when Ollama was stopped (connection resets in its last turns)"
+   }
+  ]
+ },
+ {
+  "task": "size_tower",
+  "text": "stack the three blocks into a tower ordered by size: the largest block at the bottom and the smallest on top",
+  "built": true,
+  "build_attempts": 2,
+  "problems_per_attempt": [
+   [
+    "model_error"
+   ],
+   []
+  ],
+  "build_wall_s": 4253.6,
+  "solved": true,
+  "solve_status": "success",
+  "turns": 6,
+  "steps": 423,
+  "solve_wall_s": 3969.2,
+  "model_s": 3948.6,
+  "usage": {
+   "calls": 6,
+   "tokens_in": 46527,
+   "tokens_out": 3438,
+   "cost_usd": 0.0,
+   "cost_usd_known_part": 0.0,
+   "latency_s": 3948.61
+  },
+  "reason": "terminated",
+  "video": "front.mp4",
+  "video_bytes": 149086,
+  "note": "",
+  "earlier_runs": []
+ },
+ {
+  "task": "cylinder_upright",
+  "text": "a cylinder is lying on its side on the table; stand it upright on top of the wooden box",
+  "built": true,
+  "build_attempts": 5,
+  "problems_per_attempt": [
+   [
+    "schema"
+   ],
+   [
+    "model_error"
+   ],
+   [
+    "predicate_true_at_start"
+   ],
+   [
+    "model_error"
+   ],
+   []
+  ],
+  "build_wall_s": 8841.7,
+  "solved": false,
+  "solve_status": "failure",
+  "turns": 5,
+  "steps": 160,
+  "solve_wall_s": 4011.2,
+  "model_s": 4002.4,
+  "usage": {
+   "calls": 5,
+   "tokens_in": 41615,
+   "tokens_out": 3525,
+   "cost_usd": 0.0,
+   "cost_usd_known_part": 0.0,
+   "latency_s": 4002.42
+  },
+  "reason": "agent_done: finish() called",
+  "video": null,
+  "video_bytes": null,
+  "note": "model failure: carried the lying cylinder onto the box without re-orienting it, then called finish() (upright term false)",
+  "earlier_runs": [
+   {
+    "status": "failure",
+    "turns": 2,
+    "reason": "agent_done: agent_timeout: no action from the program within 1800 s",
+    "note": "earlier run lost to Ollama queueing (kernel act wait 1800 s), before act_wait_s was raised"
+   }
+  ]
+ },
+ {
+  "task": "slide_lid",
+  "text": "slide the lid of the box open so that the box is uncovered",
+  "built": true,
+  "build_attempts": 3,
+  "problems_per_attempt": [
+   [
+    "model_error"
+   ],
+   [
+    "predicate_true_at_start"
+   ],
+   []
+  ],
+  "build_wall_s": 4174.5,
+  "solved": true,
+  "solve_status": "success",
+  "turns": 2,
+  "steps": 87,
+  "solve_wall_s": 1010.9,
+  "model_s": 1006.3,
+  "usage": {
+   "calls": 2,
+   "tokens_in": 11137,
+   "tokens_out": 1233,
+   "cost_usd": 0.0,
+   "cost_usd_known_part": 0.0,
+   "latency_s": 1006.26
+  },
+  "reason": "terminated",
+  "video": "front.mp4",
+  "video_bytes": 44964,
+  "note": "",
+  "earlier_runs": []
+ },
+ {
+  "task": "colour_row",
+  "text": "line up the red, green and blue blocks in a row along the y axis, in that order (red, then green, then blue)",
+  "built": true,
+  "build_attempts": 2,
+  "problems_per_attempt": [
+   [
+    "model_error"
+   ],
+   []
+  ],
+  "build_wall_s": 3558.9,
+  "solved": false,
+  "solve_status": "failure",
+  "turns": 4,
+  "steps": 483,
+  "solve_wall_s": 901.3,
+  "model_s": 878.5,
+  "usage": {
+   "calls": 4,
+   "tokens_in": 30947,
+   "tokens_out": 2543,
+   "cost_usd": 0.0,
+   "cost_usd_known_part": 0.0,
+   "latency_s": 878.54
+  },
+  "reason": "agent_done: finish() called",
+  "video": null,
+  "video_bytes": null,
+  "note": "model failure (rerun after the Ollama restart): placed red, green, blue at y = 0.200, 0.040, -0.015, i.e. in decreasing y while the scene's row predicate asks for increasing y in the listed order; printed SUCCESS and called finish() without checking the predicate's direction",
+  "earlier_runs": [
+   {
+    "status": "failure",
+    "turns": 3,
+    "reason": "agent_done: agent_timeout: no action from the program within 1800 s",
+    "note": "earlier run lost to Ollama queueing (kernel act wait 1800 s), before act_wait_s was raised"
+   },
+   {
+    "status": "failure",
+    "turns": 10,
+    "steps": 277,
+    "reason": "agent_done: budget: 10 turns used",
+    "note": "interrupted when Ollama was stopped (connection resets in its last turns)"
+   }
+  ]
+ },
+ {
+  "task": "ball_cup",
+  "text": "put the ball in the cup",
+  "built": true,
+  "build_attempts": 2,
+  "problems_per_attempt": [
+   [
+    "model_error"
+   ],
+   []
+  ],
+  "build_wall_s": 3575.3,
+  "solved": true,
+  "solve_status": "success",
+  "turns": 3,
+  "steps": 159,
+  "solve_wall_s": 2207.1,
+  "model_s": 2197.7,
+  "usage": {
+   "calls": 3,
+   "tokens_in": 18188,
+   "tokens_out": 1925,
+   "cost_usd": 0.0,
+   "cost_usd_known_part": 0.0,
+   "latency_s": 2197.7
+  },
+  "reason": "terminated",
+  "video": "front.mp4",
+  "video_bytes": 69639,
+  "note": "",
+  "earlier_runs": [
+   {
+    "status": "failure",
+    "turns": 3,
+    "reason": "agent_done: agent_timeout: no action from the program within 1800 s",
+    "note": "earlier run lost to Ollama queueing (kernel act wait 1800 s), before act_wait_s was raised"
+   }
+  ]
+ }
+]

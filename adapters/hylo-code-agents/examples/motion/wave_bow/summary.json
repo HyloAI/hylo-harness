@@ -1,0 +1,106 @@
+{
+  "request": "wave with the right hand, then bow",
+  "robot": "g1",
+  "inputs": {},
+  "model": "ollama:qwen3.5:35b-a3b (vision)",
+  "stopped": "finished",
+  "finished_by_model": true,
+  "note": "wave right hand then bow",
+  "turns": 2,
+  "usage": {
+    "calls": 2,
+    "tokens_in": 2454,
+    "tokens_out": 246,
+    "cost_usd": 0.0,
+    "cost_usd_known_part": 0.0,
+    "latency_s": 1132.55
+  },
+  "cost_usd": 0.0,
+  "wall_s": 2095.6,
+  "tool_seconds": {
+    "text_motion": {
+      "calls": 1,
+      "seconds": 740.354
+    },
+    "retarget": {
+      "calls": 2,
+      "seconds": 3.504
+    },
+    "check": {
+      "calls": 2,
+      "seconds": 1.396
+    },
+    "render": {
+      "calls": 2,
+      "seconds": 213.203
+    },
+    "compose": {
+      "calls": 1,
+      "seconds": 0.906
+    }
+  },
+  "final": "Motion(text:['a person waves with the right hand', 'a person bows']: 5.0 s, 150 frames, path 0.29 m, turn -7.7 deg)",
+  "files": {
+    "motion": "motion.npz",
+    "check": "check.json",
+    "video": "motion.mp4",
+    "split": "split.mp4"
+  },
+  "video_bytes": {
+    "video": 255168,
+    "split": 260502
+  },
+  "render_backend": "blender",
+  "check": {
+    "robot": "g1",
+    "seconds": 5.0,
+    "frames": 150,
+    "fps": 30.0,
+    "nq": 36,
+    "scale": 0.7475,
+    "mean_keypoint_err_m": 0.0557,
+    "max_keypoint_err_m": 0.0667,
+    "ground_correction_m": [
+      -0.027,
+      -0.009
+    ],
+    "ground_penetration_max_m": 0.0,
+    "frames_below_floor_1cm": 0,
+    "frames_floating_5cm": 0,
+    "flight_frames": 0,
+    "foot_skate_m": [
+      0.088,
+      0.098
+    ],
+    "foot_skate_mean_speed_mps": 0.019,
+    "stance_frames": [
+      149,
+      149
+    ],
+    "joint_limit_violation_frames": 0,
+    "joints_at_limit": [
+      [
+        "waist_pitch_joint",
+        0.57
+      ]
+    ],
+    "self_collision_frames": 0,
+    "self_collision_pairs": {},
+    "com_outside_support_frac": 0.0,
+    "com_outside_support_max_m": -0.005,
+    "physics": "position servos (PD) track the joint trajectory; no balance controller",
+    "upright_s": 1.48,
+    "clip_s": 4.97,
+    "upright_frac": 0.298,
+    "fell": true,
+    "fall_reason": "right_wrist_yaw_link touched the floor",
+    "joint_track_err_rad": 0.0091,
+    "root_drift_m": 0.899,
+    "with_ankle_strategy": {
+      "upright_s": 4.35,
+      "fell": true,
+      "fall_reason": "pelvis dropped below 40% of its start height",
+      "joint_track_err_rad": 0.017
+    }
+  }
+}

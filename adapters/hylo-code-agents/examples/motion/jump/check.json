@@ -1,0 +1,48 @@
+{
+  "robot": "g1",
+  "seconds": 5.0,
+  "frames": 150,
+  "fps": 30.0,
+  "nq": 36,
+  "scale": 0.7462,
+  "mean_keypoint_err_m": 0.0683,
+  "max_keypoint_err_m": 0.0709,
+  "ground_correction_m": [
+    -0.078,
+    0.001
+  ],
+  "sim_qpos": "/tmp/claude-1002/-home-bingao-hyloai/49f6a616-2836-40ee-84cf-972b09b8fd75/scratchpad/motion_runs/jump/tools/003-check-g1/sim_qpos.npy",
+  "ground_penetration_max_m": 0.0017,
+  "frames_below_floor_1cm": 0,
+  "frames_floating_5cm": 7,
+  "flight_frames": 10,
+  "foot_skate_m": [
+    0.038,
+    0.041
+  ],
+  "foot_skate_mean_speed_mps": 0.009,
+  "stance_frames": [
+    125,
+    137
+  ],
+  "joint_limit_violation_frames": 0,
+  "joints_at_limit": [],
+  "self_collision_frames": 0,
+  "self_collision_pairs": {},
+  "com_outside_support_frac": 0.007,
+  "com_outside_support_max_m": 0.062,
+  "physics": "position servos (PD) track the joint trajectory; no balance controller",
+  "upright_s": 1.44,
+  "clip_s": 4.97,
+  "upright_frac": 0.29,
+  "fell": true,
+  "fall_reason": "pelvis dropped below 40% of its start height",
+  "joint_track_err_rad": 0.0094,
+  "root_drift_m": 0.868,
+  "with_ankle_strategy": {
+    "upright_s": 1.7,
+    "fell": true,
+    "fall_reason": "left_knee_link touched the floor",
+    "joint_track_err_rad": 0.0278
+  }
+}

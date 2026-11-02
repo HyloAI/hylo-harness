@@ -1,0 +1,62 @@
+{
+ "name": "kenney_survivor",
+ "title": "Kenney survivor",
+ "kind": "rig",
+ "height_m": 1.75,
+ "asset": {
+  "archive": {
+   "url": "https://opengameart.org/sites/default/files/kenney_animated-characters-1.zip",
+   "page": "https://opengameart.org/content/animated-characters-1",
+   "sha256": "9cc53e82c941781f26aa8fb39d40887cf14b1d74cca2d10ccc6e7c140a68f820",
+   "members": {
+    "characterMedium.fbx": "Model/characterMedium.fbx",
+    "survivorMaleB.png": "Skins/survivorMaleB.png",
+    "License.txt": "License.txt"
+   }
+  },
+  "file": "characterMedium.fbx",
+  "texture": "survivorMaleB.png"
+ },
+ "licence": "CC0-1.0",
+ "author": "Kenney (www.kenney.nl)",
+ "credit": "Animated Characters 1 by Kenney (www.kenney.nl), CC0 1.0, skin survivorMaleB",
+ "joints": {
+  "pelvis": "Hips.head",
+  "chest": "Chest.head",
+  "head": "Head.head",
+  "left_hip": "LeftUpLeg.head",
+  "right_hip": "RightUpLeg.head",
+  "left_knee": "LeftLeg.head",
+  "right_knee": "RightLeg.head",
+  "left_ankle": "LeftFoot.head",
+  "right_ankle": "RightFoot.head",
+  "left_toe": "LeftToes.head",
+  "right_toe": "RightToes.head",
+  "left_shoulder": "LeftArm.head",
+  "right_shoulder": "RightArm.head",
+  "left_elbow": "LeftForeArm.head",
+  "right_elbow": "RightForeArm.head",
+  "left_wrist": "LeftHand.head",
+  "right_wrist": "RightHand.head"
+ },
+ "drive": {
+  "pelvis": "Hips",
+  "spine": [
+   "Spine",
+   "Chest",
+   "UpperChest"
+  ],
+  "neck": "Neck",
+  "left_upper_arm": "LeftArm",
+  "right_upper_arm": "RightArm",
+  "left_forearm": "LeftForeArm",
+  "right_forearm": "RightForeArm",
+  "left_thigh": "LeftUpLeg",
+  "right_thigh": "RightUpLeg",
+  "left_shin": "LeftLeg",
+  "right_shin": "RightLeg",
+  "left_foot": "LeftFoot",
+  "right_foot": "RightFoot"
+ },
+ "camera_distance": 3.4
+}

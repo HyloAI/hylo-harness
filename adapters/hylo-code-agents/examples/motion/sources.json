@@ -1,0 +1,19 @@
+{
+  "note": "Inputs of the recorded motion-studio runs. They are fetched into the tools cache, not stored in the repository; only the outputs (videos, motions, logs) are here.",
+  "video_jumping_jacks": {
+    "file": "Jumping jacks and burpees.webm",
+    "page": "https://commons.wikimedia.org/wiki/File:Jumping_jacks_and_burpees.webm",
+    "url": "https://upload.wikimedia.org/wikipedia/commons/5/57/Jumping_jacks_and_burpees.webm",
+    "sha256": "1c8370a29c52b5b1538f03f8c63be6cdc9333dea3cbd77cc8f2af0dbe496d5b4",
+    "author": "Taco Fleur (Cavemantraining), own work, 2017-11-15",
+    "licence": "CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/), checked on the Commons page 2026-11-01",
+    "used": "10.6 s to 13.4 s (jumping jacks), letterbox rows 60-419 cropped, re-encoded as jumping_jacks_10.6-13.4s.mp4 in the tools cache",
+    "derived_outputs": "video_jumping_jacks/* are adaptations of this clip (a robot motion estimated from it) and are shared under CC BY-SA 4.0 with this attribution"
+  },
+  "image_pose": {
+    "file": "pose.jpg",
+    "url": "https://storage.googleapis.com/mediapipe-assets/pose.jpg",
+    "licence": "distributed by Google in the mediapipe-assets bucket used by MediaPipe's Apache-2.0 tests (the same image the hylo-tools human tests use); the photo's original source is not stated there",
+    "content": "a man in a warrior II yoga pose on a beach"
+  }
+}

@@ -1,0 +1,115 @@
+{
+  "request": "do what the person in the reference video does",
+  "robot": "g1",
+  "inputs": {
+    "video": "/home/bingao/.cache/hylo/tools/media/commons/jumping_jacks_10.6-13.4s.mp4"
+  },
+  "model": "ollama:qwen3.5:35b-a3b (vision)",
+  "stopped": "finished",
+  "finished_by_model": true,
+  "note": "jumping jacks from reference video",
+  "turns": 6,
+  "usage": {
+    "calls": 5,
+    "tokens_in": 9805,
+    "tokens_out": 976,
+    "cost_usd": 0.0,
+    "cost_usd_known_part": 0.0,
+    "latency_s": 2922.79
+  },
+  "cost_usd": 0.0,
+  "wall_s": 5699.2,
+  "tool_seconds": {
+    "video_motion": {
+      "calls": 3,
+      "seconds": 4.871
+    },
+    "retarget": {
+      "calls": 1,
+      "seconds": 1.36
+    },
+    "check": {
+      "calls": 2,
+      "seconds": 1.617
+    },
+    "render": {
+      "calls": 1,
+      "seconds": 65.229
+    }
+  },
+  "final": "RobotMotion(g1: 2.803 s, keypoint error 0.0423 m, from video_motion:jumping_jacks_10.6-13.4s.mp4)",
+  "files": {
+    "motion": "motion.npz",
+    "check": "check.json",
+    "video": "motion.mp4"
+  },
+  "video_bytes": {
+    "video": 201559
+  },
+  "render_backend": "blender",
+  "check": {
+    "robot": "g1",
+    "seconds": 2.803,
+    "frames": 84,
+    "fps": 29.969999313354492,
+    "nq": 36,
+    "scale": 0.7607,
+    "mean_keypoint_err_m": 0.0423,
+    "max_keypoint_err_m": 0.0469,
+    "ground_correction_m": [
+      -0.028,
+      0.012
+    ],
+    "sim_qpos": "examples/motion/video_jumping_jacks/tools/004-check-g1/sim_qpos.npy",
+    "ground_penetration_max_m": 0.0075,
+    "frames_below_floor_1cm": 0,
+    "frames_floating_5cm": 0,
+    "flight_frames": 0,
+    "foot_skate_m": [
+      0.67,
+      0.797
+    ],
+    "foot_skate_mean_speed_mps": 0.333,
+    "stance_frames": [
+      54,
+      78
+    ],
+    "joint_limit_violation_frames": 0,
+    "joints_at_limit": [
+      [
+        "left_wrist_pitch_joint",
+        0.83
+      ],
+      [
+        "left_ankle_roll_joint",
+        0.35
+      ],
+      [
+        "left_shoulder_yaw_joint",
+        0.3
+      ],
+      [
+        "right_ankle_pitch_joint",
+        0.21
+      ]
+    ],
+    "self_collision_frames": 0,
+    "self_collision_pairs": {},
+    "com_outside_support_frac": 0.464,
+    "com_outside_support_max_m": 0.247,
+    "physics": "position servos (PD) track the joint trajectory; no balance controller",
+    "upright_s": 1.05,
+    "clip_s": 2.77,
+    "upright_frac": 0.379,
+    "fell": true,
+    "fall_reason": "left_knee_link touched the floor",
+    "joint_track_err_rad": 0.0354,
+    "root_drift_m": 0.534,
+    "with_ankle_strategy": {
+      "upright_s": 1.12,
+      "fell": true,
+      "fall_reason": "left_knee_link touched the floor",
+      "joint_track_err_rad": 0.0556
+    }
+  }
+}

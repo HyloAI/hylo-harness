@@ -1,0 +1,64 @@
+{
+  "robot": "g1",
+  "seconds": 9.0,
+  "frames": 270,
+  "fps": 30.0,
+  "nq": 36,
+  "scale": 0.7456,
+  "mean_keypoint_err_m": 0.0454,
+  "max_keypoint_err_m": 0.0634,
+  "ground_correction_m": [
+    -0.029,
+    -0.003
+  ],
+  "ground_penetration_max_m": 0.0,
+  "frames_below_floor_1cm": 0,
+  "frames_floating_5cm": 0,
+  "flight_frames": 0,
+  "foot_skate_m": [
+    0.376,
+    0.388
+  ],
+  "foot_skate_mean_speed_mps": 0.077,
+  "stance_frames": [
+    191,
+    108
+  ],
+  "joint_limit_violation_frames": 0,
+  "joints_at_limit": [
+    [
+      "right_ankle_pitch_joint",
+      0.06
+    ],
+    [
+      "left_knee_joint",
+      0.04
+    ],
+    [
+      "left_ankle_roll_joint",
+      0.04
+    ],
+    [
+      "left_ankle_pitch_joint",
+      0.04
+    ]
+  ],
+  "self_collision_frames": 0,
+  "self_collision_pairs": {},
+  "com_outside_support_frac": 0.311,
+  "com_outside_support_max_m": 0.217,
+  "physics": "position servos (PD) track the joint trajectory; no balance controller",
+  "upright_s": 1.22,
+  "clip_s": 8.97,
+  "upright_frac": 0.136,
+  "fell": true,
+  "fall_reason": "pelvis dropped below 40% of its start height",
+  "joint_track_err_rad": 0.0226,
+  "root_drift_m": 0.838,
+  "with_ankle_strategy": {
+    "upright_s": 1.13,
+    "fell": true,
+    "fall_reason": "pelvis dropped below 40% of its start height",
+    "joint_track_err_rad": 0.036
+  }
+}

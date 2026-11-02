@@ -1,0 +1,75 @@
+{
+ "name": "quaternius_casual",
+ "title": "Quaternius casual woman",
+ "kind": "rig",
+ "height_m": 1.68,
+ "asset": {
+  "archive": {
+   "url": "https://opengameart.org/sites/default/files/ultimate_animated_character_pack_by_quaternius.zip",
+   "page": "https://opengameart.org/content/animated-characters-pack",
+   "sha256": "0295062cbc72da52ee804f39ac38694901a40458011f9b2638fc7ef13ed509da",
+   "members": {
+    "Casual_Female.fbx": "Ultimate Animated Character Pack - Nov 2019/FBX/Casual_Female.fbx"
+   }
+  },
+  "file": "Casual_Female.fbx"
+ },
+ "licence": "CC0-1.0",
+ "author": "Quaternius",
+ "credit": "Ultimate Animated Character Pack by Quaternius (Casual_Female), CC0 1.0",
+ "joints": {
+  "pelvis": "Hips.head",
+  "chest": "Torso.head",
+  "head": "Head.head",
+  "left_hip": "UpperLeg.L.head",
+  "right_hip": "UpperLeg.R.head",
+  "left_knee": "LowerLeg.L.head",
+  "right_knee": "LowerLeg.R.head",
+  "left_ankle": "LowerLeg.L.tail",
+  "right_ankle": "LowerLeg.R.tail",
+  "left_toe": "Foot.L.tail",
+  "right_toe": "Foot.R.tail",
+  "left_shoulder": "UpperArm.L.head",
+  "right_shoulder": "UpperArm.R.head",
+  "left_elbow": "LowerArm.L.head",
+  "right_elbow": "LowerArm.R.head",
+  "left_wrist": "Fist.L.head",
+  "right_wrist": "Fist.R.head"
+ },
+ "drive": {
+  "pelvis": "Body",
+  "spine": [
+   "Hips",
+   "Abdomen",
+   "Torso"
+  ],
+  "neck": "Neck",
+  "left_upper_arm": "UpperArm.L",
+  "right_upper_arm": "UpperArm.R",
+  "left_forearm": "LowerArm.L",
+  "right_forearm": "LowerArm.R",
+  "left_thigh": "UpperLeg.L",
+  "right_thigh": "UpperLeg.R",
+  "left_shin": "LowerLeg.L",
+  "right_shin": "LowerLeg.R",
+  "left_foot": "Foot.L",
+  "right_foot": "Foot.R"
+ },
+ "attach": {
+  "Foot.L": "LowerLeg.L.tail",
+  "Foot.R": "LowerLeg.R.tail"
+ },
+ "camera_distance": 3.4,
+ "colours": {
+  "Skin": [
+   0.93,
+   0.76,
+   0.64
+  ],
+  "Face": [
+   0.95,
+   0.8,
+   0.7
+  ]
+ }
+}

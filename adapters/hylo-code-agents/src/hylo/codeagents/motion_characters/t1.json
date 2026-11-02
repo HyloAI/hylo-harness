@@ -1,0 +1,89 @@
+{
+ "name": "t1",
+ "title": "Booster T1",
+ "kind": "mjcf",
+ "height_m": 1.0,
+ "asset": {
+  "menagerie": "menagerie_t1.json",
+  "xml": "t1.xml"
+ },
+ "licence": "Apache-2.0",
+ "credit": "Booster T1 model from MuJoCo Menagerie (Booster Robotics, Apache-2.0)",
+ "bodies": {
+  "pelvis": [
+   "Waist",
+   [
+    0,
+    0,
+    0.02
+   ]
+  ],
+  "chest": [
+   "Trunk",
+   [
+    0.03,
+    0,
+    0.055
+   ]
+  ],
+  "head": [
+   "H2",
+   [
+    0.0,
+    0,
+    0.05
+   ]
+  ],
+  "left_hip": "Hip_Roll_Left",
+  "right_hip": "Hip_Roll_Right",
+  "left_knee": "Shank_Left",
+  "right_knee": "Shank_Right",
+  "left_ankle": "left_foot_link",
+  "right_ankle": "right_foot_link",
+  "left_toe": [
+   "left_foot_link",
+   [
+    0.1,
+    0,
+    -0.02
+   ]
+  ],
+  "right_toe": [
+   "right_foot_link",
+   [
+    0.1,
+    0,
+    -0.02
+   ]
+  ],
+  "left_shoulder": "AL2",
+  "right_shoulder": "AR2",
+  "left_elbow": "left_hand_link",
+  "right_elbow": "right_hand_link",
+  "left_wrist": [
+   "left_hand_link",
+   [
+    0,
+    0.2,
+    0
+   ]
+  ],
+  "right_wrist": [
+   "right_hand_link",
+   [
+    0,
+    -0.2,
+    0
+   ]
+  ]
+ },
+ "feet": [
+  "left_foot_link",
+  "right_foot_link"
+ ],
+ "clearance": {
+  "wrist": 0.17,
+  "elbow": 0.15
+ },
+ "camera_distance": 2.5
+}

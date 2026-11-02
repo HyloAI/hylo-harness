@@ -1,0 +1,35 @@
+{
+ "name": "human",
+ "title": "Hylo stick human",
+ "kind": "mjcf",
+ "height_m": 1.6,
+ "asset": {
+  "builtin": "hylo_humanoid"
+ },
+ "licence": "Apache-2.0 (part of Hylo)",
+ "credit": "Hylo's generic capsule humanoid (hylo-tools text_motion)",
+ "bodies": {
+  "pelvis": "pelvis",
+  "chest": "chest",
+  "head": "head",
+  "left_hip": "l_hip",
+  "right_hip": "r_hip",
+  "left_knee": "l_knee",
+  "right_knee": "r_knee",
+  "left_ankle": "l_ankle",
+  "right_ankle": "r_ankle",
+  "left_toe": "l_toe",
+  "right_toe": "r_toe",
+  "left_shoulder": "l_shoulder",
+  "right_shoulder": "r_shoulder",
+  "left_elbow": "l_elbow",
+  "right_elbow": "r_elbow",
+  "left_wrist": "l_wrist",
+  "right_wrist": "r_wrist"
+ },
+ "feet": [
+  "l_foot",
+  "r_foot"
+ ],
+ "camera_distance": 3.2
+}

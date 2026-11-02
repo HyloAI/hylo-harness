@@ -1,0 +1,12 @@
+{
+ "comment": "Showcase tasks for free-mode scene building (examples/scenes_free/run_all.py). Only the task text goes to the model; it picks the robot and writes the scene. `turns` is the solve budget, `blender` marks the task rendered with Blender.",
+ "tasks": [
+  {"name": "cable_lift", "text": "lift the cable off the table by both of its ends, using two arms", "turns": 15,
+   "deformable": true, "blender": true},
+  {"name": "cloth_drape", "text": "drape the cloth over the box", "turns": 15, "deformable": true},
+  {"name": "rope_line", "text": "lay the rope straight along the white line on the table", "turns": 15,
+   "deformable": true},
+  {"name": "rope_ring", "text": "thread the end of the rope through the ring", "turns": 15, "deformable": true},
+  {"name": "hinged_lid", "text": "open the hinged lid of the box", "turns": 15, "deformable": false}
+ ]
+}
