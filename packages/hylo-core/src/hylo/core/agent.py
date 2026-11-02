@@ -24,6 +24,9 @@ class AgentSpec(Contract):
     weights_license: str | None = None          # mandatory for learned policies
 
 
+END_EPISODE = "end_episode"   # ActionChunk.provenance key: the agent is done; the kernel ends the episode before
+# executing that chunk and the task predicate of the last step decides success (tool-using agents call finish())
+
 EpisodeStatus = Literal["success", "failure", "error", "safety_abort", "infra_invalid", "unlabeled"]  # unlabeled:
 # nobody could judge the outcome (a robot episode before the operator's verdict, an external episode)
 

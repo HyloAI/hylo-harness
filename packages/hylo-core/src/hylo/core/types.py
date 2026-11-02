@@ -16,6 +16,7 @@ import numpy as np
 from pydantic import Field, model_validator
 
 from .contract import Contract, JsonAny, NDArray
+from .robot import RobotSpec
 
 ControlMode = Literal[
     "joint_pos", "joint_delta", "joint_vel",
@@ -99,6 +100,7 @@ class EnvSpec(Contract):
     control_hz: float = Field(gt=0)
     capabilities: EnvCapabilities = Field(default_factory=EnvCapabilities)
     workspace: WorkspaceLimit | None = None     # contributed by the environment, enforced by the SafetyShield
+    robot: RobotSpec | None = None              # manipulation environments: arms, hands, cameras (core.robot)
 
 
 class Observation(Contract):

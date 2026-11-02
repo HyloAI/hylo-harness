@@ -1,6 +1,8 @@
 """SkillLibrary: verified, versioned procedures for task families (RFC-0003 M3).
 
-A skill is data, never code: a plan template, a steering or recovery config patch, or a weights reference.
+A skill is data, never code: a plan template, a steering or recovery config patch, a weights reference, or a
+reference to a sealed program artifact (kind "program", RFC-0006 part 6: run only by code agents, in their sandbox).
+Program skills have no trigger pattern; `similar` ranks them by instruction similarity.
 Lifecycle: proposed -> verified (only through the RSI gate, with its statistics as evidence) | refuted;
 verified -> deprecated. `match` returns verified skills only, with the slot bindings captured by the trigger's
 instruction pattern. Usage feedback (useful / misleading / not_applicable) accumulates per version.
@@ -30,6 +32,16 @@ TRANSITIONS = {"proposed": {"verified", "refuted"}, "verified": {"deprecated"}, 
 
 def normalise_instruction(text: str) -> str:
     return re.sub(r"\s+", " ", text.strip().lower()).rstrip(".")
+
+
+def _tokens(text: str) -> set[str]:
+    return {w for w in re.findall(r"[a-z0-9]+", text.lower()) if len(w) > 1}
+
+
+def similarity(a: str, b: str) -> float:
+    """Word-set cosine between two texts (0..1): enough to rank a handful of skills by instruction."""
+    ta, tb = _tokens(a), _tokens(b)
+    return len(ta & tb) / ((len(ta) * len(tb)) ** 0.5) if ta and tb else 0.0
 
 
 class SkillLibrary:
@@ -117,6 +129,30 @@ class SkillLibrary:
             out.append(((specificity, score), s, binds))
         out.sort(key=lambda x: x[0], reverse=True)
         return [(s, b) for _, s, b in out]
+
+    def for_failure(self, reasons: list[str] | tuple[str, ...] | set[str], *, env: str | None = None,
+                    kinds: tuple[str, ...] | None = None) -> list[Skill]:
+        """Verified skills whose failure signature (trigger.reason_codes) is contained in `reasons` (most specific
+        first): what to try when a check failed for these reasons."""
+        got = set(reasons)
+        out = [s for s in self.all("verified") if s.trigger.reason_codes and set(s.trigger.reason_codes) <= got
+               and (env is None or s.trigger.env in (None, env)) and (kinds is None or s.kind in kinds)]
+        return sorted(out, key=lambda s: (-len(s.trigger.reason_codes), s.name))
+
+    def similar(self, instruction: str, *, kinds: tuple[str, ...] | None = None, k: int = 3,
+                min_score: float = 0.2) -> list[tuple[Skill, float]]:
+        """Verified skills ranked by how close the instruction is to the skill's description and to the example
+        instructions in its body (`body["instructions"]`); for skills without a trigger pattern (programs)."""
+        out = []
+        for s in self.all("verified"):
+            if kinds and s.kind not in kinds:
+                continue
+            texts = [s.description, *[str(t) for t in (s.body.get("instructions") or [])]]
+            score = max(similarity(instruction, t) for t in texts)
+            if score >= min_score:
+                out.append((s, round(score, 4)))
+        out.sort(key=lambda x: (x[1], x[0].verdicts.get("useful", 0) - x[0].verdicts.get("misleading", 0)), reverse=True)
+        return out[:k]
 
     def snapshot(self) -> str:
         h = hashlib.sha256()

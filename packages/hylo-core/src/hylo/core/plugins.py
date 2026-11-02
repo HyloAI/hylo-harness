@@ -42,6 +42,7 @@ CONTRACTS: dict[str, str] = {
     "memory": "hylo.memory/v0.1", "scorers": "hylo.scorer/v0.1", "benchmarks": "hylo.benchmark/v0.1",
     "generators": "hylo.generator/v0.1", "learners": "hylo.learner/v0.1", "instruments": "hylo.instrument/v0.1",
     "datasources": "hylo.datasource/v0.1", "guards": "hylo.guard/v0.1", "gate_tests": "hylo.gate_test/v0.1",
+    "surfaces": "hylo.tools/v0.1",
 }
 # where each contract is defined: always hylo-core, so a plugin of any group depends on hylo-core alone
 CONTRACT_OBJECTS: dict[str, str] = {
@@ -53,6 +54,7 @@ CONTRACT_OBJECTS: dict[str, str] = {
     "generators": "hylo.core.improvement:Proposer", "learners": "hylo.core.learning:Learner",
     "instruments": "hylo.core.instrument:SuccessJudge", "datasources": "hylo.core.learning:DataSource",
     "guards": "hylo.core.safety:Guard", "gate_tests": "hylo.core.scoring:GateTest",
+    "surfaces": "hylo.core.tooling:Surface",
 }
 MATURITY = ("implemented", "unverified", "needs-hardware", "test-double")
 Maturity = Literal["implemented", "unverified", "needs-hardware", "test-double", "undeclared"]

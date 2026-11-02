@@ -11,7 +11,7 @@ from typing import Any, Callable
 from .contract import current_module
 
 GROUPS = ("envs", "agents", "policies", "reasoners", "choosers", "planners", "reflectors", "memory", "scorers",
-          "benchmarks", "generators", "learners", "instruments", "datasources", "guards", "gate_tests")
+          "benchmarks", "generators", "learners", "instruments", "datasources", "guards", "gate_tests", "surfaces")
 
 
 class Registry:

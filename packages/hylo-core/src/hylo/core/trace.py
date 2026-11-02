@@ -5,6 +5,12 @@ Layout of a run directory:
     <run>/episodes/<episode_id>.jsonl      one Event per line, arrays inline when small
     <run>/blobs/<sha256>.npy               large arrays (images, point clouds), content-addressed
     <run>/evallog.json                     aggregated scores; points back at episode files
+    <run>/seal.json                        optional: the run's file inventory, written by `hylo seal`
+
+Hash chain (hylo.trace/v0.2): every event line carries `prev` (the previous line's hash, "" for the first) and `h`,
+the sha256 of the line's canonical JSON without `h`. Blobs are named by their own digest, so the chain covers them
+too. `hylo.core.seal.verify_chain` finds the first line that was changed, removed or reordered. Lines written before
+the chain existed have neither key and are reported as unchained, not as broken.
 
 Scorers and shadow replay read only this; they never call the Agent or the Environment.
 """
@@ -32,6 +38,7 @@ class TraceStore:
         (self.root / "episodes").mkdir(parents=True, exist_ok=True)
         (self.root / "blobs").mkdir(exist_ok=True)
         self._files: dict[str, io.TextIOWrapper] = {}
+        self._heads: dict[str, str] = {}
 
     # ---- writing -------------------------------------------------------------------------
     def _offload(self, obj: Any) -> Any:
@@ -53,11 +60,16 @@ class TraceStore:
     def write(self, event: Event) -> None:
         f = self._files.get(event.episode_id)
         if f is None:
-            f = open(self.root / "episodes" / f"{event.episode_id}.jsonl", "a", encoding="utf-8")
+            path = self.root / "episodes" / f"{event.episode_id}.jsonl"
+            self._heads[event.episode_id] = last_hash(path)
+            f = open(path, "a", encoding="utf-8")
             self._files[event.episode_id] = f
         record = {"type": event.type, "seq": event.seq, "source": event.source,
                   "sim_time": event.sim_time, "wall_time": event.wall_time,
-                  "payload": codec.encode(self._offload(dict(event.payload)))}
+                  "payload": codec.encode(self._offload(dict(event.payload))),
+                  "prev": self._heads.get(event.episode_id, "")}
+        record["h"] = line_hash(record)
+        self._heads[event.episode_id] = record["h"]
         f.write(json.dumps(record, separators=(",", ":")) + "\n")
 
     def close_episode(self, episode_id: str) -> None:
@@ -77,6 +89,26 @@ class TraceStore:
 
     def read(self, episode_id: str) -> "EpisodeTrace":
         return EpisodeTrace(self.root, episode_id)
+
+
+def line_hash(record: dict[str, Any]) -> str:
+    """sha256 of an event line's canonical JSON, without its own `h`."""
+    body = {k: v for k, v in record.items() if k != "h"}
+    return hashlib.sha256(json.dumps(body, sort_keys=True, separators=(",", ":")).encode()).hexdigest()
+
+
+def last_hash(path: Path) -> str:
+    """The `h` of the last line of an episode file ("" when there is none: a new file or an unchained one)."""
+    if not path.is_file() or path.stat().st_size == 0:
+        return ""
+    size = path.stat().st_size
+    with open(path, "rb") as f:
+        f.seek(max(0, size - (1 << 20)))                  # the last line is within the last MiB
+        lines = [ln for ln in f.read().splitlines() if ln.strip()]
+    try:
+        return str(json.loads(lines[-1]).get("h", "")) if lines else ""
+    except json.JSONDecodeError:
+        return ""
 
 
 class EpisodeTrace:

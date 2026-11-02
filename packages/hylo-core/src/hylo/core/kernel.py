@@ -37,7 +37,7 @@ import numpy as np
 from pydantic import Field
 
 from . import events as ev
-from .agent import Agent, EpisodeContext, EpisodeOutcome
+from .agent import END_EPISODE, Agent, EpisodeContext, EpisodeOutcome
 from .compat import CompatReport, require_compatible
 from .contract import Contract
 from .env import Environment, PrivilegedStateSource
@@ -235,7 +235,11 @@ class EpisodeRunner:
                 if pending is not None and self._arrived(pending, steps):
                     q, chunks = self._merge(eid, pending, steps, obs), chunks + 1
                     recent.append(pending.latency_s)
+                    ended = pending.chunk.provenance.get(END_EPISODE) if pending.chunk is not None else None
                     pending = None
+                    if ended:                                        # the agent says it is done: nothing more runs
+                        reason = f"agent_done: {ended}" if isinstance(ended, str) else "agent_done"
+                        break
                 # 3. execute one action, or hold
                 if q:
                     data, consecutive = q.pop(0), 0

@@ -33,7 +33,7 @@ DEV_SPLITS: tuple[str, ...] = ("search", "search_val")
 FORBIDDEN_SPLIT_PREFIXES: tuple[str, ...] = ("gate", "heldout")
 
 ArtifactKind = Literal["dataset", "action_memory", "value_model", "noise_policy", "policy_weights", "policy_params", "success_judge",
-                       "progress_model", "world_model", "lesson_book", "skill_library", "other"]
+                       "progress_model", "world_model", "lesson_book", "skill_library", "program", "other"]
 ArtifactRole = Literal["behaviour", "instrument", "proposal", "data"]
 
 

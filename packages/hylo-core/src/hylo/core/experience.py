@@ -90,6 +90,7 @@ class SkillTrigger(Contract):
     instruction_pattern: str | None = None   # regex with named groups, e.g. r"put both the (?P<a>.+) and the (?P<b>.+) in the basket"
     task_tags: tuple[str, ...] = ()
     env: str | None = None
+    reason_codes: tuple[str, ...] = ()       # failure signature: a check failed with all of these (RFC-0008 part 9)
 
 
 class Skill(Contract):
@@ -97,8 +98,10 @@ class Skill(Contract):
     version: str
     description: str                     # name + description form the index an LLM sees (progressive disclosure)
     trigger: SkillTrigger
-    kind: Literal["plan", "steering", "recovery", "weights"]
-    body: dict[str, JsonAny]             # plan: {"subgoals": [templates]}; steering/recovery: a config patch; weights: a ref
+    kind: Literal["plan", "steering", "recovery", "weights", "program", "recipe"]
+    body: dict[str, JsonAny]             # plan: {"subgoals": [templates]}; steering/recovery: a config patch; weights: a ref;
+    #                                      program: a sealed program artifact (path, digest, entry) a code agent can call;
+    #                                      recipe: {"surface": name, "steps": [{"tool", "arguments"}]} replayed on a surface
     status: Literal["proposed", "verified", "refuted", "deprecated"] = "proposed"
     verdicts: dict[str, int] = Field(default_factory=dict)   # usage feedback: useful / misleading / not_applicable
     evidence: dict[str, Any] = Field(default_factory=dict)   # gate statistics, archive entry, source candidate digest

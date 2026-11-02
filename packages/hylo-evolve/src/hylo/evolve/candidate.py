@@ -1,7 +1,8 @@
 """Improvement candidates and the candidate registry.
 
-- A Candidate is declarative: a patch of dotted config paths (v0.1). Code candidates are not
-  accepted until an isolated runtime exists (same stance as Zetta stages.py).
+- A Candidate is declarative: a patch of dotted config paths (v0.1). A code candidate (RFC-0006 part 5) is
+  still a patch: it may change only the agent, and its program must be a sealed `program` artifact (validated and
+  run in the restricted namespace of hylo-code-agents), never inline source.
 - ProtectedScope: candidates may not touch safety, benchmark, scoring or trace configuration.
 - Registry: immutable versions with parent links, an `active` pointer, an append-only ledger,
   and rollback as a first-class operation (no upstream project implements rollback).
@@ -20,9 +21,9 @@ from hylo.core.improvement import Candidate, CandidateKind  # noqa: F401 - the c
 PROTECTED_PREFIXES = ("safety", "benchmark", "trace", "scorers", "evolution", "schema_version", "env")
 
 
-# Kinds accepted by the v0.1 gate. "code" (model-generated executable code) is deliberately not
-# enabled: the decision is pending (RFC-0001 D5) and requires an isolated execution runtime first.
-ENABLED_KINDS: frozenset[str] = frozenset({"config_patch"})
+# Kinds accepted by the gate. "code" (a model-written program, RFC-0006 part 5) only as a sealed program artifact
+# the agent loads and runs in its restricted namespace (check_code_candidate).
+ENABLED_KINDS: frozenset[str] = frozenset({"config_patch", "code"})
 
 
 def check_protected_scope(candidate: Candidate, protected: tuple[str, ...] = PROTECTED_PREFIXES) -> None:
@@ -31,6 +32,30 @@ def check_protected_scope(candidate: Candidate, protected: tuple[str, ...] = PRO
     for path in candidate.patch:
         if path.split(".")[0] in protected:
             raise ProtectedScopeViolation(f"candidate {candidate.id} touches protected scope {path!r}")
+    if candidate.kind == "code":
+        check_code_candidate(candidate)
+
+
+def _keys(obj: Any) -> set[str]:
+    if isinstance(obj, Mapping):
+        return {str(k) for k in obj} | {k for v in obj.values() for k in _keys(v)}
+    if isinstance(obj, (list, tuple)):
+        return {k for v in obj for k in _keys(v)}
+    return set()
+
+
+def check_code_candidate(candidate: Candidate) -> None:
+    """A code candidate changes only the agent and carries its program as a sealed `program` artifact: no inline
+    source, so what the gate measured is byte for byte what gets promoted."""
+    from hylo.core.artifact import referenced_artifacts
+
+    outside = [p for p in candidate.patch if not p.startswith("agent.") and p != "agent"]
+    if outside:
+        raise ProtectedScopeViolation(f"code candidate {candidate.id} may change only the agent, not {outside}")
+    if "source" in {p.rsplit(".", 1)[-1] for p in candidate.patch} | _keys(candidate.patch):
+        raise ProtectedScopeViolation(f"code candidate {candidate.id} carries inline source; seal it as an artifact")
+    if not any(m.kind == "program" for m in referenced_artifacts(candidate.patch).values()):
+        raise ProtectedScopeViolation(f"code candidate {candidate.id} references no sealed program artifact")
 
 
 class CandidateRegistry:

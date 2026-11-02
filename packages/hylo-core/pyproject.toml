@@ -12,6 +12,8 @@ hylo = "hylo.core.cli:main"
 [project.entry-points."hylo.commands"]
 profile = "hylo.core.profile:main"
 store = "hylo.core.store:main"
+seal = "hylo.core.seal:main"
+stage = "hylo.core.stage_cli:main"
 
 [build-system]
 requires = ["hatchling>=1.24"]
