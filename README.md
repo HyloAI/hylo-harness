@@ -27,6 +27,13 @@ improvement campaigns, the run catalog and the adapters to policy stacks and LLM
 repository (bench, serve, studio, plugins) builds on this one and talks to the others only through formats defined
 in `hylo-core`.
 
+The user-facing workflow is the lifecycle of robot skills: develop, run, validate, improve and reuse task
+capabilities with recorded evidence. Robot tools and code agents help construct program implementations;
+existing model policies and controllers use the same kernel, traces and evaluation machinery. Skill-library
+records cover specific reuse paths, including promoted programs.
+
+[Robot skills and their lifecycle](https://hyloai.github.io/hylo-docs/user-guide/skills/)
+
 <p align="center">
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset=".github/assets/loop-dark.svg">
@@ -56,14 +63,18 @@ in `hylo-core`.
 | `packages/hylo-evolve` | `hylo.evolve` | improvement protocol: diagnosis, candidates, cascade and group-sequential gate, registry with rollback, campaigns |
 | `packages/hylo-catalog` | `hylo.catalog` | read-only queries over runs, episodes, comparisons, campaigns and artifacts |
 | `packages/hylo-cli` | `hylo.cli` | `hylo run`, `hylo evolve`, `hylo learn`, `hylo calibrate`, `hylo plugin`, ... |
+| `packages/hylo-manip` | `hylo.manip` | robot tools: perception, kinematics, grasps and motion planning over `RobotSpec`; MuJoCo is the current kinematics backend |
+| `adapters/hylo-code-agents` | `hylo.codeagents` | `code.llm`, `code.program`, research sessions, code candidates and program skills; `tools.llm` (typed tool calls), `hylo watch`, `hylo preflight`, `hylo mcp`, `hylo chats`, `hylo world` sessions and `hylo roles` campaigns; experimental scene, replay and motion workflows |
+| `adapters/hylo-tools` | `hylo.tools` | perception, motion and rendering models in independent worker environments; `physicalize` (collision geometry for meshes) |
 | `adapters/hylo-policy-lerobot` | `hylo.policies.lerobot` | LeRobot policies (SmolVLA, ...) with steering, their learners and builders |
 | `adapters/hylo-policy-openpi` | `hylo.policies.openpi` | client for openpi policy servers (pi0, pi0-FAST, pi0.5) |
-| `adapters/hylo-reasoner-llm` | `hylo.reasoners.llm` | runtime LLM / VLM components (planner, VLM judge) |
+| `adapters/hylo-reasoner-llm` | `hylo.reasoners.llm` | chat models with native tool calls (OpenAI-compatible, Anthropic, coding-agent CLIs) and runtime LLM / VLM components (planner, VLM judge) |
 | `adapters/hylo-proposer-llm` | `hylo.proposers.llm` | LLM candidate proposer and reflector for campaigns |
 | `adapters/hylo-data-video` | `hylo.datasources.video` | videos as external data sources |
 
-The harness has no environments of its own: runnable examples live where the simulators are, in hylo-bench
-(`examples/`: MuJoCo reach and table, LIBERO; campaigns, the reference-policy leaderboard, the RSI demo). Unit tests
+Environment implementations live in hylo-bench. The harness's `examples/` exercises core, agents, memory, learning
+and evolution against installed environments. Code-agent programs and measured workflows live under
+`adapters/hylo-code-agents/examples/`; bench also has environment configs and benchmarking examples. Unit tests
 use a test double (`hylo.testing`, plugins named `testing.*`, hidden from `hylo plugins` unless `--all`).
 
 ```bash
@@ -76,6 +87,29 @@ uv run pytest                                              # unit tests on the t
 Documentation: [extending Hylo](docs/extending.md), [package layering](docs/dependency-graph.md),
 [interfaces](docs/interfaces/), [plugin system](docs/plugin-system.md), [experiment schema](docs/experiment-schema.md).
 Architecture, RFCs and research live in hylo-docs.
+
+## Develop and reuse robot skills
+
+Use `code.program` for a Python `solve(robot)` strategy, `code.llm` for a model writing code during an episode,
+or `hylo research` to develop and freeze programs on development cases. Programs use the manipulation tools;
+actions still pass through the kernel and SafetyShield. First-task validation checks task requirements; an
+improvement claim additionally needs an independent comparison with a baseline.
+
+Start with [Developing robot skills](https://hyloai.github.io/hylo-docs/user-guide/developing-strategies/), then
+[Skill research, validation and reuse](https://hyloai.github.io/hylo-docs/user-guide/research-and-skills/).
+[Recorded results](adapters/hylo-code-agents/examples/README.md) include reference programs, a model-improved stacking
+program and skill reuse, with observation privileges and limitations stated. Free-scene and motion-free showcase
+requests remain unrun. The Python namespace restriction is not operating-system isolation.
+
+## Tool-calling agents and worlds
+
+`tools.llm` lets a chat model operate the robot through typed tools, one checked action at a time: each action runs
+through the kernel and the SafetyShield and comes back as a measured receipt. `hylo watch` follows or steers a run,
+`hylo preflight` checks a model and a config first, and `hylo seal` verifies the hash-chained trace and locks the run.
+Stages (`hylo.core.stage`) describe scenes with revisions; bench builds them into MuJoCo worlds with 24 robot packs,
+and `hylo world chat`, `hylo mcp` and the Studio run them through the same tools. See
+[Tool-calling agents](https://hyloai.github.io/hylo-docs/user-guide/tool-agents/) and
+[Worlds](https://hyloai.github.io/hylo-docs/user-guide/worlds/).
 
 ## Gated improvement
 

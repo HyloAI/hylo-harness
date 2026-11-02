@@ -1,46 +1,41 @@
 # Module Dependency Graph
 
-> Current package table and enforced rules: docs/design/architecture.md §2.1 and `dev/test_boundaries.py`
-> (which also checks the repository rules of docs/design/repository-structure.md). The graph below is the
-> original design (2026-10-30); package names follow the current ones.
+The runtime core remains independent of simulators and models. Strategy development adds robot tools and program
+agents above that core; environments remain in bench and heavy model tools run in their own worker environments.
+`dev/test_boundaries.py` enforces installed package dependencies and cross-repository imports.
 
-## 1. Package dependencies (compile-time import relationships)
+## 1. Package dependencies
 
 ```mermaid
 flowchart BT
-  core[hylo-core<br/>numpy, pyyaml]
-  eval[hylo-eval] --> core
+  eval[hylo-eval] --> core[hylo-core]
   agents[hylo-agents] --> core
   memory[hylo-memory] --> core
-  evolve[hylo-evolve] --> core
-  evolve --> eval
-  cli[Hylo CLI<br/>meta-package] --> core & eval & agents & memory & evolve
-
-  subgraph adapters[Adapter packages - each declares its own heavy dependencies]
-    envmj[hylo-env-mujoco<br/>+mujoco] --> core
-    envremote[hylo-env-libero / robocasa / maniskill<br/>server side, own venv] --> core
-    bridge[hylo-bridge-vlaeval<br/>+websockets, msgpack] --> core
-    polopenpi[hylo-policy-openpi<br/>+websockets, msgpack] --> core
-    pollerobot[hylo-policy-lerobot<br/>+lerobot, torch] --> agents
-    rsllm[hylo-reasoner-llm<br/>+vendor SDK] --> agents
-    rslg[hylo-reasoner-langgraph<br/>+langgraph] --> agents
-    evdspy[hylo-evolve-dspy<br/>+dspy] --> evolve
-    memdsg[hylo-memory-sparkdsg<br/>+spark-dsg] --> memory
-    memmem0[hylo-memory-mem0<br/>+mem0] --> memory
-  end
+  manip[hylo-manip · MuJoCo kinematics] --> core
+  tools[hylo-tools · model workers] -. optional integration .-> manip
+  llm[hylo-reasoner-llm] --> core
+  learn[hylo-learn] --> core & eval
+  evolve[hylo-evolve] --> core & eval & learn
+  code[hylo-code-agents] --> core & agents & manip & tools & llm & memory & evolve & eval
+  envs[bench environment adapters] --> core
+  studio[Studio] --> core & eval
+  serve[Serve] --> core
 ```
 
-**Dependency rules** (enforced in CI with an AST import-lint, modeled on Zetta's `test_layering.py`):
+Selected relationships are shown; `dev/test_boundaries.py` contains the complete allowed dependency table.
+`hylo-tools` declares manipulation integration as an optional dependency. `hylo-manip` deliberately uses MuJoCo
+for its current kinematics/collision backend even when the environment is remote; the core contracts do not.
 
-1. `hylo-core` does not import any other Hylo package.
-2. `hylo-eval`, `hylo-agents` and `hylo-memory` depend only on `hylo-core` and **do not depend on each other**.
-   - Memory does not know about Agent; Agent holds a memory instance through the `MemoryStore` protocol (dependency injection).
-   - Bench does not know Agent internals; Scorers only read the Trace.
-3. `hylo-evolve` depends on `hylo-core` + `hylo-eval` (it needs to run evaluations); it interacts with memory/agents only through config patches and protocols.
-4. No non-adapter package **may** import an adapter package; adapter packages do not depend on each other.
-5. Heavy dependencies (torch, jax, mujoco, langchain-core, dspy, robosuite) appear only in adapter packages.
+**Dependency rules**
 
-> Resolved in the workspace packages: memory contracts (`MemoryItem`, `MemoryQuery`, `MemoryStore`, `WorkingMemory`) live in `hylo.core.memory`; agents obtain a backend through the `memory` plugin group, so hylo-agents and hylo-memory never import each other. `dev/test_boundaries.py` enforces rules 1–5 on every `src/` tree.
+1. `hylo-core` imports no other Hylo package. Robot and scene descriptions are simulator-independent data.
+2. The harness imports no leaf repository. Bench, serve, studio and plugins never import one another.
+3. Decision-making, memory, measurement and development remain separate packages; optional components load only
+   when requested. The robot-side serve packages declare only core by default.
+4. MuJoCo imports are allowed in `hylo-manip`, the MuJoCo environment adapter, `hylo-tools` and code-agent workflows
+   as listed by the boundary lint. Torch and conflicting model dependencies stay in policy/tool worker environments.
+5. Cross-repository runtime contracts live in core. Studio reads producer-owned research JSON/JSONL records without
+   importing their producer; changes to these records must preserve tolerant readers.
 
 ## 2. Runtime process topology
 

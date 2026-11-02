@@ -34,6 +34,7 @@ Every contract is defined in hylo-core (module in brackets), so a plugin of any 
 | `hylo.instruments` | `SuccessJudge` / `ValueModel` / `WorldModel` (`core.instrument`) | `judge.trace`, `judge.vlm` |
 | `hylo.datasources` | `DataSource` (`core.learning`) | `video.frames`, `lerobot.dataset` |
 | `hylo.guards` | `Guard` (`core.safety`) | `delta_limit`, `keep_out` |
+| `hylo.surfaces` | a factory returning a tool `Surface` (`core.tooling`) | `mujoco.world` |
 
 ## 3. Resolution rules
 
@@ -82,3 +83,13 @@ Each plugin group provides a set of conformance tests (`conformance/`) that thir
 - **Scorer**: depends only on the Trace (can run without env/agent).
 
 The corresponding test cases in the prototype's `tests/` are the embryo of the conformance kit.
+
+## 7. Tool surfaces
+
+A surface (`hylo.surfaces`, contract `hylo.tools/v0.1` in `core.tooling`) is a set of tools a model or a person can
+call: each `ToolDef` has a name, a kind (`read`, `act` or `end`), a structured description and a closed JSON Schema
+for its arguments. `Surface.call` checks the arguments, runs the tool and returns either a result or a structured
+`ToolError` (code, message, field, whether a retry can help). `Surface.digest()` identifies the declarations a run
+used. Surfaces are served unchanged by `hylo world chat` (a chat model), `hylo mcp` (coding agents over MCP), the
+Studio's World page and `hylo roles`.
+

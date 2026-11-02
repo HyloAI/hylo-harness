@@ -38,11 +38,17 @@ OWNER = {
     "hylo.instruments": "hylo-instruments",
     "hylo.reasoners.rules": "hylo-reasoners",
     "hylo.memory": "hylo-memory",
+    "hylo.manip": "hylo-manip",
+    "hylo.tools": "hylo-tools",
     "hylo.evolve": "hylo-evolve",
     "hylo.envs.mujoco": "hylo-env-mujoco",
     "hylo.reasoners.llm": "hylo-reasoner-llm",
     "hylo.proposers.llm": "hylo-proposer-llm",
+    "hylo.codeagents": "hylo-code-agents",
     "hylo.envs.libero": "hylo-env-libero",
+    "hylo.envs.robosuite_contract": "hylo-robosuite-contract",
+    "hylo.envs.robosuite": "hylo-env-robosuite",
+    "hylo.envs.robocasa": "hylo-env-robocasa",
     "hylo.policies.lerobot": "hylo-policy-lerobot",
     "hylo.policies.openpi": "hylo-policy-openpi",
     "hylo.cli": "hylo-cli",
@@ -65,6 +71,8 @@ ALLOWED = {
     "hylo-instruments": {"hylo-core"},
     "hylo-reasoners": {"hylo-core"},
     "hylo-memory": {"hylo-core"},
+    "hylo-manip": {"hylo-core"},
+    "hylo-tools": {"hylo-core", "hylo-manip"},
     "hylo-policies": {"hylo-core", "hylo-instruments"},
     "hylo-learn": {"hylo-core", "hylo-eval", "hylo-instruments"},
     "hylo-evolve": {"hylo-core", "hylo-eval", "hylo-learn"},
@@ -73,6 +81,8 @@ ALLOWED = {
                  "hylo-learn"},
     "hylo-reasoner-llm": {"hylo-core"},
     "hylo-proposer-llm": {"hylo-core", "hylo-agents", "hylo-evolve", "hylo-reasoner-llm"},
+    "hylo-code-agents": {"hylo-core", "hylo-agents", "hylo-manip", "hylo-eval", "hylo-evolve", "hylo-memory",
+                         "hylo-reasoner-llm", "hylo-tools"},
     "hylo-policy-lerobot": {"hylo-core", "hylo-agents", "hylo-memory"},
     "hylo-policy-openpi": {"hylo-core"},
     "hylo-data-video": {"hylo-core"},
@@ -80,6 +90,9 @@ ALLOWED = {
     "hylo-bench": {"hylo-core", "hylo-eval"},
     "hylo-env-libero": {"hylo-core"},
     "hylo-env-mujoco": {"hylo-core"},
+    "hylo-robosuite-contract": {"hylo-core"},
+    "hylo-env-robosuite": {"hylo-core", "hylo-robosuite-contract"},
+    "hylo-env-robocasa": {"hylo-core", "hylo-robosuite-contract"},
     # serve
     "hylo-serve": {"hylo-core"},
     "hylo-env-lerobot-robot": {"hylo-core"},
@@ -90,7 +103,8 @@ ALLOWED = {
 }
 
 HEAVY = {"torch", "jax", "mujoco", "langchain_core", "langgraph", "dspy", "robosuite"}
-HEAVY_ALLOWED = {"hylo-env-mujoco": {"mujoco"}, "hylo-policy-lerobot": {"torch"}}
+HEAVY_ALLOWED = {"hylo-env-mujoco": {"mujoco"}, "hylo-manip": {"mujoco"}, "hylo-tools": {"mujoco"}, "hylo-policy-lerobot": {"torch"},
+                 "hylo-robosuite-contract": {"mujoco"}}
 
 NOT_MODULES = {"hylo.commands", "hylo.meta"}      # entry-point group names, not module references
 REF = re.compile(r"^hylo(\.[a-z_0-9]+)+(:[A-Za-z_][A-Za-z_0-9.]*)?$")
@@ -164,8 +178,15 @@ def test_package_imports_respect_layering(dist: str):
     repo, root = PACKAGES[dist]
     violations = []
     for py in (root / "src").rglob("*.py"):
+        # a PEP 723 script declares its own dependencies and runs in its own environment (`uv run --script`), never
+        # imported by the package; so do helpers marked "# hylo: worker-side" (imported only by such scripts):
+        # heavy dependencies are allowed there (hylo-tools workers)
+        head = py.read_text()[:200]
+        isolated = head.startswith("# /// script") or head.startswith("# hylo: worker-side")
         for mod in _imports(py):
             top = mod.split(".")[0]
+            if isolated and not mod.startswith("hylo."):
+                continue
             if mod.startswith("hylo.") or top == "hylo_examples":
                 owner = _owner(mod)
                 if owner is None or (owner != dist and owner not in ALLOWED[dist]):

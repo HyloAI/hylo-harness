@@ -49,6 +49,7 @@ implements; `hylo plugin check` warns when a declaration is missing.
 | `memory` | `MemoryStore`, `ActionMemory` (core/memory.py, core/experience.py) | action_bank, skill_library, lesson_book, sqlite | experience stores | conformance kit `check_memory_store` |
 | `scorers`, `benchmarks` | `Scorer` (core/scoring.py), a factory returning a `Benchmark` (core/benchmark.py) | success, steps, mujoco/reach-v0, libero | metrics, task sets | – |
 | `reasoners`, `choosers`, `planners`, `reflectors` | `Reasoner`, `Chooser`, `Planner`, `Reflector` (core/reasoning.py) | testing.rule_landmark, chooser.llm, planner.llm, llm.reflector | deliberation, object choice, subgoal planning, lessons from campaigns | – |
+| `surfaces` | a factory returning a `Surface` of `ToolDef`s (core/tooling.py) | mujoco.world | tools for models, people and coding agents: anything callable through `hylo world chat`, `hylo mcp`, the Studio and `hylo roles` | `Surface.call` checks every call against its schema |
 
 ## 3. What a plugin gets for free, and what it cannot change
 
