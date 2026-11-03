@@ -1,6 +1,6 @@
 # Plugin System
 
-> Implementation: hylo-core `hylo/core/registry.py` **[Validated in prototype]**
+> Implementation: `hylo.core.registry` and `hylo.core.plugins` in hylo-core.
 
 ## 1. Design sources
 
@@ -12,8 +12,6 @@
 
 ## 2. Plugin groups
 
-| Group (entry point group) | Protocol | Examples |
-|---|---|---|
 Every contract is defined in hylo-core (module in brackets), so a plugin of any group depends on hylo-core alone.
 
 | Group (entry point group) | Contract (hylo-core module) | Examples |
@@ -48,20 +46,23 @@ registry.build(group, {"type": "...", "params": {...}})   # factory call
 - **Lazy**: `builtin.py` registers string references with `register_lazy`, so `import Hylo` does not import MuJoCo **[Validated in prototype]**.
 - **Diagnosable errors**: an error for an unknown name lists the known plugins **[Validated in prototype]**.
 
-## 4. Plugin metadata (introduced in v0.2)
+## 4. Plugin metadata
+
+A distribution declares metadata through a `hylo.meta` entry point pointing to a lightweight `META` dictionary.
+The registry exposes each plugin as `PluginMeta` (`hylo.core.plugins`), including its contract version, maturity,
+licence and weights information. For example, the declaration can contain:
 
 ```python
-class PluginInfo(Contract):
-    name: str; version: str; group: str
-    isolation: Literal["in_process", "subprocess", "container"]
-    requires: dict[str, str]          # {"python": ">=3.8,<3.9", "gpu": "optional", "vulkan": "required"}
-    capabilities: dict[str, bool]     # corresponds to EnvCapabilities / PolicyCapabilities
-    license: str                      # code license
-    weights_license: str | None       # required for policies
-    assets_license: str | None        # required for envs (ManiSkill: CC BY-NC 4.0)
+META = {
+    "contracts": {"policies": "hylo.policy/v0.1"},
+    "maturity": "unverified",
+    "plugins": {"policies/my_policy": {"weights": "per checkpoint"}},
+}
 ```
 
-The Runner checks `requires` and `capabilities` before building (for example, a benchmark requires `privileged_state`, or an experiment requires `snapshot` to do shadow replay); if they are not satisfied it refuses to run, rather than failing halfway through.
+The registry refuses an incompatible declared contract version. Undeclared plugins can still load;
+`hylo plugin check` warns about the missing declaration. `hylo plugins` lists installed metadata without loading
+heavy plugin implementations. The code licence comes from the distribution's package metadata.
 
 ## 5. Isolation levels
 

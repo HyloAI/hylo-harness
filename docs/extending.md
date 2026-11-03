@@ -71,7 +71,10 @@ By design, a plugin cannot change:
 - the rule that only the gate activates a behaviour artifact, and that instruments are trusted only after
   calibration.
 
-Candidates are configuration patches. Model-generated code is not executed until an isolated runtime exists.
+Candidates are configuration patches and can reference sealed program artifacts. Program agents and research
+sessions execute model-generated code with AST validation and a restricted Python namespace in the host process.
+These restrictions do not provide operating-system isolation. Campaign approval controls promotion after
+candidate evaluation; see [program execution boundaries](../user-guide/security.md#model-written-programs).
 
 ## 4. Worked examples (all runnable)
 
