@@ -90,10 +90,12 @@ def timeline(tr: EpisodeTrace) -> dict[str, Any]:
 
 
 def frame_array(tr: EpisodeTrace, obs_index: int, camera: str) -> np.ndarray:
+    """One camera's frame of one observation, in its recorded dtype (RGB uint8, depth float metres, segmentation
+    integer ids); a viewer decides how to show it."""
     for i, e in enumerate(tr.of_type("observation")):
         if i == obs_index:
             img = (e["payload"].get("images") or {}).get(camera)
             if img is None:
                 raise KeyError(f"no {camera} frame at observation {obs_index}")
-            return np.asarray(img, dtype=np.uint8)
+            return np.asarray(img)
     raise KeyError(f"observation {obs_index} out of range")
