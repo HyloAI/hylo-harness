@@ -8,29 +8,33 @@
 ```mermaid
 stateDiagram-v2
   [*] --> Execute: parent = registry.active
-  Execute --> Diagnose: train split traces
+  Execute --> Diagnose: search split traces
   Diagnose --> Generate
   Generate --> StaticCheck
   StaticCheck --> Rejected: protected scope / schema
-  StaticCheck --> ShadowReplay: replayable candidate kinds
-  StaticCheck --> Validate: others
-  ShadowReplay --> Validate: preflight ok
-  ShadowReplay --> Rejected
+  StaticCheck --> Selection: search_val cascade
+  Selection --> Rejected: candidate not selected
+  Selection --> Validate: independent gate
   Validate --> Rejected: gate failed
   Validate --> HeldOut: gate passed (best)
   HeldOut --> Approval: report only, not used for selection
   Approval --> Promoted: approved
   Approval --> Archived: declined
   Promoted --> RolledBack: rollback()
-  Rejected --> Reflection
-  Reflection --> Generate
+  Rejected --> Archived: retain evidence
 ```
 
-| Split | Purpose | May read privileged information? |
+| Split | Purpose | Data boundary |
 |---|---|---|
-| train | diagnosis, candidate generation | yes |
-| validation | **candidate selection** (paired gate) | no (requires deployment-equivalent observations) |
-| heldout | **report only**, `used_for_selection=false` | no |
+| search | diagnosis and candidate development | deployment observation requirements depend on the configured tools and diagnosis |
+| search_val | candidate screening and selection | separate from search cases |
+| gate | confirmatory paired test | separate from candidate development and selection |
+| heldout | report only | not used for candidate selection |
+
+This is the current `run_cycle` campaign protocol. The older `improvement_cycle` prototype
+uses train/validation/heldout; its example results below should not be read as the current
+four-split protocol. Proposers receive the archive and must control what reaches a model;
+the interface itself does not isolate arbitrary plugins from historical evaluation fields.
 
 ## 2. Data types and protocols
 
@@ -40,7 +44,7 @@ class Candidate(Contract):
     rationale: str
     parent_id: str | None             # must equal registry.active at promotion time (prevents stale candidates)
     generator: str                    # "name@version"
-    kind: str = "config_patch"        # v0.2: "critic_rule" | "recovery_rule" | "prompt" | "skill" | "policy_ref"
+    kind: str = "config_patch"        # enabled: config_patch or code; other enum values remain disabled
     evidence: Mapping[str, Any]       # diagnostic references (bucket, episode ids)
     id: str
     def digest(self) -> str
@@ -66,24 +70,34 @@ class CandidateRegistry:
 
 ## 3. Validation gate (Gate)
 
-A candidate passes only if it satisfies **all** of the following:
+After selection, the current campaign checks:
 
-1. Paired comparison (same TaskInstance.key), one-sided exact McNemar `p < alpha` (default 0.05).
-2. Overall success rate is not lower than the parent version.
-3. The increase in mean safety interventions does not exceed `max_safety_increase` (default 0).
-4. Regression suite: no single task's success rate drops by more than `max_task_regression` (default 0.1).
-5. (v0.2) Cross-benchmark regression: no degradation on the registered set of regression benchmarks.
-6. (v0.2) Latency budget: `latency_p95` does not exceed the budget.
+1. A paired gate test on matching episode keys. The default is one-sided exact McNemar on
+   success, with `alpha=0.05`, Holm correction across selected candidates and optional
+   alpha spending across configured gate looks. A custom `gate_test` can select another metric.
+2. Per-task success regression no greater than `max_task_regression` (default `0.15`).
+3. Mean safety-intervention increase no greater than `max_safety_increase` (default `1.0`).
+
+The default success test requires evidence favoring the candidate; arbitrary gate plugins
+have their own comparison semantics. A general cross-benchmark regression suite and a
+`latency_p95` promotion veto are not implemented by `ProtocolConfig`. The older prototype
+has different defaults. See `hylo.evolve.protocol.ProtocolConfig` for current options.
 
 ## 4. Protected scope (Protected Scope)
 
 Config prefixes a candidate **must not** modify: `safety`, `benchmark`, `trace`, `scorers`, `evolution`, `schema_version`, `env` **[Validated in prototype]**.
 Reason: to prevent "raising the score by relaxing safety constraints or modifying the evaluation". In the prototype demo, an adversarial generator proposing `safety.max_delta: 10.0` is rejected outright.
 
-Additionally (implemented in v0.2, not covered by the prototype):
-- Candidate kind allowlist; code-type candidates (code inside a `skill`) may only execute in a subprocess/container with no network and a read-only filesystem, and the actions they produce still go through the SafetyShield.
-- During the LLM generation phase, access to Traces and diagnostics is read-only, with no shell/write permission (compare Zetta/RPent, which default to full access).
-- Promotion for real-robot deployment requires mandatory human approval (the `approve` callback cannot be disabled by a candidate or by config).
+Current implementation boundaries:
+
+- The kind allowlist enables `config_patch` and `code`. Code candidates may change only the
+  agent, cannot contain inline source and must reference a sealed program artifact.
+- Code agents use the configured restricted Python namespace and tool path. This is not a
+  universal subprocess/container, read-only-filesystem or network-isolation guarantee for
+  arbitrary proposer plugins. Observation permissions depend on the toolkit.
+- `EvolveConfig.approval` defaults to `auto`. Configure `manual` for reviewed deployment;
+  a passing candidate then waits for explicit approval. The campaign does not independently
+  detect hardware and force that setting.
 
 ## 5. Registry and Rollback
 
