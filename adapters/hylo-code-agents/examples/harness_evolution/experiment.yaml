@@ -1,0 +1,13 @@
+schema_version: hylo.experiment/v0.1
+name: harness-program-toy
+benchmark:
+  type: hylo.codeagents.fakes:toy_benchmark
+env:
+  type: hylo.codeagents.fakes:ToyManipEnv
+agent:
+  type: code.program
+  params:
+    source: |
+      def solve(robot):
+          print("baseline: no movement")
+    tools: hylo.codeagents.fakes:FakeTools

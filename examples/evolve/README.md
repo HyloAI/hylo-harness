@@ -1,5 +1,8 @@
 # Evolution examples
 
+For architecture, strategy selection, validation and rollback, see the
+[Self-Evolution README](../../packages/hylo-evolve/README.md).
+
 Runnable examples of the evolution layer (`hylo-evolve`, the paired statistics of `hylo-eval`, `hylo-proposer-llm`)
 on MuJoCo planar reach. Each script shows one capability and measures its effect. All run from the harness
 repository root, write `result.json` and print a results table:

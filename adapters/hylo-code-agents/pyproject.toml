@@ -21,6 +21,7 @@ packages = ["src/hylo"]
 
 [project.entry-points."hylo.generators"]
 "research.llm" = "hylo.codeagents.generator:ResearchProposer"
+"harness.program" = "hylo.codeagents.harness_evolution:HarnessEvolutionProposer"
 
 [project.entry-points."hylo.commands"]
 research = "hylo.codeagents.cli:research"

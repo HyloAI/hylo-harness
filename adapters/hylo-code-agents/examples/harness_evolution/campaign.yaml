@@ -1,0 +1,21 @@
+schema_version: hylo.evolve/v0.1
+name: harness-program-toy
+experiment: experiment.yaml
+cycles: 1
+approval: auto
+out_dir: runs/harness-program-toy
+proposer:
+  # Module reference also works before reinstalling the adapter's entry-point metadata.
+  type: hylo.codeagents.harness_evolution:HarnessEvolutionProposer
+  params:
+    model:
+      backend: ollama
+      model: gpt-oss:20b
+      reasoning_effort: low
+      timeout_s: 90
+      retries: 0
+    dev: 2
+    reply_tokens: 4096
+    budget: {turns: 16, submits: 4, resets: 4, tokens: 180000}
+    out_root: runs/harness-program-toy/proposals
+    repair_campaigns: [runs/harness-program-toy]

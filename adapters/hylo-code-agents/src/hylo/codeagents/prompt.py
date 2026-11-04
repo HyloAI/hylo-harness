@@ -100,9 +100,26 @@ def toolkit_reference(tools: Any) -> str:
     """The toolkit's own reference (hylo.manip.api_reference) or, until it exists, signatures and docstrings."""
     try:
         from hylo.manip import api_reference as manip_reference  # type: ignore[attr-defined]
+        from hylo.manip import Tools
+        from hylo.manip.tools import verbs_for
 
+        # The rich reference describes base Tools signatures and includes matching examples.
+        # Custom toolkits can override those signatures. Keep the public verb list and
+        # type descriptions, replace signatures and omit incompatible base examples.
+        changed = any(callable(getattr(Tools, name, None)) and callable(getattr(type(tools), name, None))
+                      and inspect.signature(getattr(Tools, name)) != inspect.signature(getattr(type(tools), name))
+                      for name in dir(Tools) if not name.startswith("_"))
         text = manip_reference(tools)
         if text:
+            if changed:
+                signatures = {f"robot.{name}": f"robot.{name}{inspect.signature(getattr(tools, name))}"
+                              for name in verbs_for(tools)}
+                text = "\n".join(signatures.get(line.split("(", 1)[0], line)
+                                 if line.startswith("robot.") else line for line in text.splitlines())
+                before, _, rest = text.partition("## Example")
+                if rest:
+                    _, marker, types = rest.partition("## Types")
+                    text = before + marker + types
             return str(text)
     except Exception:  # noqa: BLE001 - older toolkit without a reference
         pass

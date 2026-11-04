@@ -71,6 +71,8 @@ class ResearchConfig(Contract):
     program_params: dict[str, Any] = Field(default_factory=dict)   # extra code.program params in the candidate
     demonstration: str | None = None
     parent_program: str | None = None                # the program being improved (a campaign's parent), if any
+    guidance: str | None = None                      # optional development-only context from a proposer
+    auto_submit: bool = False                        # evaluate completed program revisions without a model call
     skills: str | dict[str, Any] | None = None
     max_case_output: int = 1200
 
@@ -107,7 +109,7 @@ Research functions (in your namespace):
 - `finish()`: ends the session. The submission with the most development successes is frozen.
 
 Write general code: read the instruction from robot.status()["instruction"], measure the scene every time, and never
-hard-code positions seen in one case.{skills}{demo}{parent}"""
+hard-code positions seen in one case.{skills}{demo}{parent}{guidance}"""
 
 
 class ResearchSession:
@@ -313,7 +315,8 @@ class ResearchSession:
                     f"every case). It is already defined in your namespace (solve and its helpers, as if you had run "
                     f"it as your first block): run solve(robot) on live cases to find where it fails, redefine only "
                     f"what needs changing, then submit():\n```python\n{self.rc.parent_program.strip()}\n```"
-                    if self.rc.parent_program else ""))
+                    if self.rc.parent_program else ""),
+            guidance=(f"\n\nDevelopment guidance:\n{self.rc.guidance}" if self.rc.guidance else ""))
         stopped = None
         try:
             self._start(0)
@@ -331,12 +334,26 @@ class ResearchSession:
             loop.messages[1]["content"] = "\n".join([
                 f"Development cases: {compact(cases, 3000)}", f"Live episode: case 0. Robot status: {compact(status())}",
                 budget_text(self._remaining(loop)), "Write your first block."])
+            last_program = sandbox.program_source("solve")
             while not self.finished:
                 stopped = loop.exceeded(self.rc.budget) or loop.done
                 if stopped:
                     break
                 self.live.bridge.provenance = {"source": "research", "session": self.name, "turn": loop.turn + 1}
-                loop.step(self._remaining(loop), extra={"live_case": self.current})
+                before = len(self.submissions)
+                turn = loop.step(self._remaining(loop), extra={"live_case": self.current})
+                if self.rc.auto_submit:
+                    program = sandbox.program_source("solve")
+                    room = self.rc.budget.submits is None or len(self.submissions) < self.rc.budget.submits
+                    if (program and program != last_program and len(self.submissions) == before and room
+                            and not turn.get("error") and not turn.get("model_error") and not self.finished):
+                        try:
+                            result = self.submit(program)
+                        except (CodeRejected, ValueError) as exc:
+                            result = {"error": str(exc)}
+                        self._log("auto_submit", {"turn": loop.turn, "result": result})
+                        loop.messages[-1]["content"] += "\nAutomatic development evaluation: " + compact(result, 6000)
+                    last_program = program
             stopped = stopped or "finish() called"
             self._end_live("session over")
             self.usage, self.turns = loop.usage, loop.turn

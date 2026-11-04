@@ -15,6 +15,8 @@ META = {
     "contracts": {"agents": "hylo.agent/v0.1", "generators": "hylo.generator/v0.1"},
     "maturity": "unverified",
     "plugins": {
+        "generators/harness.program": {"notes": "Independent HarnessPAI-inspired phase planning, program repair and evidence-linked repair recall; benchmark effectiveness unverified; no upstream code included",
+                                       "weights": "the configured reasoning model's own licence"},
         "agents/code.llm": {"notes": "run on mujoco/manip-v0 (examples/RESULTS.md): gpt-oss:20b zero-shot 14/30 "
                                      "(pick_place, put_in_bowl, stack solved; push, press, sort not), qwen3.5:35b-a3b "
                                      "2/6, Claude Sonnet 5.5 via the CLI 5/6",

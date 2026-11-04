@@ -104,3 +104,23 @@ Additionally (implemented in v0.2, not covered by the prototype):
 | promote → rollback | effective patch `{kp: 2.0}` → `{}`; ledger records the rollback |
 
 Note: this demo validates the **process and interfaces**; gain tuning on the test double (and on MuJoCo reach) does not represent the real difficulty of RSI.
+
+## 7. Phase-guided program evolution
+
+The optional `harness.program` generator in `hylo-code-agents` independently implements a
+HarnessPAI-inspired strategy: propose an observable phase plan, repair an executable program
+on development cases, then seal the program together with evidence-linked repair notes.
+Completed program revisions are evaluated automatically within the submission budget;
+unchanged revisions and explicit submissions are not duplicated.
+It reuses the existing campaign gate and registry; solving development cases does not
+activate the candidate. No upstream HarnessPAI code is included.
+
+`PhaseRepairMemory` retrieves notes only from active promoted program lineages. A note
+must cite failed and successful development replays of the same case, and its content is
+covered by the program artifact digest. Rollback removes the retired branch from recall.
+The containing program has gate evidence; transfer of an individual note remains unverified.
+Phase completion and handover logic are generated code, not a centrally interpreted phase
+graph. A frozen VLA can only be called through a toolkit that actually exposes one.
+
+Implementation, configuration and verification details are maintained in
+`adapters/hylo-code-agents/examples/harness_evolution/README.md`.
