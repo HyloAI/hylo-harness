@@ -79,6 +79,7 @@ flowchart LR
 | LIBERO / RoboCasa / ManiSkill | PyPI/source dependency in a separate venv | hylo-env-* (server side) |
 | vla-evaluation-harness | Protocol-compatible + run its containers | hylo-bridge-vlaeval |
 | openpi | Protocol-compatible (no import) | hylo-policy-openpi |
+| SimpleMemVLA | Optional frozen model runtime and independent video-memory option | hylo-policy-simplememvla, hylo-memory |
 | LeRobot | Optional dependency + data format export | hylo-policy-lerobot, hylo-eval (exporter) |
 | inspect-robots | Port code (MIT, with attribution) | hylo-core (safety/compat parts) |
 | RPent | Port the tool layer (Apache-2.0, with attribution) | hylo-agents (tools) |

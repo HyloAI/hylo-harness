@@ -53,6 +53,13 @@ class MemoryStore(Protocol):
 
 ## 3. Four kinds of memory
 
+`hylo.memory.simplememvla.SimpleMemVLAHistory` is an additional, independent streaming
+visual-memory option. It implements the SimpleMemVLA history window and temporal patch
+identities; it does not implement the semantic-store protocol above. The optional
+`hylo-policy-simplememvla` adapter connects it to a compatible frozen checkpoint and exposes
+the `simplememvla` agent plugin. See `adapters/hylo-policy-simplememvla/README.md`
+for its observation interface, upstream pin and reproduction checks.
+
 | Kind | v0.1 backend | When written | Retrieval | Production backend |
 |---|---|---|---|---|
 | Working | in-process bounded OrderedDict | every deliberate | key | same |
@@ -62,6 +69,11 @@ class MemoryStore(Protocol):
 
 Skill item payload (v0.2): `{"code" | "params", "api_surface": "hylo.tools@v1", "trigger", "preconditions", "postconditions", "status": proposed|verified|refuted|deprecated, "verdicts": {useful, misleading, wrong, not_applicable}, "evidence": [trace refs]}`.
 Skill writes go through the same gate as the Evolution layer (`improvement.md`); this is where Memory and RSI meet.
+
+The experimental model-managed Working Memory runtime, agent wrapper and dedicated
+RoboMME runner were removed on 2026-11-04. Historical experiment records remain available.
+This removal does not affect the bounded in-process store above, event-memory primitives,
+or the independent SimpleMemVLA option.
 
 ## 4. Memory and observability
 

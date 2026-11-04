@@ -13,6 +13,9 @@ build-backend = "hatchling.build"
 [tool.hatch.build.targets.wheel]
 packages = ["src/hylo"]
 
+[tool.hatch.build.targets.wheel.force-include]
+"THIRD_PARTY_NOTICES.md" = "hylo/memory/SIMPLEMEMVLA_NOTICE.md"
+
 [project.entry-points."hylo.memory"]
 "sqlite" = "hylo.memory.sqlite:SQLiteMemoryStore"
 "action_bank" = "hylo.memory.action_bank:ActionBank"

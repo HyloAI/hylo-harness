@@ -51,6 +51,7 @@ OWNER = {
     "hylo.envs.robocasa": "hylo-env-robocasa",
     "hylo.policies.lerobot": "hylo-policy-lerobot",
     "hylo.policies.openpi": "hylo-policy-openpi",
+    "hylo.policies.simplememvla": "hylo-policy-simplememvla",
     "hylo.cli": "hylo-cli",
     "hylo.learn": "hylo-learn",
     "hylo.playground": "hylo-playground",
@@ -85,6 +86,7 @@ ALLOWED = {
                          "hylo-reasoner-llm", "hylo-tools"},
     "hylo-policy-lerobot": {"hylo-core", "hylo-agents", "hylo-memory"},
     "hylo-policy-openpi": {"hylo-core"},
+    "hylo-policy-simplememvla": {"hylo-core", "hylo-memory"},
     "hylo-data-video": {"hylo-core"},
     # bench
     "hylo-bench": {"hylo-core", "hylo-eval"},
@@ -104,7 +106,7 @@ ALLOWED = {
 
 HEAVY = {"torch", "jax", "mujoco", "langchain_core", "langgraph", "dspy", "robosuite"}
 HEAVY_ALLOWED = {"hylo-env-mujoco": {"mujoco"}, "hylo-manip": {"mujoco"}, "hylo-tools": {"mujoco"}, "hylo-policy-lerobot": {"torch"},
-                 "hylo-robosuite-contract": {"mujoco"}}
+                 "hylo-robosuite-contract": {"mujoco"}, "hylo-policy-simplememvla": {"torch"}}
 
 NOT_MODULES = {"hylo.commands", "hylo.meta"}      # entry-point group names, not module references
 REF = re.compile(r"^hylo(\.[a-z_0-9]+)+(:[A-Za-z_][A-Za-z_0-9.]*)?$")
