@@ -1,94 +1,104 @@
-# Experiment Schema (`hylo.experiment/v0.1`)
+# Experiment configuration
 
-> Implementation: hylo-core `hylo/core/config.py`; example configs in hylo-bench `examples/configs/` **[Validated in prototype]**
+Fields of `hylo.core.config.ExperimentConfig`, using schema `hylo.experiment/v0.1`.
+For a complete workflow, see [Run experiments](../user-guide/experiments.md).
+The [Configuration API](../api/config.md) documents the Python models;
+[Data formats & schemas](../api/formats.md) provides the generated JSON Schema.
 
-## 1. Configuration file
+## Fields { #1-configuration-file }
+
+| Field | Default | Meaning |
+|---|---|---|
+| `schema_version` | `hylo.experiment/v0.1` | experiment format version |
+| `name` | required | experiment name |
+| `benchmark` | required | `{type, split, params}`; `split` defaults to `validation`, `params` to `{}` |
+| `env` | required | `{type, params, remote}`; `params` defaults to `{}`, `remote` to `null` |
+| `agent` | required | `{type, params}`; `params` defaults to `{}` |
+| `seed` | `0` | experiment seed recorded with the configuration |
+| `safety` | `{}` | safety shield settings |
+| `trace.record_privileged` | `true` | record available privileged state in the trace |
+| `trace.image_every` | `1` | record camera images every N steps; `0` disables image recording |
+| `timing` | default `Timing` model | defaults to `mode: sync`, `clock: virtual` |
+| `output_dir` | `runs` | root directory for run outputs |
+| `workers` | `1` | parallel episode workers; must be at least 1 |
+| `tags` | `[]` | experiment labels |
+
+Component `type` values name a registered plugin or a `module:attr` reference.
+Unknown model fields are rejected. Plugin-specific fields belong in `params` and are validated by the consuming plugin.
+See the [plugin catalogue](../developer-guide/plugin-catalogue.md) for registered implementations.
 
 ```yaml
-schema_version: hylo.experiment/v0.1      # required; readers match strictly and reject if incompatible
+schema_version: hylo.experiment/v0.1
 name: mujoco-reach
-seed: 0                                  # experiment-level seed (Agent randomness, etc.); episode seeds are determined by the benchmark split
-tags: [baseline, reach]
-
 benchmark:
-  type: mujoco/reach-v0                  # plugin name or module:attr
-  split: validation                      # train | validation | heldout; search | search_val | gate | heldout with protocol: rsi
+  type: mujoco/reach-v0
+  split: validation
   params: {protocol: standard}
-
-env:
-  type: mujoco.planar_reach
-  params: {}
-  remote:                                # optional: run out of process
-    python: /opt/venvs/libero/bin/python
-
+env: {type: mujoco.planar_reach}
 agent:
   type: baseline.planar_ik
   params: {kp: 0.3}
-
-safety:                                  # can only be tightened, mandatory guards cannot be disabled; RSI candidates cannot modify this
-  max_delta: 0.25
-
-trace:
-  record_privileged: true
-
-output_dir: runs                         # not included in the digest
+safety: {max_delta: 0.25}
+trace: {record_privileged: true, image_every: 1}
+output_dir: runs
 ```
 
-## 2. Identifiers and reproducibility
+### Component placement
 
-| Identifier | How it is computed | Purpose |
-|---|---|---|
-| `config_digest` | `sha256(canonical_json(config except output_dir))[:16]` | Unique identifier of an experiment; two runs with the same digest ⇒ the same object is measured **[Validated in prototype]** |
-| `benchmark.digest` | `sha256(id, version, each TaskSpec.digest, splits)` | Changes whenever the task set or seed table changes |
-| `TaskSpec.digest` | `sha256(all TaskSpec fields)` | Written into every `episode.start` |
-| `TaskInstance.key` | `"{task_id}#{seed}"` | Primary key for paired comparison |
-| `run_id` | `{name}-{label}-{config_digest}-{rand}` | One execution |
+`env.remote` accepts `runtime`, `python` and `env`. A named `runtime` resolves through the machine's
+[execution profile](../configuration/profiles.md); explicit `python` and `env` values override that runtime.
+A `remote` agent carries placement settings in its `params`.
 
-### Run Manifest (`<run>/manifest.json`)
+### Timing
 
-```json
-{
-  "run_id": "...", "schema_version": "hylo.experiment/v0.1", "config_digest": "5ed561fa3971c221",
-  "config": {"...": "full normalized configuration"},
-  "code": {"git_sha": "..."},
-  "runtime": {"python": "3.12.3", "platform": "...", "packages": {"numpy": "2.5.4", "mujoco": "3.17.0"}},
-  "benchmark": {"id": "testing/reach-v0", "version": "0.1", "digest": "...", "split": "validation"},
-  "agent_spec": {"name": "...", "version": "...", "components": {"policy": "...", "reasoner": "...", "memory": "..."}}
-}
-```
+`timing` controls how policy time relates to environment time. See
+[experiment timing](../user-guide/experiments.md#timing-sync-and-realtime) for execution semantics and
+[`Timing`](../api/kernel.md#hylo.core.kernel.Timing) for every field and default.
 
-Added in v0.2: all Hylo package versions and protocol versions, external benchmark commit and asset hashes, policy weight identifiers and `weights_license`, memory `snapshot()` hash, Candidate Registry `active` version, EnvServer-side Python/dependency versions.
+## Digest and run manifest { #2-identifiers-and-reproducibility }
+
+`config_digest` is the first 16 hexadecimal characters of SHA-256 over the canonical JSON produced by
+`ExperimentConfig.measured()`. The measured configuration follows these rules:
+
+- Exclude `output_dir` and `workers`.
+- Normalize `env.remote` to `null`, so environment placement does not change the digest.
+- Remove `runtime`, `python` and `env` from the `params` of components whose `type` is `remote`, recursively.
+- Omit `timing` only when it equals the complete default `Timing` model; non-default timing is measured.
+- Retain other configuration fields, including `name`, `seed` and `tags`.
 
 ### Reproducibility levels
 
-| Level | Guarantee | Conditions |
-|---|---|---|
-| R0 | Configuration traceable | Manifest exists |
-| R1 | Statistically reproducible (same distribution) | Same config_digest + same benchmark digest |
-| R2 | Step-wise deterministic | R1 + deterministic env + deterministic agent (MuJoCo CPU single-threaded, the test double) **[Validated in prototype: two episodes with the same seed produce bit-identical actions]** |
-| R3 | Bit-identical across machines | R2 + locked dependencies and platform — promised only for the test double |
+A matching digest identifies the measured configuration. It does not establish identical code, model weights,
+assets or results. Use [Validation](../developer-guide/validation/index.md) for measured reproducibility evidence.
 
-GPU simulation, GPU inference and remote LLMs can generally only reach R1; the EvalLog records the level achieved.
+### Run Manifest (`<run>/manifest.json`)
 
-## 3. Seeds
+The run manifest records `run_id`, configuration and trace schema versions, the measured
+configuration and digest, creation time, Git SHA, Python/platform information and selected package versions.
+Store references add pinned artifact records. Callers may add further manifest fields.
 
-- Episode seeds = the benchmark split's seed table; **the same seed must not appear in two splits** (validated at construction).
-- Prototype split partitioning: train `0..`, validation `10000..`, heldout `20000..`.
-- Agent-internal randomness is derived from `EpisodeContext.seed` (v0.2: `derive_seed(experiment.seed, task_key, component)`, modeled on inspect-robots).
+## Seeds { #3-seeds }
 
-## 4. Overrides and Sweep
+The benchmark supplies each episode's task and seed. Split definitions belong to the benchmark; do not infer
+held-out seeds from the experiment-level `seed`. See
+[evaluation protocols](../benchmarking/protocols.md) for the fixed conditions used to compare agents.
 
-- Dot-path override: `cfg.with_overrides({"agent.params.kp": 2.0})` returns a new config (new digest) **[Validated in prototype]**. An RSI candidate is simply a set of overrides.
-- Sweep (v0.2): `sweep: {agent.params.kp: [0.5, 1, 2]}` expands into multiple configs, each with its own digest.
+## Overrides { #4-overrides-and-sweep }
 
-## 5. Output layout
+`cfg.with_overrides({"agent.params.kp": 2.0})` applies dotted-path values and validates a new
+`ExperimentConfig`. Its digest changes when the measured configuration changes.
+Use [Run experiments](../user-guide/experiments.md) for command-line overrides.
+
+## Output layout { #5-output-layout }
 
 ```text
 runs/<run_id>/
 ├── manifest.json
-├── evallog.json           # hylo.evallog/v0.1: benchmark, agent, results, samples[{key, task_id, seed, episode_id, status, scores, trace}]
-├── episodes/<episode_id>.jsonl   # hylo.trace/v0.1 event stream
-└── blobs/<sha256>.npy     # arrays > 64 KB (images, etc.), content-addressed
+├── evallog.json
+├── episodes/<episode_id>.jsonl
+└── blobs/
 ```
 
-Exporters (v0.2): `hylo trace export --format lerobot-v3` (training data), `--format rerun` (visualization), `--format inspect-robots` (reuse its view tools).
+`manifest.json` records configuration and runtime provenance. `evallog.json` records the benchmark, agent,
+aggregate results and episode samples. Episode traces reference array data in `blobs/`.
+See [Runs and traces](../user-guide/experiments.md#runs-and-traces) for inspection and replay.
