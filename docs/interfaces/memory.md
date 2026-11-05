@@ -1,86 +1,70 @@
 # Interface: Memory
 
-> Package: `hylo-memory` (data types pushed down into `hylo-core`) **[Validated in prototype]**
-> Based on: `../../research/comparisons/memory-comparison.md`, `../../research/projects/memory-landscape.md` §10
+Memory backends and their consumers meet through contracts in `hylo-core`. Choose the contract that matches the
+information and lifetime you need; spatial records, ordered events, video history and reusable experience have
+different APIs. [Use memory](../../user-guide/using-memory.md) provides the user-facing entry points.
 
-## 1. Data model
+## Spatial and semantic records { #1-data-model }
 
-```python
-class MemoryKind(str, Enum): WORKING, EPISODIC, SEMANTIC, SPATIAL, SKILL
+`MemoryItem` holds typed content with optional identity, entities, scope, pose and time. `MemoryKind` includes
+`working`, `episodic`, `semantic`, `spatial` and `skill`; these are record labels, not interchangeable backend
+implementations. A `skill`-labelled memory item does not replace a skill-library record or its verification rules.
 
-class Pose(Contract):      frame_id: str; position: tuple[float, float, float]; orientation: tuple[float, ...] | None
-class TimeSpan(Contract):  start: float; end: float | None; clock: Literal["sim", "wall"]
+| Type | Important fields |
+|---|---|
+| `MemoryItem` | `kind`, `content`, `key`, `payload`, `entities`, `scope`, `pose`, `event_time`, `valid_from`, `confidence`, `source`, `id` |
+| `Pose` | `frame_id`, three-dimensional `position`, optional quaternion `orientation` in xyzw order |
+| `TimeSpan` | `start`, optional `end`, and `clock` (`sim` or `wall`) |
+| `MemoryQuery` | kind/key/text/entity/scope filters, `time_range`, `as_of`, `clock`, `near`, `include_invalidated`, `k` |
+| `Hit` | the item, score, scoring details and optional `valid_to` |
 
-class MemoryItem(Contract):
-    kind: MemoryKind
-    content: str                         # human/LLM readable
-    key: str | None                      # identity of the thing described; a new write with the same (kind, key) invalidates the old item
-    payload: Mapping[str, Any]           # kind-specific structure (see §3)
-    entities: tuple[str, ...]
-    scope: Mapping[str, str]             # task_id / robot_id / episode_id
-    pose: Pose | None                    # first-class field, not embedded
-    event_time: TimeSpan | None          # when it happened in the world
-    valid_from: float | None             # when the fact became true (the invalidation time valid_to is maintained by the store)
-    confidence: float
-    source: str                          # producer "component@version"
-    id: str
-    # v0.2: embeddings: {space@version: vector}, extent, links[(relation, target_id)], provenance(evidence uris)
-```
+Queries must use compatible frames and clock domains. See [Spatial memory](../../user-guide/memory/spatial.md)
+for invalidation, duplicate evidence and historical queries, and the
+[core memory API](../../api/modules/hylo-core/hylo.core.memory.md) for exact fields and defaults.
 
-## 2. Protocol
+## Store protocol { #2-protocol }
 
 ```python
-class MemoryQuery(Contract):
-    text: str | None; kinds: frozenset[MemoryKind] | None; key: str | None
-    entities: tuple[str, ...]; scope: Mapping[str, str] | None
-    time_range: tuple[float, float] | None      # intersected with the event_time interval
-    as_of: float | None                         # items "believed true at that time"
-    near: tuple[Pose, float] | None             # radius query; frame_id must match
-    include_invalidated: bool = False; k: int = 10
-    # v0.2: embedding=(space, vector), object_ids, relation=("on", "O12"), rerank
-
-class Hit(Contract): item: MemoryItem; score: float; details: Mapping[str, float]; valid_to: float | None
-
 class MemoryStore(Protocol):
-    def write(self, items: Sequence[MemoryItem]) -> WriteResult: ...     # events: ADD | INVALIDATE | SKIP_DUP (v0.2: MERGE)
+    def write(self, items: Sequence[MemoryItem]) -> WriteResult: ...
     def query(self, q: MemoryQuery) -> list[Hit]: ...
-    def forget(self, q: MemoryQuery) -> int: ...                         # soft delete (expired_at), auditable
-    def snapshot(self) -> str: ...                                       # content hash → Run Manifest
-    # v0.2: consolidate(scope, budget) -> ConsolidationReport; history(item_id)
+    def forget(self, q: MemoryQuery) -> int: ...
+    def snapshot(self) -> str: ...
 ```
 
-**Semantics validated in prototype**: radius queries use true distance (bbox pre-filter + exact check); mismatched frames never match; a new fact with the same key invalidates the old fact, but history remains queryable with `as_of`; duplicate writes are skipped; `forget` is a soft delete; WorkingMemory has a capacity limit.
+`write` reports `ADD`, `INVALIDATE` or `SKIP_DUP`. `forget` expires matching records; it does not erase audit
+history. `snapshot` identifies the stored content. The SQLite backend implements this protocol. Callers scope
+observations to their episode and emit memory events so retrieval and writes can be inspected in the trace.
 
-## 3. Four kinds of memory
+## Other memory interfaces { #3-four-kinds-of-memory }
 
-`hylo.memory.simplememvla.SimpleMemVLAHistory` is an additional, independent streaming
-visual-memory option. It implements the SimpleMemVLA history window and temporal patch
-identities; it does not implement the semantic-store protocol above. The optional
-`hylo-policy-simplememvla` adapter connects it to a compatible frozen checkpoint and exposes
-the `simplememvla` agent plugin. See `adapters/hylo-policy-simplememvla/README.md`
-for its observation interface, upstream pin and reproduction checks.
+| Component | Interface and consumer | Lifetime |
+|---|---|---|
+| Bounded working store | `WorkingMemory.put/get/clear/items`; a reasoner's scratchpad | clear at episode boundaries |
+| Event memory | `EpisodeMemory.reset/append/recall/close`; an observation extractor and an event-memory agent | exact recall within a task/episode scope |
+| Video history | `SimpleMemVLAHistory`; the compatible video-conditioned model runtime | session-owned frames and caches, cleared at reset/end |
+| Action bank | `ActionMemory`; a compatible policy's sampling/steering path | sealed development artifact, frozen during evaluation |
+| Skill library | `SkillLibrary`; the consumer for each skill kind | versioned experience, frozen during evaluation |
+| Lesson book | `LessonBook`; an experience-aware proposer | curated development experience |
 
-| Kind | v0.1 backend | When written | Retrieval | Production backend |
-|---|---|---|---|---|
-| Working | in-process bounded OrderedDict | every deliberate | key | same |
-| Episodic | SQLite | end of episode (outcome, key events) | scope + time window + text (v0.2 vectors) | mem0 vector layer / Graphiti |
-| Spatial | SQLite (bbox + radius) | when an object/landmark is observed | near(pose, r) + key + as_of | Spark-DSG (hierarchical scene graph, observation intervals, change-feed) + ConceptGraphs association rules |
-| Skill | v0.2: directory + JSON + content hash | **only after promotion through the validation gate** | trigger/precondition matching; embedding used only for recall | same + sandboxed execution |
+[Event memory](../../user-guide/memory/events.md) requires an extractor: the journal does not infer facts from
+images. [Video memory](../../user-guide/memory/video.md) uses streaming frame history rather than `MemoryStore`.
+Its native model integration has separate checkpoint, embodiment and runtime requirements.
 
-Skill item payload (v0.2): `{"code" | "params", "api_surface": "hylo.tools@v1", "trigger", "preconditions", "postconditions", "status": proposed|verified|refuted|deprecated, "verdicts": {useful, misleading, wrong, not_applicable}, "evidence": [trace refs]}`.
-Skill writes go through the same gate as the Evolution layer (`improvement.md`); this is where Memory and RSI meet.
+Skills have `proposed`, `verified`, `refuted` and `deprecated` states. Campaign-derived skills carry gate evidence;
+recipe skills carry model-free replay evidence. These checks establish different claims. Use the
+[skill-library rules](../../user-guide/memory/skills.md#status) for the evidence and permitted consumers.
 
-The experimental model-managed Working Memory runtime, agent wrapper and dedicated
-RoboMME runner were removed on 2026-11-04. Historical experiment records remain available.
-This removal does not affect the bounded in-process store above, event-memory primitives,
-or the independent SimpleMemVLA option.
+## Lifecycle and observability { #4-memory-and-observability }
 
-## 4. Memory and observability
+- Reset or select an episode scope before recording observations. Do not expose another evaluation episode's history.
+- Emit `memory.write` and `memory.retrieval` events from the consuming integration where applicable.
+- Keep persistent action banks, skill libraries and lesson books frozen while evaluating an agent.
+- Episode-local spatial, event and video history can update from permitted observations during evaluation.
+- A content digest identifies stored evidence; it does not establish perception accuracy or a performance gain.
 
-- Every retrieval → `memory.retrieval {query, n_hits, hits[id, pos, score]}`; every write/forget → `memory.write {op, key, events}` **[Validated in prototype]**.
-- v0.2: Scorer `memory_helpfulness`: associates retrieval hits with episode outcomes, produces ASPIRE-style `useful/misleading` ratings, and writes them back as item statistics.
-- **Stale memory handling** (validated in prototype): when the Reasoner reaches a recalled position but does not perceive the target → `forget` and switch to exploration; in a test that injects a wrong landmark, the episode still succeeds and the memory is corrected to the true position.
+## Verification { #5-prototype-data }
 
-## 5. Prototype data
-
-`testing/revisit_landmark` (target visible only within 0.25 m): with memory, the first episode explores and later episodes go straight there; `tests/test_memory.py::test_spatial_memory_shortens_later_episodes` asserts that the total steps of later episodes are significantly lower than in the no-memory version.
+Use conformance and lifecycle checks for the interface, then compare complete agents under matching task and
+observation conditions. [Memory results](../../showcase/memory.md) and
+[video-memory integration checks](../../showcase/video-memory.md) describe their measured scope separately.
